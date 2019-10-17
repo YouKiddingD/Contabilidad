@@ -7,7 +7,7 @@
 	<head>
 		<base href="">
 		<meta charset="utf-8" />
-		<title>LogistikGo</title>
+		<title>LogistikGo | Cuentas por pagar</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -77,6 +77,7 @@
 		<link href='{% static "assets/plugins/custom/jstree/dist/themes/default/style.css" %}' rel="stylesheet" type="text/css" />
 		<link href='{% static "assets/plugins/custom/jqvmap/dist/jqvmap.css" %}' rel="stylesheet" type="text/css" />
 		<link href='{% static "assets/plugins/custom/uppy/dist/uppy.min.css" %}' rel="stylesheet" type="text/css" />
+		<link href='{% static "css/datatables.min.css" %}' rel="stylesheet">
 
 
 		<!--end:: Vendor Plugins for custom pages -->
@@ -121,8 +122,8 @@
 					<!-- begin:: Aside -->
 					<div class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
 						<div class="kt-aside__brand-logo">
-							<a href="index.html">
-								<img alt="Logo" src='{% static "img/Logistik_GO_Brokerage.png" %}'>
+							<a href="#">
+								<img alt="Logo" src='{% static "img/logo-cobrar-145x42.png" %}'>
 							</a>
 						</div>
 						<div class="kt-aside__brand-tools">
@@ -160,8 +161,8 @@
 									<h4 class="kt-menu__section-text">Reportes</h4>
 									<i class="kt-menu__section-icon flaticon-more-v2"></i>
 								</li>
-								<li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-graphic"></i><span class="kt-menu__link-text">Facturas pagadas</span></a></li>
-								<li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-expand"></i><span class="kt-menu__link-text">Facturas canceladas</span></a></li>
+								<li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-checkmark"></i><span class="kt-menu__link-text">Cobradas</span></a></li>
+								<li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-cancel"></i><span class="kt-menu__link-text">Canceladas</span></a></li>
 								<!-- MENU End Reportes -->
 
 							</ul>
@@ -261,20 +262,27 @@
 								</div>
 							</div>
 
+
 							<!--end:cerrar sesion -->
 						</div>
 					</div>
 				</div>
 
 
+		<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+			<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+				{% block content %}
+				{% endblock %}
+			</div>
+		</div>
 
-		<main>
-			{% block content %}
-			{% endblock %}
-		</main>
 
 
-		<!--ENd:: Chat-->
+	<footer class="py-2 bg-white text-dark">
+    	<div class="container text-center">
+      		<small>®LOGISTIKGO CUENTAS POR COBRAR 2019. | Todos los derechos reservados.</small>
+    	</div>
+  	</footer>
 
 		<!-- begin::Global Config(global config for global JS sciprts) -->
 		<script>
@@ -429,8 +437,8 @@
 
 		<!--begin::Page Scripts(used by this page) -->
 		<script src='{% static "assets/js/pages/dashboard.js" %}' type="text/javascript"></script>
-
 		<!--end::Page Scripts -->
+		<script src='{% static "js/PendientesEnviarTable" %}'></script>
 	</body>
 
 	<!-- end::Body -->

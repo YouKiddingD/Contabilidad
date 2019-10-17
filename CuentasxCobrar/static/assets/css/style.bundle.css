@@ -14885,7 +14885,7 @@ body {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 300;
   font-family: Poppins, Helvetica, sans-serif;
   -ms-text-size-adjust: 100%;
@@ -35420,7 +35420,7 @@ body {
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
-  padding: 0 25px;
+  padding: 0 5px;
   height: 65px;
   background-color: #800080; }
   .kt-aside__brand .kt-aside__brand-logo {
@@ -35575,7 +35575,7 @@ body {
 
 .kt-aside {
   background-color: #282733;
-  width: 190px;
+  width: 195px;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease; }
   .kt-aside .ps > .ps__rail-x {
@@ -35653,7 +35653,7 @@ body {
       .kt-aside .ps > .ps__rail-y > .ps__thumb-y:hover, .kt-aside .ps > .ps__rail-y > .ps__thumb-y:focus {
         width: 6px; }
   .kt-aside--fixed.kt-aside--minimize-hover .kt-aside {
-    width: 190px;
+    width: 195px;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease; }
   .kt-aside--fixed.kt-aside--minimize-hover .kt-header {
