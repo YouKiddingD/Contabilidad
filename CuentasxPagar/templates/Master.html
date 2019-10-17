@@ -11,6 +11,7 @@
 	{% load static %}
 	<link rel="icon" href='{% static "img/logoRed.png" %}'>
 	<link href='{% static "css/datatables.min.css" %}' rel="stylesheet" type="text/css" />
+	<link href='{% static "css/StyleLKGo.css" %}' rel="stylesheet" type="text/css" />
 	<link href='{% static "css/fontawesome.min.css" %}' rel="stylesheet" type="text/css" />
 	<link href='{% static "css/select2.min.css" %}' rel="stylesheet" type="text/css" />
 	<link href='{% static "css/select2-bootstrap.min.css" %}' rel="stylesheet" type="text/css" />
@@ -232,7 +233,7 @@
 				<!-- begin:: Aside -->
 				<div class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
 					<div class="kt-aside__brand-logo">
-							<img alt="Logo" class="logo-logistikgo" src='{% static "img/LogistikGO-CxP.png" %}'>
+						<img alt="Logo" class="logo-logistikgo" src='{% static "img/LogistikGO-CxP.png" %}'>
 					</div>
 					<div class="kt-aside__brand-tools">
 						<button class="kt-aside__brand-aside-toggler" id="kt_aside_toggler"><span></span></button>
@@ -900,21 +901,39 @@
     		<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
     			<!-- begin:: Content -->
     			<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-    				{%block body_block%}
-    				{%endblock%}
-    			</div>
-    			<!-- end:: Content -->
+    				<div class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" id="TbPading">
+							<h3>Pendientes de Enviar</h3>
 
-    			<!-- begin:: Footer -->
-    			<div class="kt-footer  kt-grid__item kt-grid kt-grid--desktop kt-grid--ver-desktop" id="kt_footer">
-    				<div class="kt-container  kt-container--fluid ">
-    					<div class="kt-footer__copyright">
-    						®LOGISTIKGO Cuentas por pagar 2019. | Todos los derechos reservados.
-    					</div>
-    				</div>
+							<table class="display" id="example">
+								<thead>
+									<tr>
+										<td>ID</td>
+										<td>Nombre</td>
+										<td>Apellido</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>god</td>
+										<td>god</td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>god</td>
+										<td>god</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
     			</div>
-    			<!-- end:: Footer -->
     		</div>
+    		<footer class="py-2 text-white">
+    			<div class="container text-center">
+    				<small>®LOGISTIKGO CUENTAS POR PAGAR 2019. | Todos los derechos reservados.</small>
+    			</div>
+    		</footer>
     	</div>
     </div>
 
