@@ -138,7 +138,7 @@
 									<h4 class="kt-menu__section-text">Facturas</h4>
 									<i class="kt-menu__section-icon flaticon-more-v2"></i>
 								</li>
-								<li class="kt-menu__item kt-menu__item--active" aria-haspopup="true"><a href="base.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-file-1"></i><span class="kt-menu__link-text">Pendientes de enviar</span></a></li>
+								<li class="kt-menu__item" aria-haspopup="true"><a href="base.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-file-1"></i><span class="kt-menu__link-text">Pendientes de enviar</span></a></li>
 
 
 								<li class="kt-menu__section ">
@@ -152,8 +152,8 @@
 									<h4 class="kt-menu__section-text">Reportes</h4>
 									<i class="kt-menu__section-icon flaticon-more-v2"></i>
 								</li>
-									<li class="kt-menu__item " aria-haspopup="true"><a href="ReporteCobradas.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-checkmark"></i><span class="kt-menu__link-text">Facturas</span></a></li>
-										<li class="kt-menu__item " aria-haspopup="true"><a href="ReportePagos.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-cancel"></i><span class="kt-menu__link-text">Cobros</span></a></li>
+									<li class="kt-menu__item" aria-haspopup="true"><a href="ReporteCobradas.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-checkmark"></i><span class="kt-menu__link-text">Facturas</span></a></li>
+										<li class="kt-menu__item kt-menu__item--active" aria-haspopup="true"><a href="ReportePagos.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-cancel"></i><span class="kt-menu__link-text">Cobros</span></a></li>
 
 
 							</ul>
@@ -265,7 +265,7 @@
 						<div class="kt-container  kt-container--fluid ">
 							<div class="kt-subheader__toolbar">
 								<div class="kt-subheader__wrapper">
-									<h3>Pendientes de Enviar</h3>
+									<h3>Reporte de Pagos</h3>
 
 								</div>
 							</div>
@@ -277,13 +277,10 @@
 					<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
 						<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 				<div class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" id="TbPading">
-							<div class="kt-subheader__wrapper">
-									<button type="button" class="btn btn-brand btn-elevate btn-pill float-right" data-toggle="modal" data-target="#kt_modal_1_2">Subir Factura</button>
-							</div></br>
-									<table class="table" id="example">
+
+									<table class="display" id="example">
 										<thead>
 											<tr>
-												<th></th>
 												<th>Folio</th>
 												<th>Nombre Cliente</th>
 												<th>Fecha Descarga</th>
@@ -296,7 +293,6 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td></td>
 												<td>bkg000001</td>
 												<td>Rafael</td>
 												<td>2019-10-02 20:54:56</td>
@@ -307,7 +303,6 @@
 												<td>Finalizado</td>
 											</tr>
 											<tr>
-												<td></td>
 												<td>XDD00063</td>
 												<td>Rafael</td>
 												<td>2019-10-02 20:54:56</td>
@@ -347,15 +342,6 @@
 															<th>Total</th>
 														</tr>
 													</thead>
-													<tbody>
-														<tr>
-															<td>bkg000001</td>
-															<td>5000.00</td>
-															<td>500.00</td>
-															<td>120.00</td>
-															<td>6000.00</td>
-														</tr>
-													</tbody>
 												</table>
 											</div>
 										</div>
@@ -539,22 +525,11 @@
 
 		<script>
 		$(document).ready(function() {
-		$('#example').DataTable( {
-			"scrollX": true,
-			"language": {
-					"url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-			},
-				columnDefs: [ {
-						orderable: false,
-						className: 'select-checkbox',
-						targets:   0
-				} ],
-				select: {
-						style:    'multi',
-						selector: 'td:first-child'
-				},
-				order: [[ 1, 'asc' ]]
-		} );
+			$('#example').DataTable({
+				"language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+        }
+			});
 		} );
 		</script>
 		<!--end::Page Scripts -->

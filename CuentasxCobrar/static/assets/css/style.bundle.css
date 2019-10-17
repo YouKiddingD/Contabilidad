@@ -33254,13 +33254,13 @@ body {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease; }
     .kt-header--fixed .kt-wrapper {
-      padding-top: 65px; }
+      padding-top: 50px; }
     .kt-header--fixed.kt-subheader--fixed.kt-subheader--enabled .kt-wrapper {
       padding-top: 119px; }
     .kt-aside--fixed .kt-wrapper {
-      padding-left: 250px; }
+      padding-left: 190px; }
     .kt-aside--fixed.kt-aside--minimize .kt-wrapper {
-      padding-left: 78px;
+      padding-left: 50px;
       -webkit-transition: all 0.3s ease;
       transition: all 0.3s ease; }
   .kt-header--fixed.kt-subheader--fixed .kt-subheader {

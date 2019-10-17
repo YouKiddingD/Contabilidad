@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 {% load static %}
-
 <html lang="en">
 
 	<!-- begin::Head -->
 	<head>
 		<base href="">
 		<meta charset="utf-8" />
-		<title>LogistikGo | Cuentas por pagar</title>
+		<title>LogistikGo | Cuentas por cobrar</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -23,6 +22,9 @@
 		<!--begin::Global Theme Styles(used by all pages) -->
 
 		<!--begin:: Vendor Plugins -->
+		<link rel="stylesheet" href='{% static "css/jquery.dataTables.min.css" %}'>
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">s
 		<link href='{% static "assets/plugins/general/perfect-scrollbar/css/perfect-scrollbar.css" %}' rel="stylesheet" type="text/css" />
 		<link href='{% static "assets/plugins/general/tether/dist/css/tether.css" %}' rel="stylesheet" type="text/css" />
 		<link href='{% static "assets/plugins/general/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" %}' rel="stylesheet" type="text/css" />
@@ -55,6 +57,7 @@
 
 		<!--end:: Vendor Plugins -->
 		<link href='{% static "assets/css/style.bundle.css" %}' rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href='{% static "css/StyleLKGo.css" %}'>
 
 		<!--begin:: Vendor Plugins for custom pages -->
 		<link href='{% static "assets/plugins/custom/plugins/jquery-ui/jquery-ui.min.css" %}' rel="stylesheet" type="text/css" />
@@ -77,8 +80,6 @@
 		<link href='{% static "assets/plugins/custom/jstree/dist/themes/default/style.css" %}' rel="stylesheet" type="text/css" />
 		<link href='{% static "assets/plugins/custom/jqvmap/dist/jqvmap.css" %}' rel="stylesheet" type="text/css" />
 		<link href='{% static "assets/plugins/custom/uppy/dist/uppy.min.css" %}' rel="stylesheet" type="text/css" />
-		<link href='{% static "css/datatables.min.css" %}' rel="stylesheet">
-
 
 		<!--end:: Vendor Plugins for custom pages -->
 
@@ -87,7 +88,7 @@
 		<!--begin::Layout Skins(used by all pages) -->
 
 		<!--end::Layout Skins -->
-		<link rel="shortcut icon" href='{% static "img/logoRed.png" %}' />
+		<link rel="shortcut icon" href='{% static "img\logoRed.png" %}'>
 	</head>
 
 	<!-- end::Head -->
@@ -95,13 +96,10 @@
 	<!-- begin::Body -->
 	<body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
 
-		<!-- begin:: Page -->
-
-		<!-- begin:: Header Mobile -->
 		<div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
 			<div class="kt-header-mobile__logo">
 				<a href="index.html">
-					<img alt="Logo" src='{% static "img/Logistik_GO_Brokerage.png" %}' />
+					<img alt="Logo" src='{% static "assets/media/logos/logo-12.png" %}'/>
 				</a>
 			</div>
 			<div class="kt-header-mobile__toolbar">
@@ -122,8 +120,8 @@
 					<!-- begin:: Aside -->
 					<div class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
 						<div class="kt-aside__brand-logo">
-							<a href="#">
-								<img alt="Logo" src='{% static "img/logo-cobrar-145x42.png" %}'>
+							<a href="index.html">
+								<img alt="Logo" src='{% static "img\logo-cobrar-145x42.png" %}'>
 							</a>
 						</div>
 						<div class="kt-aside__brand-tools">
@@ -137,33 +135,28 @@
 					<div class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_aside_menu_wrapper">
 						<div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
 							<ul class="kt-menu__nav ">
-								<li class="kt-menu__item  kt-menu__item--active" aria-haspopup="true"><a href="index.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span class="kt-menu__link-text">Dashboard</span></a></li>
-
-								<!-- MENU - Begin Facturas -->
+								<li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span class="kt-menu__link-text">Dashboard</span></a></li>
 								<li class="kt-menu__section ">
 									<h4 class="kt-menu__section-text">Facturas</h4>
 									<i class="kt-menu__section-icon flaticon-more-v2"></i>
 								</li>
-								<li class="kt-menu__item" aria-haspopup="true"><a target="_blank" href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-edit-1"></i><span class="kt-menu__link-text">Pendientes de Enviar</span></a></li>
-								<!-- MENU End Facturas -->
+								<li class="kt-menu__item kt-menu__item--active" aria-haspopup="true"><a href="base.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-file-1"></i><span class="kt-menu__link-text">Pendientes de enviar</span></a></li>
 
-								<!--MENU - Begin Pagos -->
+
 								<li class="kt-menu__section ">
 									<h4 class="kt-menu__section-text">Pagos</h4>
 									<i class="kt-menu__section-icon flaticon-more-v2"></i>
 								</li>
-								<li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-coins"></i><span class="kt-menu__link-text">Estados de cuenta</span></a></li>
+								<li class="kt-menu__item " aria-haspopup="true"><a href="EstadosCuenta.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-coins"></i><span class="kt-menu__link-text">Estados de cuenta</span></a></li>
 
-								<!-- MENU End Pagos -->
 
-								<!--MENU - Begin Reportes -->
 								<li class="kt-menu__section ">
 									<h4 class="kt-menu__section-text">Reportes</h4>
 									<i class="kt-menu__section-icon flaticon-more-v2"></i>
 								</li>
-								<li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-checkmark"></i><span class="kt-menu__link-text">Cobradas</span></a></li>
-								<li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="#" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-cancel"></i><span class="kt-menu__link-text">Canceladas</span></a></li>
-								<!-- MENU End Reportes -->
+									<li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="https://keenthemes.com/metronic/preview/demo12/builder.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-checkmark"></i><span class="kt-menu__link-text">Cobradas</span></a></li>
+										<li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="https://keenthemes.com/metronic/preview/demo12/builder.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-cancel"></i><span class="kt-menu__link-text">Canceladas</span></a></li>
+
 
 							</ul>
 						</div>
@@ -171,9 +164,6 @@
 
 					<!-- end:: Aside Menu -->
 				</div>
-			</div>
-		</div>
-
 
 				<!-- end:: Aside -->
 				<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
@@ -186,34 +176,25 @@
 						<div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper">
 							<div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
 								<ul class="kt-menu__nav ">
-									<li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
-										<!--<img alt="Logo" src='{% static "img/Logistik_GO_Brokerage.png" %}'>-->
-									</li>
+
 								</ul>
 							</div>
 						</div>
 
 						<!-- end: Header Menu -->
 
-
-
-
-
-
 						<!-- begin:: Header Topbar -->
 						<div class="kt-header__topbar">
-
-
 
 							<!--begin: Notifications -->
 							<div class="kt-header__topbar-item dropdown">
 								<div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="30px,0px" aria-expanded="true">
 									<span class="kt-header__topbar-icon kt-pulse kt-pulse--brand">
-										<i class="flaticon2-bell-alarm-symbol"></i>
+										<i class="flaticon2-bell-alarm-symbol">14</i>
 										<span class="kt-pulse__ring"></span>
 									</span>
-								</div>
 
+								</div>
 							</div>
 
 							<!--end: Notifications -->
@@ -225,66 +206,171 @@
 										<i class="flaticon2-gear"></i>
 									</span>
 								</div>
-								<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
-									<form>
-
-									</form>
-								</div>
 							</div>
 
 							<!--end: Quick Actions -->
 
-							<!--begin: My Cart -->
-							<div class="kt-header__topbar-item dropdown">
-								<div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="30px,0px" aria-expanded="true">
-									<span class="kt-header__topbar-icon">
-										<i class="flaticon2-shopping-cart-1"></i>
-									</span>
-								</div>
-								<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
-
-								</div>
-							</div>
-
-							<!--end: My Cart -->
 
 
+							<!--begin: Quick panel toggler -->
 
-							<!--begin: Cerrar sesion -->
+
+							<!--end: Quick panel toggler -->
+
+
+							<!--begin: User Bar -->
 							<div class="kt-header__topbar-item kt-header__topbar-item--user">
-								<div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="30px,0px" aria-expanded="true">
+								<div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
 									<div class="kt-header__topbar-user">
+										<span class="kt-header__topbar-welcome kt-hidden-mobile">Hola,</span>
+										<span class="kt-header__topbar-username kt-hidden-mobile">User</span>
 										<span class="kt-header__topbar-icon" title="Salir">
 										<a href="#"><i class="flaticon-logout"></i></a>
 										</span>
 
 									</div>
 								</div>
+
+
+
+								<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
+									<div class="kt-notification">
+										<a href="#" class="kt-notification__item" target="_blank">
+											<div class="kt-notification__item-icon">
+												<i class="flaticon2-mail kt-font-warning"></i>
+											</div>
+											<div class="kt-notification__item-details">
+												<div class="kt-notification__item-title kt-font-bold">
+													Documentacion
+												</div>
+
+											</div>
+										</a>
+
+										<div class="kt-notification__custom kt-space-between">
+											<a href="#" class="btn btn-label btn-label-brand btn-sm btn-bold">Salir</a>
+										</div>
+									</div>
+
+								</div>
 							</div>
 
+							<!--end: User Bar -->
+						</div>
 
-							<!--end:cerrar sesion -->
+						<!-- end:: Header Topbar -->
+					</div>
+
+					<!-- end:: Header -->
+
+					<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+						<div class="kt-container  kt-container--fluid ">
+							<div class="kt-subheader__toolbar">
+								<div class="kt-subheader__wrapper">
+									<h3>Pendientes de Enviar</h3>
+
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
 
 
-		<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
-			<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-				{% block content %}
-				{% endblock %}
-			</div>
+					<!-- aqui va el contenido -->
+					<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+						<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+				<div class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" id="TbPading">
+							<div class="kt-subheader__wrapper">
+									<button type="button" class="btn btn-brand btn-elevate btn-pill float-right" data-toggle="modal" data-target="#kt_modal_1_2">Subir Factura</button>
+							</div></br>
+									<table class="display" id="example">
+										<thead>
+											<tr>
+												<th>Folio</th>
+												<th>Nombre Cliente</th>
+												<th>Fecha Descarga</th>
+												<th>Costo Subtotal</th>
+												<th>Costo IVA</th>
+												<th>Costo Retencion</th>
+												<th>Costo Total</th>
+												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>bkg000001</td>
+												<td>Rafael</td>
+												<td>2019-10-02 20:54:56</td>
+												<td>5000.00</td>
+												<td>500.00</td>
+												<td>120.00</td>
+												<td>6000.00</td>
+												<td>Finalizado</td>
+											</tr>
+											<tr>
+												<td>XDD00063</td>
+												<td>Rafael</td>
+												<td>2019-10-02 20:54:56</td>
+												<td>600.00</td>
+												<td>120.00</td>
+												<td>80.00</td>
+												<td>800.00</td>
+												<td>Finalizado</td>
+											</tr>
+										</tbody>
+									</table>
+
+						</div>
+					</div>
+</div>
+
+<!--end content-->
+
+<!-- modal subir facturas-->
+<div class="modal fade" id="kt_modal_1_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Subir Facturas</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="kt-scroll" data-scroll="true" data-height="200">
+												<table class="table">
+													<thead>
+														<tr>
+															<th>Folio</th>
+															<th>Subtotal</th>
+															<th>Iva</th>
+															<th>Retencion</th>
+															<th>Total</th>
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary">Save changes</button>
+										</div>
+									</div>
+								</div>
 		</div>
+		<!--end modal subir facturas-->
+
+  <footer class="py-2 text-white">
+    <div class="container text-center">
+      <small>®LOGISTIKGO CUENTAS POR COBRAR 2019. | Todos los derechos reservados.</small>
+    </div>
+  </footer>
+</div>
+</div>
+</div>
 
 
-
-	<footer class="py-2 bg-white text-dark">
-    	<div class="container text-center">
-      		<small>®LOGISTIKGO CUENTAS POR COBRAR 2019. | Todos los derechos reservados.</small>
-    	</div>
-  	</footer>
 
 		<!-- begin::Global Config(global config for global JS sciprts) -->
+
 		<script>
 			var KTAppOptions = {
 				"colors": {
@@ -311,6 +397,9 @@
 		<!--begin::Global Theme Bundle(used by all pages) -->
 
 		<!--begin:: Vendor Plugins -->
+
+
+
 		<script src='{% static "assets/plugins/general/jquery/dist/jquery.js" %}' type="text/javascript"></script>
 		<script src='{% static "assets/plugins/general/popper.js/dist/umd/popper.js" %}' type="text/javascript"></script>
 		<script src='{% static "assets/plugins/general/bootstrap/dist/js/bootstrap.min.js" %}' type="text/javascript"></script>
@@ -380,7 +469,7 @@
 		<script src='{% static "assets/js/scripts.bundle.js" %}' type="text/javascript"></script>
 
 		<!--begin:: Vendor Plugins for custom pages -->
-		<script src='{% static "assets/plugins/custom/plugins/jquery-ui/jquery-ui.min.js" %}' type="text/javascript"></script>
+	<!--	<script src='{% static "assets/plugins/custom/plugins/jquery-ui/jquery-ui.min.js" %}' type="text/javascript"></script>-->
 		<script src='{% static "assets/plugins/custom/@fullcalendar/core/main.js" %}' type="text/javascript"></script>
 		<script src='{% static "assets/plugins/custom/@fullcalendar/daygrid/main.js" %}' type="text/javascript"></script>
 		<script src='{% static "assets/plugins/custom/@fullcalendar/google-calendar/main.js" %}' type="text/javascript"></script>
@@ -437,8 +526,17 @@
 
 		<!--begin::Page Scripts(used by this page) -->
 		<script src='{% static "assets/js/pages/dashboard.js" %}' type="text/javascript"></script>
+
+		<script>
+		$(document).ready(function() {
+			$('#example').DataTable({
+				"language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+        }
+			});
+		} );
+		</script>
 		<!--end::Page Scripts -->
-		<script src='{% static "js/PendientesEnviarTable" %}'></script>
 	</body>
 
 	<!-- end::Body -->
