@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import demo
+from .views import pendientesenviar
 
 urlpatterns = [
-    path('demo/', demo),
+    path('', pendientesenviar),
 ]
