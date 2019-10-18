@@ -1,4 +1,4 @@
-var DATA_COUNT = 16;
+var DATA_COUNT = 40;
     	var MIN_XY = -125;
     	var MAX_XY = 95;
 
