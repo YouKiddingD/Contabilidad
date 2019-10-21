@@ -21,4 +21,5 @@ urlpatterns = [
     path('PendienteEnviar/', include('PendientesEnviar.urls')),
     path('Dashboard/', include('Dashboard.urls')),
     path('EstadosCuenta/', include('EstadosCuenta.urls')),
+    path('Usuario/', include('Usuario.urls')),
 ]

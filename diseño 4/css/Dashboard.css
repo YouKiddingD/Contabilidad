@@ -3,13 +3,34 @@ h3 {
 	color: #343434;
 	font-weight: normal;
 	font-family: 'Ultra', sans-serif;   
-	font-size: 45px;
+	font-size: 40px;
 	line-height: 42px;
 	text-transform: uppercase;
 	text-shadow: 0 2px white, 0 3px #777;
 }
 
 p {
-  font-family: "Monaco";
-  font-size: 25px;
+	font-family: "Monaco";
+	font-size: 20px;
+}
+
+.frameAnimacion {
+	display: block;  
+	border: 0px; 
+	margin: 0px; 
+	top: 0px; 
+	left: 0px; 
+	bottom: 0px; 
+	right: 0px; 
+	position: absolute; 
+	pointer-events: none; 
+	z-index: -1;
+}
+
+.animate-chart {
+	width: 400px !important; 
+	height: 400px !important; 
+	padding: 0; 
+	margin: auto; 
+	display: block;
 }

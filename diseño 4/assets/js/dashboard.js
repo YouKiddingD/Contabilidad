@@ -1,4 +1,4 @@
-var DATA_COUNT = 40;
+var DATA_COUNT = 50;
     	var MIN_XY = -125;
     	var MAX_XY = 95;
 
@@ -8,15 +8,8 @@ var DATA_COUNT = 40;
     	utils.srand(110);
 
     	function colorize(opaque, context) {
-    		var value = context.dataset.data[context.dataIndex];
-    		var x = value.x / 100;
-    		var y = value.y / 100;
-    		var r = x < 0 && y < 0 ? 250 : x < 0 ? 150 : y < 0 ? 50 : 0;
-    		var g = x < 0 && y < 0 ? 0 : x < 0 ? 50 : y < 0 ? 150 : 250;
-    		var b = x < 0 && y < 0 ? 0 : x > 0 && y > 0 ? 250 : 150;
-    		var a = opaque ? 1 : 0.5 * value.v / 1000;
-
-    		return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+    		return 'rgba(' + (Math.random() * (254 - 50) + 50) + ',' + 
+            (Math.random() * (254 - 50) + 50) + ',' + (Math.random() * (254 - 50) + 50) + ',' + .7 + ')';
     	}
 
     	function generateData() {
@@ -60,7 +53,7 @@ var DATA_COUNT = 40;
     			point: {
     				backgroundColor: colorize.bind(null, false),
 
-    				borderColor: colorize.bind(null, false),
+    				borderColor: 'rgba(255,255,255,0)',
 
     				radius: function(context) {
     					var value = context.dataset.data[context.dataIndex];
