@@ -137,7 +137,7 @@
 				<div class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_aside_menu_wrapper">
 					<div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
 						<ul class="kt-menu__nav ">
-							<li class="kt-menu__item " aria-haspopup="true"><a href="index.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span class="kt-menu__link-text">Dashboard</span></a></li>
+							<li class="kt-menu__item " aria-haspopup="true"><a href="Dashboard.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span class="kt-menu__link-text">Dashboard</span></a></li>
 							<li class="kt-menu__section ">
 								<h4 class="kt-menu__section-text">Facturas</h4>
 								<i class="kt-menu__section-icon flaticon-more-v2"></i>
@@ -214,7 +214,70 @@
 
 
 						<!--begin: Quick panel toggler -->
+						<!-- filtros -->
 
+						<div id="kt_quick_panel" class="kt-quick-panel">
+						<a href="#" class="kt-quick-panel__close" id="kt_quick_panel_close_btn"><i class="flaticon2-delete"></i></a>
+
+						<div class="kt-quick-panel__content">
+							<div class="tab-content">
+								<div class="tab-pane fade show kt-scroll active" id="kt_quick_panel_tab_notifications" role="tabpanel">
+									<div class="kt-notification">
+										<div class="kt-subheader__main">
+												<label class="col-form-label col-lg-3 col-sm-12"><strong>Fecha: </strong></label>
+												<div class="col-lg-9 col-md-8 col-sm-12">
+													<div class="kt-input-icon pull-right" id='kt_daterangepicker_2_modal'>
+														 <input type="text" class="form-control " placeholder="Desde - Hasta" name="FiltroFecha" id="kt_daterangepicker_1_modal">
+														 <span class="kt-input-icon__icon kt-input-icon__icon--right"><span><i class="la la-calendar-check-o"></i></span></span>
+													 </div>
+												 </div>
+											</div></br>
+											<div class="container">
+										<label class="col-form-label col-lg-3 col-sm-12"><strong>Estatus: </strong></label>
+											<select class="custom-select" id="inputGroupSelect01">
+													<option selected>Seleccionar</option>
+													<option value="1">Pendientes</option>
+													<option value="2">Finalizado</option>
+											 </select>
+										 </div></br>
+										 <div class="container">
+											<label class="col-form-label col-lg-3 col-sm-12"><strong>Proveedor: </strong></label>
+											 <div>
+												 <select class="form-control" id="kt_select2_3" name="param">
+													 <option value="HI">Rafael</option>
+													 <option value="CA">California</option>
+												 </select>
+											 </div>
+											 </div></br>
+											 <div class="container">
+											 <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" data-placement="left">
+												<div class="form-group col-1">
+														<label class="col-form-label col-lg-3 col-sm-12"><strong>Moneda: </strong></label>
+														<label class="kt-radio kt-radio--bold kt-radio--success">
+														<input type="radio" name="radio6"> MXN
+														<span></span>
+														</label>
+														<label class="kt-radio kt-radio--bold kt-radio--brand">
+														<input type="radio" name="radio6"> USA
+														<span></span>
+														</label>
+												</div>
+											</div>
+										</div></br>
+										<div class="container">
+											<div class="form-inline">
+												<button type="button" name="button" class="btn btn-danger btn-elevate btn-pill btn-elevate-air btn-sm" id="BtnCancelarFiltro">Cancelar</button>
+												<button type="button" name="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" id="BtnAplicarFiltro">Aplicar</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane kt-quick-panel__content-padding-x fade kt-scroll" id="kt_quick_panel_tab_settings" role="tabpanel">
+								</div>
+							</div>
+						</div>
+						</div>
+							<!-- end filtros -->
 
 						<!--end: Quick panel toggler -->
 
@@ -264,6 +327,20 @@
 
 				<!-- end:: Header -->
 
+				<!-- filtros -->
+									<div class="kt-subheader kt-grid__item" id="kt_subheader">
+												<div class="kt-container  kt-container--fluid ">
+
+													<div class="kt-header__topbar-item kt-header__topbar-item--quick-panel" data-toggle="kt-tooltip" title="Filtros" data-placement="right">
+															<span class="kt-header__topbar-icon" id="kt_quick_panel_toggler_btn">
+																	<button type="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm">Filtros</button>
+															</span>
+													</div>
+																</div>
+															</div>
+				<!--end filtros-->
+
+
 				<div class="kt-subheader   kt-grid__item" id="kt_subheader">
 					<div class="kt-container  kt-container--fluid ">
 						<div class="kt-subheader__toolbar">
@@ -281,7 +358,7 @@
 					<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 						<div class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" id="TbPading">
 							<div class="kt-subheader__wrapper">
-								<button type="button" name="button" class="btn btn-info float-right">Subir Pago</button>
+								<button type="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" data-toggle="modal" data-target="#kt_modal_1_2" data-backdrop="static" data-keyboard="false">Subir Pago</button>
 							</div></br>
 							<table class="table" id="example">
 								<thead>
@@ -324,6 +401,49 @@
 					</div>
 				</div>
 
+
+
+				<!-- modal subir facturas-->
+				   <div class="modal fade" id="kt_modal_1_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">Subir Pagos</h5>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															</button>
+														</div>
+														<div class="modal-body">
+															<div class="kt-scroll" data-scroll="true" data-height="200">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th>Folio</th>
+																			<th>Subtotal</th>
+																			<th>Iva</th>
+																			<th>Retencion</th>
+																			<th>Total</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																			<td>bkg000001</td>
+																			<td>5000.00</td>
+																			<td>500.00</td>
+																			<td>120.00</td>
+																			<td>6000.00</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+															<button type="button" class="btn btn-primary">Guardar</button>
+														</div>
+													</div>
+												</div>
+					  </div>
+						<!--end modal subir facturas-->
 
 				<footer class="py-2 text-white">
 					<div class="container text-center">
@@ -512,6 +632,20 @@
 				},
 				order: [[ 1, 'asc' ]]
 			} );
+
+			$('input[name="FiltroFecha"]').daterangepicker({
+				autoUpdateInput: false
+			});
+
+			$('input[name="FiltroFecha"]').on('apply.daterangepicker', function(ev, picker) {
+					 $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+			 });
+
+
+			 $("#kt_select2_3").select2({
+					placeholder: "Cliente"
+			 });
+
 		} );
 	</script>
 	<!--end::Page Scripts -->

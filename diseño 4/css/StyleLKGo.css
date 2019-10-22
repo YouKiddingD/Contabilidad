@@ -4,3 +4,18 @@
 footer{
   background: #757376;
 }
+.modal-header {
+    background-color: #040131;
+ }
+#exampleModalLabel{
+  color: white;
+}
+#BtnCancelarFiltro{
+  margin: auto;
+}
+#BtnAplicarFiltro{
+  margin: auto;
+}
+.daterangepicker {
+    z-index: 1051;
+}
