@@ -96,7 +96,7 @@
 
 		<div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
 			<div class="kt-header-mobile__logo">
-				<a href="index.html">
+				<a href="Dashboard.html">
 					<img alt="Logo" src="assets/media/logos/logo-12.png" />
 				</a>
 			</div>
@@ -153,7 +153,7 @@
 									<i class="kt-menu__section-icon flaticon-more-v2"></i>
 								</li>
 									<li class="kt-menu__item " aria-haspopup="true"><a href="ReporteCobradas.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-checkmark"></i><span class="kt-menu__link-text">Facturas</span></a></li>
-										<li class="kt-menu__item " aria-haspopup="true"><a href="ReportePagos.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-cancel"></i><span class="kt-menu__link-text">Cobros</span></a></li>
+										<li class="kt-menu__item " aria-haspopup="true"><a href="ReportePagos.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-cancel"></i><span class="kt-menu__link-text">Pagos</span></a></li>
 
 
 							</ul>
@@ -230,13 +230,12 @@
 														 </div>
 													 </div>
 												</div></br>
+												<label class="col-form-label col-lg-3 col-sm-12"><strong>Estatus: </strong></label>
 												<div class="container">
-											<label class="col-form-label col-lg-3 col-sm-12"><strong>Estatus: </strong></label>
-												<select class="custom-select" id="inputGroupSelect01">
-														<option selected>Seleccionar</option>
-														<option value="1">Pendientes</option>
-														<option value="2">Finalizado</option>
-												 </select>
+												<select class="selectpicker" multiple title="Selecciona un estatus" data-width="100%" data-live-search="true">
+  												<option>Pendientes</option>
+  												<option>Finalizado</option>
+												</select>
 											 </div></br>
 											 <div class="container">
 												<label class="col-form-label col-lg-3 col-sm-12"><strong>Proveedor: </strong></label>
@@ -252,7 +251,7 @@
 													<div class="form-group col-1">
 															<label class="col-form-label col-lg-3 col-sm-12"><strong>Moneda: </strong></label>
 															<label class="kt-radio kt-radio--bold kt-radio--success">
-															<input type="radio" name="radio6"> MXN
+															<input type="radio" name="radio6" checked> MXN
 															<span></span>
 															</label>
 															<label class="kt-radio kt-radio--bold kt-radio--brand">
@@ -363,19 +362,20 @@
 						<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 				<div class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" id="TbPading">
 							<div class="kt-subheader__wrapper">
-									<button type="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" data-toggle="modal" data-target="#kt_modal_1_2" data-backdrop="static" data-keyboard="false">Subir Factura</button>
+									<button type="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" data-toggle="modal" data-target="#kt_modal_2" data-backdrop="static" data-keyboard="false">Subir Factura</button>
 							</div></br>
-									<table class="table" id="example">
+									<table class="table table-striped table-bordered" id="example">
 										<thead>
 											<tr>
 												<th></th>
 												<th>Folio</th>
 												<th>Nombre Cliente</th>
 												<th>Fecha Descarga</th>
-												<th>Costo Subtotal</th>
-												<th>Costo IVA</th>
-												<th>Costo Retencion</th>
-												<th>Costo Total</th>
+												<th>Precio Subtotal</th>
+												<th>Precio IVA</th>
+												<th>Precio Retencion</th>
+												<th>Precio Total</th>
+												<th>Moneda</th>
 												<th>Status</th>
 											</tr>
 										</thead>
@@ -389,6 +389,7 @@
 												<td>500.00</td>
 												<td>120.00</td>
 												<td>6000.00</td>
+												<td>MXN</td>
 												<td>Finalizado</td>
 											</tr>
 											<tr>
@@ -400,11 +401,11 @@
 												<td>120.00</td>
 												<td>80.00</td>
 												<td>800.00</td>
+												<td>MXN</td>
 												<td>Finalizado</td>
 											</tr>
 										</tbody>
 									</table>
-
 						</div>
 					</div>
 </div>
@@ -412,46 +413,151 @@
 <!--aqui termina el contenido-->
 
 <!-- modal subir facturas-->
-   <div class="modal fade" id="kt_modal_1_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog" role="document">
+   <div class="modal fade" id="kt_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+								<div class="modal-dialog modal-lg" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Subir Facturas</h5>
+											<h5 class="modal-title" id="exampleModalLongTitle">Subir Facturas</h5>
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											</button>
 										</div>
 										<div class="modal-body">
-											<div class="kt-scroll" data-scroll="true" data-height="200">
-												<table class="table">
-													<thead>
-														<tr>
-															<th>Folio</th>
-															<th>Subtotal</th>
-															<th>Iva</th>
-															<th>Retencion</th>
-															<th>Total</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td>bkg000001</td>
-															<td>5000.00</td>
-															<td>500.00</td>
-															<td>120.00</td>
-															<td>6000.00</td>
-														</tr>
-													</tbody>
-												</table>
-												<form action="/file-upload" class="dropzone">
-  												<div class="fallback">
-    												<input name="file" type="file" multiple />
-  												</div>
-												</form>
+											<div class="kt-scroll" data-scroll="true" data-height="500">
+												<div class="tab-content" id="nav-tabContent">
+
+												<div class="container">
+													<div class="row">
+														<div class="col col-md-4">
+															<label for="Folio">Folio Factura:</label>
+															<input type="text" class="form-control form-control-sm" name="FolioFactura" required>
+														</div>
+														<div class="col">
+															<label for="Folio">Comentarios:</label>
+															<input type="text" class="form-control form-control-sm" name="Comentarios">
+														</div>
+													</div>
+												</div></br>
+
+												<div class="container">
+													<div class="form-inline">
+														<div class="col">
+															<label for="FechaFactura">Fecha Factura</label>
+														</div>
+														<div class="col">
+															<label for="FechaRevision">Fecha Revisi&oacute;n</label>
+														</div>
+														<div class="col">
+															<label for="FechaVencimiento">Fecha Vencimiento</label>
+														</div>
+														<div class="col">
+															<label for="TipoCambio">Tipo Cambio</label>
+														</div>
+													</div>
+												</div></br>
+
+													<div class="container">
+														<div class="form-inline">
+															<div class="input-group date col col-3">
+																<input type="text" class="form-control" name="FechaFactura" id="FechaFactura">
+																	<div class="input-group-append">
+																			<span class="input-group-text">
+																				<i class="la la-calendar"></i>
+																			</span>
+																	</div>
+															</div>
+
+															<div class="input-group date col col-3">
+																	<input type="text" class="form-control" name="FechaRevision" id="FechaRevision">
+																	<div class="input-group-append">
+																			<span class="input-group-text">
+																				<i class="la la-calendar"></i>
+																			</span>
+																	</div>
+														</div>
+
+														<div class="input-group date col col-3">
+																<input type="text" class="form-control" name="FechaVencimiento" id="FechaVencimiento">
+																<div class="input-group-append">
+																		<span class="input-group-text">
+																			<i class="la la-calendar"></i>
+																		</span>
+																</div>
+													</div>
+
+													<div class="input-group date col col-3">
+															<input type="number" class="form-control" name="TipoCambio" value="0">
+															<div class="input-group-append">
+																	<span class="input-group-text">
+																		<i class="la la-dollar"></i>
+																	</span>
+															 </div>
+												   </div>
+												</div>
+											</div>
+												  </br>
+
+													<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+													<div class="row">
+
+														<div class="col-md-6">
+														<div class="kt-portlet kt-portlet--height-fluid">
+														<div class="kt-portlet__head">
+														<div class="kt-portlet__head-label">
+														<h3 class="kt-portlet__head-title">
+														PDF
+														</h3>
+														</div>
+														</div>
+															<div id="SubirEvidenciaPDF"></div>
+															<div id="for-ProgressBar"></div>
+														</div>
+														</div>
+
+													<div class="col-md-6">
+													<div class="kt-portlet kt-portlet--height-fluid">
+													<div class="kt-portlet__head">
+													<div class="kt-portlet__head-label">
+													<h3 class="kt-portlet__head-title">
+													XML
+													</h3>
+													</div>
+													</div>
+															<div id="SubirEvidenciaXML"></div>
+															<div id="ProgressXML"></div>
+													</div>
+													</div>
+													</div>
+													</div>
+
+													<div class="container">
+														<table class="table">
+															<thead class="thead-dark">
+																<tr>
+																	<th>Folio</th>
+																	<th>Subtotal</th>
+																	<th>Iva</th>
+																	<th>Retencion</th>
+																	<th>Total</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>bkg000001</td>
+																	<td>5000.00</td>
+																	<td>500.00</td>
+																	<td>120.00</td>
+																	<td>6000.00</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+
+												</div>
 											</div>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary">Guardar</button>
+											<button type="button" class="btn btn-danger btn-elevate " data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-success btn-elevate">Guardar</button>
 										</div>
 									</div>
 								</div>
@@ -624,7 +730,7 @@
 		<!--end:: Vendor Plugins for custom pages -->
 
 		<!--end::Global Theme Bundle -->
-
+<script src="https://transloadit.edgly.net/releases/uppy/locales/v1.8.0/es_ES.min.js"></script>
 
 		<!--begin::Page Scripts(used by this page) -->
 		<script src="assets/js/pages/dashboard.js" type="text/javascript"></script>
@@ -661,9 +767,57 @@ $('input[name="FiltroFecha"]').on('apply.daterangepicker', function(ev, picker) 
 		placeholder: "Cliente"
  });
 
- $("div#myId").dropzone({ url: "/file/post" });
 
 } );
+		</script>
+
+		<script>
+				var uppy = Uppy.Core({ debug: true, autoProceed: true, allowMultipleUploads: true, restrictions: {maxNumberOfFiles:1, minNumberOfFiles: 1, allowedFileTypes:['.pdf']}, locale: Uppy.locales.es_ES })
+	  		 uppy.use(Uppy.DragDrop, { target: '#SubirEvidenciaPDF', height: 250, note: null,})
+	  	 	uppy.use(Uppy.XHRUpload, { endpoint: 'https://mywebsite.com/receive-file.php' })
+				uppy.use(Uppy.StatusBar, { target: '#for-ProgressBar', hideUploadButton: true, showProgressDetails: true})
+				uppy.on('upload-success', (file, response) => {
+			  var img = new Image()
+  			img.width = 300
+			  img.alt = file.id
+			  img.src = response.uploadURL
+			  document.body.appendChild(img)
+					})
+		</script>
+
+		<script>
+				var uppy = Uppy.Core({ autoProceed: true, allowMultipleUploads: true, restrictions: {maxNumberOfFiles:1, minNumberOfFiles: 1, allowedFileTypes:['.xml']}, locale: Uppy.locales.es_ES })
+				uppy.use(Uppy.DragDrop, { target: '#SubirEvidenciaXML', inline: true, height: 250, showLinkToFileUploadResult: true})
+				uppy.use(Uppy.XHRUpload, { endpoint: 'https://mywebsite.com/receive-file.php' })
+				uppy.use(Uppy.StatusBar, { target: '#ProgressXML', hideUploadButton: true, showProgressDetails: true})
+				uppy.on('upload-success', (file, response) => {
+				var img = new Image()
+				img.width = 300
+				img.alt = file.id
+				img.src = response.uploadURL
+				document.body.appendChild(img)
+					})
+		</script>
+
+		<script>
+		$(document).ready(function(){
+				$('#FechaFactura').datepicker({
+					todayHighlight: true
+				});
+				 $("#FechaFactura").datepicker('setDate', 'today' );
+
+				 $('#FechaRevision').datepicker({
+					 todayHighlight: true
+				 });
+				 $("#FechaRevision").datepicker('setDate', 'today' );
+
+				 $('#FechaVencimiento').datepicker({
+					 todayHighlight: true
+				 });
+				 $("#FechaVencimiento").datepicker('setDate', 'today' );
+
+		});
+
 		</script>
 		<!--end::Page Scripts -->
 	</body>

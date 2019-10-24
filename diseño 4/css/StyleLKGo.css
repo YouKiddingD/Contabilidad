@@ -5,8 +5,12 @@ footer{
   background: #757376;
 }
 .modal-header {
-    background-color: #040131;
+    background-color: #d9dce65c;
+    /*height: 40px;*/
  }
+/*.modal-footer {
+   height: 45px
+ }*/
 #exampleModalLabel{
   color: white;
 }
