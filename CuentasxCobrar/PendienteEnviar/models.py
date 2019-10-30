@@ -42,7 +42,7 @@ class RelacionConceptoxProyecto(models.Model):
 
 
 class View_PendientesEnviarCxC(models.Model):
-    IDPendienteEnviar = models.ForeignKey(PendientesEnviar, on_delete=models.DO_NOTHING, db_column = 'IDPendienteEnviar')
+    IDPendienteEnviar = models.ForeignKey(PendientesEnviar, on_delete=models.DO_NOTHING, db_column = 'IDPendienteEnviar', primary_key=True)
     IDConcepto = models.IntegerField(default=0)
     Folio = models.CharField(max_length=10, unique=True)
     IDCliente = models.IntegerField(default=0)
@@ -57,6 +57,7 @@ class View_PendientesEnviarCxC(models.Model):
     IsEvidenciaDigital = models.BooleanField()
     IsEvidenciaFisica = models.BooleanField()
     Proyecto = models.CharField(max_length=30)
+
     class Meta:
         managed = False
         db_table = "View_PendientesEnviarCxC"
