@@ -1,7 +1,8 @@
 $(document).ready(function() {
 var cliente;
 var moneda;
-    var bandera = $('#isEvicencias').val();
+var bandera;
+var status;
     console.log(bandera);
 //Tabla Pendientes de enviar
    var table =  $('#TablePendientesEnviar').DataTable( {
@@ -17,7 +18,9 @@ var moneda;
             "className": "dt-head-center dt-body-center",
             "width": "1%",
             "mRender": function (data, type, full) {
-            return (bandera != 'false' ? '<input type="checkbox" name="checkPE" />': '');
+            bandera = $('input[type=hidden]').val();
+            status = $('#status').val();
+            return (bandera != 'False' && status == 'Finalizado' ? '<input type="checkbox" name="checkPE" />': '');
 }
         },
         {
@@ -48,7 +51,7 @@ var moneda;
             "className": "dt-head-center dt-body-center",
             "targets": 10,
              "mRender": function (data, type, full) {
-               return (bandera != 'false' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
+               return (bandera != 'False' && status == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
                }
          }]
     } );

@@ -177,9 +177,9 @@
 																<td>{{pendiente.PrecioRetencion}}</td>
 																<td>{{pendiente.PrecioTotal}}</td>
 																<td>{{pendiente.Moneda}}</td>
-																<td>{{pendiente.Status}}</td>
-																<td></td>
-																<input id="isEvicencias" name="isEvicencias" type="hidden" value="{{pendiente.IsEvidenciaDigital}}">
+																<td id="status">{{pendiente.Status}}</td>
+																<td><input id="isEvicencias" name="isEvicencias" type="hidden" value="{{pendiente.IsEvidenciaDigital}}"></td>
+
 															</tr>
 															{%endfor%}
 														</tbody>
