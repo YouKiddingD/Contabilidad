@@ -45,7 +45,7 @@
 														<div class="kt-notification">
 															<div class="kt-subheader__main">
 																<label class="col-form-label col-lg-3 col-sm-12"><strong>Fecha: </strong></label>
-																<div class="col-lg-9 col-md-8 col-sm-12">
+																<div class="col-lg-12 col-md-8 col-sm-12">
 																	<div class="kt-input-icon pull-right" id='kt_daterangepicker_2_modal'>
 																		<input type="text" class="form-control " placeholder="Desde - Hasta" name="FiltroFecha" id="kt_daterangepicker_1_modal">
 																		<span class="kt-input-icon__icon kt-input-icon__icon--right"><span><i class="la la-calendar-check-o"></i></span></span>
@@ -110,7 +110,7 @@
 																			<span></span>
 																		</label>
 																	</div>
-																	<span class="form-text text-muted">Some help text goes here</span>
+
 																</div>
 															</div>
 
@@ -303,9 +303,9 @@
 																		</div>
 
 																	</div>
-																	<!--prueba -->
+																	<!--ver archivos subidos (PDF y XML)-->
 																	<div class="uploaded-files">
-																		<h5>Uploaded files:</h5>
+																		<h5>Archivos Subidos:</h5>
 																		<ol></ol>
 																	</div>
 																</div>
@@ -353,7 +353,7 @@
 
 									<!-- modal ver evidencias -->
 									<div class="modal fade" id="ModalVerEvidencias" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-										<div class="modal-dialog" role="document">
+										<div class="modal-dialog modal-md" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
 													<h5 class="modal-title" >Modal title</h5>
@@ -362,8 +362,13 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													...
+													<div class="container">
+														<div class="row">
+															<a href="http://www.google.com.mx" target="_blank"><embed src='{% static "img\logo-cobrar.png" %}' height="100px" width="150px"></a>
+														</div>
+													</div>
 												</div>
+
 												<div class="modal-footer">
 													<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 												</div>

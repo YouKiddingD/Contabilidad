@@ -204,7 +204,7 @@ $("input[name=checkPE]:checked").each(function () {
   "hideMethod": "fadeOut"
 };
 
-toastr.error("El cliente debe ser el mismo");
+toastr.error("El cliente y la modena deben ser iguales");
             }
             else
             {
@@ -328,19 +328,13 @@ function LimpiarModalSF()
 				uppyDashboard.use(XHRUpload, { endpoint: 'https://api-bkg-test.logistikgo.com/api/Viaje/SaveevidenciaTest', method: 'post'});
 				//uppyDashboard.use(XHRUpload, { endpoint: 'http://localhost:63510/api/Viaje/SaveevidenciaTest', method: 'post'});
 				uppyDashboard.use(GoogleDrive, { target: Dashboard, companionUrl: 'https://companion.uppy.io' });
-				//uppyDashboard.use(Dropbox, { target: Dashboard, companionUrl: 'https://companion.uppy.io' });
-				//uppyDashboard.use(Instagram, { target: Dashboard, companionUrl: 'https://companion.uppy.io' });
-				//uppyDashboard.use(Webcam, { target: Dashboard });
                 uppyDashboard.on('upload-success', (file, response) => {
                     const url = response.body
                     const fileName = file.name
-                    console.log(url);
                     document.querySelector('.uploaded-files ol').innerHTML +=
-    `<li><a href="${url}" target="_blank">${fileName}</a></li>`
+    `<li><a href="${url}" target="_blank" value="${url}" name="url">${fileName}</a></li>`
+   // `<embed src="${url}">`
                   })
-    /* uppyDashboard.on('complete', (result) => {
-        console.log('Upload complete! We’ve uploaded these files:', result.successful)
-      })*/
 			}
 			return {
 				// public functions
