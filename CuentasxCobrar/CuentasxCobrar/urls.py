@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('datos/', include('PendienteEnviar.urls')),
+    path('PendientesEnviar/', include('PendienteEnviar.urls')),
 ]
