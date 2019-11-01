@@ -35,6 +35,7 @@
 										{% endblock %}
 
 										{% block FiltrosPendientesEnviar %}
+										<form action="/PendientesEnviar/FilterBy" method="GET">
 										<div id="kt_quick_panel" class="kt-quick-panel">
 											<a href="#" class="kt-quick-panel__close" id="kt_quick_panel_close_btn"><i class="flaticon2-delete"></i></a>
 
@@ -53,8 +54,8 @@
 															</div></br>
 															<label class="col-form-label col-lg-3 col-sm-12"><strong>Estatus: </strong></label>
 															<div class="container">
-																<select class="selectpicker" multiple title="Selecciona un estatus" data-width="100%" data-live-search="true">
-																	<option>Pendientes</option>
+																<select class="selectpicker" multiple name="Status" title="Selecciona un estatus" data-width="100%" data-live-search="true">
+																	<option>Pendiente</option>
 																	<option>Finalizado</option>
 																	<option>Con evidencias</option>
 																</select>
@@ -62,8 +63,8 @@
 															<div class="container">
 																<label class="col-form-label col-lg-3 col-sm-12"><strong>Cliente: </strong></label>
 																<div>
-																	<select class="selectpicker" multiple title="Selecciona un cliente" data-width="100%" data-live-search="true">
-																		<option value="Rafael">Rafael</option>
+																	<select class="selectpicker" multiple name="Cliente" title="Selecciona un cliente" data-width="100%" data-live-search="true">
+																		<option value="Eaton">Eaton</option>
 																		<option value="3M">3M</option>
 																	</select>
 																</div>
@@ -117,7 +118,7 @@
 															<div class="container">
 																<div class="form-inline">
 																	<button type="button" name="button" class="btn btn-danger btn-elevate btn-pill btn-elevate-air btn-sm" id="BtnCancelarFiltro">Cancelar</button>
-																	<button type="button" name="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" id="BtnAplicarFiltro">Aplicar</button>
+																	<button type="Submit" name="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" id="BtnAplicarFiltro">Aplicar</button>
 																</div>
 															</div>
 														</div>
@@ -127,6 +128,7 @@
 												</div>
 											</div>
 										</div>
+									</form>
 										{% endblock %}
 
 										{% block PendientesEnviar %}

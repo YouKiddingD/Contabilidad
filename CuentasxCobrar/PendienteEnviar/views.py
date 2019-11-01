@@ -6,7 +6,6 @@ from .forms import FiltrosPendientesEnviar
 
 def GetPendientesEnviar(request):
 	PendingToSend = View_PendientesEnviarCxC.objects.all()
-	#breakpoint()
 	return render(request, 'PendienteEnviar.html', {'pendientes':PendingToSend})
 
 def GetPendientesByFilters(request):
@@ -17,12 +16,12 @@ def GetPendientesByFilters(request):
 		Status = formFiltros.cleaned_data["Status"]
 		#FechaDescargaDesde = formFiltros.cleaned_data["FechaDescargaDesde"]
 		#FechaDescargaHasta = formFiltros.cleaned_data["FechaDescargaHasta"]
-		PendientesEnviar = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s AND NombreCliente = %s", [Status, Cliente])
+		breakpoint()
+		PendientesEnviar = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status IN %s AND NombreCliente IN %s", [Status, Cliente])
 		return render(request, 'PendienteEnviar.html', {'pendientes':PendientesEnviar})
 
 def GetPendientesByStatus(request):
 	Status = request.GET["Status"]
 	PendientesEnviar = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s", [Status])
 	jRes = serializers.serialize('json', PendientesEnviar)
-	#return HttpResponse(jRes, content_type='application/json')
 	return render(request, 'PendienteEnviar.html', {'pendientes':jRes})
