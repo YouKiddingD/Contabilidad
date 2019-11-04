@@ -1,9 +1,9 @@
 var TestFile = null;
 $(document).ready(function() {
 
-var cliente;
-var moneda;
-var bandera;
+  var cliente;
+  var moneda;
+  var bandera;
 //Tabla Pendientes de enviar
 var table =  $('#TablePendientesEnviar').DataTable( {
  "language": {
@@ -129,21 +129,21 @@ $("#kt_select2_3").select2({
 
 //Fechas modal
 $('#kt_modal_2').on('shown.bs.modal', function(){
-                  $('#FechaFactura').datepicker({
-				    	todayHighlight: true
-			    	 });
-				  $("#FechaFactura").datepicker('setDate', 'today' );
-        		 $('#FechaRevision').datepicker({
-				    todayHighlight: true,
-				    });
-				 $("#FechaRevision").datepicker('setDate', 'today' );
+  $('#FechaFactura').datepicker({
+   todayHighlight: true
+ });
+  $("#FechaFactura").datepicker('setDate', 'today' );
+  $('#FechaRevision').datepicker({
+    todayHighlight: true,
+  });
+  $("#FechaRevision").datepicker('setDate', 'today' );
 
-				 $('#FechaVencimiento').datepicker({
-					 todayHighlight: true
-				 });
-				 $("#FechaVencimiento").datepicker('setDate', 'today' );
-				 $('#FechaVencimiento').prop('disabled', true);
-				KTUppy.init()
+  $('#FechaVencimiento').datepicker({
+    todayHighlight: true
+  });
+  $("#FechaVencimiento").datepicker('setDate', 'today' );
+  $('#FechaVencimiento').prop('disabled', true);
+  KTUppy.init()
 });
 
 //limpiar modal
@@ -268,10 +268,10 @@ $('#total').html('<strong>$'+total+'</strong>');
 //funcion limpiar modal subir facturas de pendientes de enviar
 function LimpiarModalSF()
 {
-    $('input[name="FolioFactura"]').val("");
-    $('input[name="Comentarios"]').val("");
-    $('input[name="TipoCambio"]').val(0);
-    KTUppy.finish()
+  $('input[name="FolioFactura"]').val("");
+  $('input[name="Comentarios"]').val("");
+  $('input[name="TipoCambio"]').val(0);
+  KTUppy.finish()
 }
 
 
@@ -310,19 +310,19 @@ function LimpiarModalSF()
 					/*metaFields: [
 						{ id: 'name', name: 'Name', placeholder: 'file name' },
 						{ id: 'caption', name: 'Caption', placeholder: 'describe what the image is about' }
-					],*/
-					browserBackButtonClose: true
-				}
+           ],*/
+           browserBackButtonClose: true
+         }
 
-				var uppyDashboard = Uppy.Core({
-					autoProceed: false,
-					restrictions: {
+         var uppyDashboard = Uppy.Core({
+           autoProceed: false,
+           restrictions: {
 						maxFileSize: 5000000, // 5mb
 						maxNumberOfFiles: 2,
 						minNumberOfFiles: 1,
-					  allowedFileTypes:['.pdf', '.xml']
-					},
-					locale: Uppy.locales.es_ES
+           allowedFileTypes:['.pdf', '.xml']
+         },
+         locale: Uppy.locales.es_ES
 					/*onBeforeFileAdded: (currentFile, file) => {
                     TestFile = TestFile != null ? TestFile : currentFile
 					try {
@@ -339,26 +339,26 @@ function LimpiarModalSF()
 					    console.log(e)
 					}
 
-                            }*/
-				});
+        }*/
+      });
 
 
-        uppyDashboard.use(Dashboard, options);
-        uppyDashboard.use(XHRUpload, { endpoint: 'https://api-bkg-test.logistikgo.com/api/Viaje/SaveevidenciaTest', method: 'post'});
+         uppyDashboard.use(Dashboard, options);
+         uppyDashboard.use(XHRUpload, { endpoint: 'https://api-bkg-test.logistikgo.com/api/Viaje/SaveevidenciaTest', method: 'post'});
 				//uppyDashboard.use(XHRUpload, { endpoint: 'http://localhost:63510/api/Viaje/SaveevidenciaTest', method: 'post'});
 				uppyDashboard.use(GoogleDrive, { target: Dashboard, companionUrl: 'https://companion.uppy.io' });
-                uppyDashboard.on('upload-success', (file, response) => {
-                    const url = response.body
-                    const fileName = file.name
-                    document.querySelector('.uploaded-files ol').innerHTML +=
-    `<li id="rutaarchivo" value="${url}"><a href="${url}" target="_blank" name="url">${fileName}</a></li>`
-    var a = $('#rutaarchivo').val()
-     console.log(a)
+        uppyDashboard.on('upload-success', (file, response) => {
+          const url = response.body
+          const fileName = file.name
+          document.querySelector('.uploaded-files ol').innerHTML +=
+          `<li id="rutaarchivo" value="${url}"><a href="${url}" target="_blank" name="url">${fileName}</a></li>`
+          var a = $('#rutaarchivo').val()
+          console.log(a)
    // `<embed src="${url}">`
-                  });
+ });
 
-			}
-			return {
+      }
+      return {
 				// public functions
 				init: function() {
 					initUppy1();
@@ -376,10 +376,11 @@ function LimpiarModalSF()
 var fnGetPendientesEnviar = function () {
   startDate = $('#cboFechaDescarga').data('daterangepicker').startDate._d;
   endDate = $('#cboFechaDescarga').data('daterangepicker').endDate._d;
-  arrStatus = $('#cboStatus');
-  arrClientes = $('#cboCliente');
+  arrStatus = $('#cboStatus').val();
+  arrClientes = $('#cboCliente').val();
+  strMoneda = $('#rdMXN').is(':checked') ? 'MXN' : 'USD';
 
-  fetch("/PendientesEnviar/FilterBy?FechaDescargaDesde=19-mar-2019&FechaDescargaHasta=19-mar-2019&Status=Pendiente&Cliente=Eaton&Moneda=MXN", {
+  fetch("/PendientesEnviar/FilterBy?FechaDescargaDesde=19-mar-2019&FechaDescargaHasta=19-mar-2019&Status="+ JSON.stringify(arrStatus) +"&Cliente="+ JSON.stringify(arrClientes) +"&Moneda="+ strMoneda, {
     method: "GET",
     credentials: "same-origin",
     headers: {
@@ -390,7 +391,7 @@ var fnGetPendientesEnviar = function () {
     }).then(function(response){
       return response.clone().json();
     }).then(function(data){
-      console.log("success!");
+      $('#divTablaPendientesEnviar').html(data.htmlRes)
     }).catch(function(ex){
       console.log("no success!");
     });

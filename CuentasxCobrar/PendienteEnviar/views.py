@@ -4,18 +4,18 @@ from PendienteEnviar.models import View_PendientesEnviarCxC
 from django.core import serializers
 from .forms import FiltrosPendientesEnviar
 from django.template.loader import render_to_string
+import json
 
 def GetPendientesEnviar(request):
 	PendingToSend = View_PendientesEnviarCxC.objects.all()
 	return render(request, 'PendienteEnviar.html', {'pendientes':PendingToSend})
 
 def GetPendientesByFilters(request):
-	Cliente = request.GET["Cliente"]
-	Status = request.GET["Status"]
+	Cliente = json.loads(request.GET["Cliente"])
+	Status = json.loads(request.GET["Status"])
 	breakpoint()
-	PendientesEnviar = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s AND NombreCliente = %s", [Status, Cliente])
-	#return render(request, 'PendienteEnviar.html', {'pendientes':PendientesEnviar})
-	htmlRes = render_to_string('PendienteEnviar.html', {'pendientes':PendientesEnviar}, request = request,)
+	PendientesEnviar = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status IN %s", params=[Status])
+	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendientesEnviar}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
 
 def GetPendientesByStatus(request):

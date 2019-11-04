@@ -1,7 +1,11 @@
 #TbPading{
   padding: 12px 20px 15px 20px;
 }
+
 footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   background: #757376;
 }
 .modal-header {
