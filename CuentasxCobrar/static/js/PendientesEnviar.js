@@ -1,4 +1,6 @@
+var TestFile = null;
 $(document).ready(function() {
+
 var cliente;
 var moneda;
 var bandera;
@@ -140,6 +142,7 @@ $('#kt_modal_2').on('shown.bs.modal', function(){
 				 });
 				 $("#FechaVencimiento").datepicker('setDate', 'today' );
 				 $('#FechaVencimiento').prop('disabled', true);
+				KTUppy.init()
 });
 
 //limpiar modal
@@ -267,6 +270,7 @@ function LimpiarModalSF()
     $('input[name="FolioFactura"]').val("");
     $('input[name="Comentarios"]').val("");
     $('input[name="TipoCambio"]').val(0);
+    KTUppy.finish()
 }
 
 
@@ -286,10 +290,8 @@ function LimpiarModalSF()
 
 			// to get uppy companions working, please refer to the official documentation here: https://uppy.io/docs/companion/
 			const Dashboard = Uppy.Dashboard;
-			const Dropbox = Uppy.Dropbox;
 			const GoogleDrive = Uppy.GoogleDrive;
-			const Instagram = Uppy.Instagram;
-			const Webcam = Uppy.Webcam;
+
 
 			// Private functions
 			var initUppy1 = function(){
@@ -304,16 +306,15 @@ function LimpiarModalSF()
 					showProgressDetails: true,
 					note: 'Logisti-k',
 
-
-					metaFields: [
+					/*metaFields: [
 						{ id: 'name', name: 'Name', placeholder: 'file name' },
 						{ id: 'caption', name: 'Caption', placeholder: 'describe what the image is about' }
-					],
+					],*/
 					browserBackButtonClose: true
 				}
 
 				var uppyDashboard = Uppy.Core({
-					autoProceed: true,
+					autoProceed: false,
 					restrictions: {
 						maxFileSize: 5000000, // 5mb
 						maxNumberOfFiles: 2,
@@ -321,6 +322,23 @@ function LimpiarModalSF()
 					  allowedFileTypes:['.pdf', '.xml']
 					},
 					locale: Uppy.locales.es_ES
+					/*onBeforeFileAdded: (currentFile, file) => {
+                    TestFile = TestFile != null ? TestFile : currentFile
+					try {
+
+					if(TestFile.type === currentFile.type){
+					alert("es igual")
+					}
+					else{
+					alert("es diferente")
+					}
+
+					}
+					catch(e){
+					    console.log(e)
+					}
+
+                            }*/
 				});
 
 
@@ -332,9 +350,12 @@ function LimpiarModalSF()
                     const url = response.body
                     const fileName = file.name
                     document.querySelector('.uploaded-files ol').innerHTML +=
-    `<li><a href="${url}" target="_blank" value="${url}" name="url">${fileName}</a></li>`
+    `<li id="rutaarchivo" value="${url}"><a href="${url}" target="_blank" name="url">${fileName}</a></li>`
+    var a = $('#rutaarchivo').val()
+     console.log(a)
    // `<embed src="${url}">`
-                  })
+                  });
+
 			}
 			return {
 				// public functions
