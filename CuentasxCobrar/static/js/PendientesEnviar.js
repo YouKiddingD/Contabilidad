@@ -418,8 +418,8 @@ function LimpiarModalSF()
   });
 
 var fnGetPendientesEnviar = function () {
-  startDate = $('#cboFechaDescarga').data('daterangepicker').startDate._d;
-  endDate = $('#cboFechaDescarga').data('daterangepicker').endDate._d;
+  startDate = $('#cboFechaDescarga').data('daterangepicker').startDate._i;
+  endDate = $('#cboFechaDescarga').data('daterangepicker').endDate._i;
   arrStatus = $('#cboStatus').val();
   arrClientes = $('#cboCliente').val();
   strMoneda = $('#rdMXN').is(':checked') ? 'MXN' : 'USD';

@@ -13,10 +13,19 @@ def GetPendientesEnviar(request):
 def GetPendientesByFilters(request):
 	Clientes = json.loads(request.GET["Cliente"])
 	Status = json.loads(request.GET["Status"])
-	Query = "SELECT * FROM View_PendientesEnviarCxC WHERE Status IN ({}) AND NombreCliente IN ({})".format(','.join(['%s' for _ in range(len(Status))]))
-	breakpoint()
-	params = Status + Clientes
-	PendientesEnviar = View_PendientesEnviarCxC.objects.raw(Query,params)
+	Moneda = request.GET["Moneda"]
+	if not Status:
+		QueryStatus = ""
+	else:
+		QueryStatus = "Status IN ({}) AND ".format(','.join(['%s' for _ in range(len(Status))]))
+	if not Clientes:
+		QueryClientes = ""
+	else:
+		QueryClientes = "NombreCliente IN ({}) AND ".format(','.join(['%s' for _ in range(len(Clientes))]))
+	QueryMoneda = "Moneda = %s "
+	FinalQuery = "SELECT * FROM View_PendientesEnviarCxC WHERE " + QueryStatus + QueryClientes + QueryMoneda
+	params = Status + Clientes + [Moneda]
+	PendientesEnviar = View_PendientesEnviarCxC.objects.raw(FinalQuery,params)
 	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendientesEnviar}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
 
