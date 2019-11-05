@@ -1367,7 +1367,7 @@ pre {
   border: 0; }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: #f7f8fa; }
+  background-color: #83b4e86b; }
 
 .table-hover tbody tr:hover {
   color: #212529;
@@ -21750,7 +21750,7 @@ strong {
     position: relative;
     padding: 0 25px;
     border-bottom: 1px solid #ebedf2;
-    min-height: 60px; }
+    min-height: 40px; }
     .kt-portlet .kt-portlet__head.kt-portlet__head--right {
       -webkit-box-pack: end;
       -ms-flex-pack: end;
@@ -21849,7 +21849,7 @@ strong {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    padding: 25px; }
+    padding: 10px; }
     .kt-portlet .kt-portlet__body .kt-portlet__content {
       padding: 0;
       margin: 0; }
