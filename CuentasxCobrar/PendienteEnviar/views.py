@@ -11,10 +11,12 @@ def GetPendientesEnviar(request):
 	return render(request, 'PendienteEnviar.html', {'pendientes':PendingToSend})
 
 def GetPendientesByFilters(request):
-	Cliente = json.loads(request.GET["Cliente"])
+	Clientes = json.loads(request.GET["Cliente"])
 	Status = json.loads(request.GET["Status"])
+	Query = "SELECT * FROM View_PendientesEnviarCxC WHERE Status IN ({}) AND NombreCliente IN ({})".format(','.join(['%s' for _ in range(len(Status))]))
 	breakpoint()
-	PendientesEnviar = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status IN %s", params=[Status])
+	params = Status + Clientes
+	PendientesEnviar = View_PendientesEnviarCxC.objects.raw(Query,params)
 	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendientesEnviar}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
 

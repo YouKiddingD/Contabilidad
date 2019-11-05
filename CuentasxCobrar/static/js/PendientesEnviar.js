@@ -5,55 +5,8 @@ $(document).ready(function() {
   var moneda;
   var bandera;
 //Tabla Pendientes de enviar
-var table =  $('#TablePendientesEnviar').DataTable( {
- "language": {
-   "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
- },
- "responsive": true,
- "paging": false,
-
- columnDefs: [ {
-  orderable: false,
-  targets:   0,
-  "className": "dt-head-center dt-body-center",
-  "width": "1%",
-  "mRender": function (data, type, full) {
-    bandera = $('input[type=hidden]').val();
-    return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" />': '');
-  }
-},
-{
-  "name": "Status",
-  "width": "5%",
-  "className": "text-center bold",
-  "targets": 1
-},
-{
-  "name": "Status",
-  "width": "10%",
-  "className": "dt-head-center dt-body-center",
-  "targets": [2,3]
-},
-{
-  "width": "5%",
-  "className": "dt-head-center dt-body-center",
-  "targets": [8,9]
-
-},
-{
-  "className": "dt-head-center dt-body-right",
-  'width' : '5%',
-  "targets": [4,5,6,7]
-},
-{
-  "width": "5%",
-  "className": "dt-head-center dt-body-center",
-  "targets": 10,
-  "mRender": function (data, type, full) {
-   return (bandera != 'False' && full[9] == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
- }
-}]
-} );
+var table;
+formatDataTable();
 
 //on click select row checkbox
 
@@ -179,7 +132,6 @@ function ContadorCheck()
     $('#BtnSubirFacturaPendietnesEnviar').prop('disabled', true);
   }
 }
-
 
 //validacion mismo cliente en los checkbox
 function FiltroCheckboxCliente(){
@@ -392,7 +344,60 @@ var fnGetPendientesEnviar = function () {
       return response.clone().json();
     }).then(function(data){
       $('#divTablaPendientesEnviar').html(data.htmlRes)
+      formatDataTable();
     }).catch(function(ex){
       console.log("no success!");
     });
+  }
+
+  function formatDataTable() {
+    table = $('#TablePendientesEnviar').DataTable( {
+     "language": {
+       "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+     },
+     "responsive": true,
+     "paging": false,
+
+     columnDefs: [ {
+      orderable: false,
+      targets:   0,
+      "className": "dt-head-center dt-body-center",
+      "width": "1%",
+      "mRender": function (data, type, full) {
+        bandera = $('input[type=hidden]').val();
+        return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" />': '');
+      }
+    },
+    {
+      "name": "Status",
+      "width": "5%",
+      "className": "text-center bold",
+      "targets": 1
+    },
+    {
+      "name": "Status",
+      "width": "10%",
+      "className": "dt-head-center dt-body-center",
+      "targets": [2,3]
+    },
+    {
+      "width": "5%",
+      "className": "dt-head-center dt-body-center",
+      "targets": [8,9]
+
+    },
+    {
+      "className": "dt-head-center dt-body-right",
+      'width' : '5%',
+      "targets": [4,5,6,7]
+    },
+    {
+      "width": "5%",
+      "className": "dt-head-center dt-body-center",
+      "targets": 10,
+      "mRender": function (data, type, full) {
+       return (bandera != 'False' && full[9] == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
+     }
+   }]
+ } );
   }
