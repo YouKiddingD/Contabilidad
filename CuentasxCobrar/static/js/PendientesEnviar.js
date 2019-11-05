@@ -1,4 +1,4 @@
-var TestFile = null;
+//var TestFile = null;
 $(document).ready(function() {
 
 var cliente;
@@ -6,11 +6,15 @@ var moneda;
 var bandera;
 //Tabla Pendientes de enviar
    var table =  $('#TablePendientesEnviar').DataTable( {
+            dom: 'Bfrtip',
 			"language": {
 					"url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
 			},
 			 "responsive": true,
 			 "paging": false,
+			 buttons: [
+                 'excel'
+                ],
 
         columnDefs: [ {
             orderable: false,
@@ -19,7 +23,7 @@ var bandera;
             "width": "1%",
             "mRender": function (data, type, full) {
             bandera = $('input[type=hidden]').val();
-            return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" />': '');
+            return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" id="estiloCheckbox" name="checkPE"/>': '');
 }
         },
         {
@@ -129,25 +133,29 @@ var bandera;
 //Fechas modal
 $('#kt_modal_2').on('shown.bs.modal', function(){
                   $('#FechaFactura').datepicker({
+                        format: 'yyyy/mm/dd',
 				    	todayHighlight: true
 			    	 });
 				  $("#FechaFactura").datepicker('setDate', 'today' );
         		 $('#FechaRevision').datepicker({
+        		    format: 'yyyy/mm/dd',
 				    todayHighlight: true,
 				    });
 				 $("#FechaRevision").datepicker('setDate', 'today' );
 
 				 $('#FechaVencimiento').datepicker({
+				     format: 'yyyy/mm/dd',
 					 todayHighlight: true
 				 });
 				 $("#FechaVencimiento").datepicker('setDate', 'today' );
 				 $('#FechaVencimiento').prop('disabled', true);
-				KTUppy.init()
+				//KTUppy.init()
 });
 
 //limpiar modal
 $('#kt_modal_2').on('hidden.bs.modal', function(){
         LimpiarModalSF();
+        KTUppy.init()
 });
 
 
@@ -269,8 +277,9 @@ function LimpiarModalSF()
 {
     $('input[name="FolioFactura"]').val("");
     $('input[name="Comentarios"]').val("");
-    $('input[name="TipoCambio"]').val(0);
-    KTUppy.finish()
+    $('input[name="TipoCambio"]').val(1);
+    TestFile = null;
+    $('.uploaded-files ol').remove()
 }
 
 
@@ -318,27 +327,56 @@ function LimpiarModalSF()
 					restrictions: {
 						maxFileSize: 5000000, // 5mb
 						maxNumberOfFiles: 2,
-						minNumberOfFiles: 1,
+						minNumberOfFiles: 2,
 					  allowedFileTypes:['.pdf', '.xml']
 					},
-					locale: Uppy.locales.es_ES
-					/*onBeforeFileAdded: (currentFile, file) => {
-                    TestFile = TestFile != null ? TestFile : currentFile
-					try {
+					locale: Uppy.locales.es_ES,
+					onBeforeFileAdded: (currentFile, file) => {
 
-					if(TestFile.type === currentFile.type){
-					alert("es igual")
-					}
-					else{
-					alert("es diferente")
-					}
+					console.log(currentFile.type)
+					console.log($('.uppy-DashboardContent-title').length)
+					    if($('.uppy-DashboardContent-title').length == 0)
+					    {
+					        console.log("+1")
+					    }
+					    else
+					    {
+					        if((currentFile.type === Object.values(file)[0].meta.type))
+					        {
+					            uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
+					            return false
+					        }
+					        else
+					        {
+					            console.log("ok")
+					        }
+					    }
+/*
+					    if($('.uppy-DashboardContent-title').length == 0)
+					    {
+					        if(currentFile.type != 'application/pdf' && currentFile.type != 'text/xml')
+					        {
+					            console.log("solo pdf y xml")
+					        }
+					        else
+					        {
+
+					            TestFile = currentFile.type
+					        }
+
+					    }
+
+					    if($('.uppy-DashboardContent-title').length == 2)
+					    {
+                            console.log(Object.values(file)[0].meta.type)
+					        if(TestFile == currentFile.type)
+					        {
+					            uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
+					            return false
+					        }
+					    }*/
 
 					}
-					catch(e){
-					    console.log(e)
-					}
-
-                            }*/
 				});
 
 
@@ -347,12 +385,23 @@ function LimpiarModalSF()
 				//uppyDashboard.use(XHRUpload, { endpoint: 'http://localhost:63510/api/Viaje/SaveevidenciaTest', method: 'post'});
 				uppyDashboard.use(GoogleDrive, { target: Dashboard, companionUrl: 'https://companion.uppy.io' });
                 uppyDashboard.on('upload-success', (file, response) => {
+                console.log(file)
+                if (file.extension === 'pdf')
+                {
+                   const urlPDF = response.body
+                   $('#kt_uppy_1').data("rutaarchivoPDF", urlPDF)
+                 //  console.log($('#kt_uppy_1').data("rutaarchivoPDF"))
+                }
+                else
+                {
+                   const urlPDF = response.body
+                   $('#kt_uppy_1').data("rutaarchivoXML", urlPDF)
+                   //console.log($('#kt_uppy_1').data("rutaarchivoXML"))
+                }
                     const url = response.body
                     const fileName = file.name
-                    document.querySelector('.uploaded-files ol').innerHTML +=
-    `<li id="rutaarchivo" value="${url}"><a href="${url}" target="_blank" name="url">${fileName}</a></li>`
-    var a = $('#rutaarchivo').val()
-     console.log(a)
+                    document.querySelector('.uploaded-files').innerHTML +=
+                    `<ol><li id="listaArchivos"><a href="${url}" target="_blank" name="url" id="ArchivosSubidosModal">${fileName}</a></li></ol>`
    // `<embed src="${url}">`
                   });
 

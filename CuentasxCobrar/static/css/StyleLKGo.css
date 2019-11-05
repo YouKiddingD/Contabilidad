@@ -26,3 +26,19 @@ footer{
 #folio{
     font-weight: bold;
 }
+.buttons-excel {
+    background: #51A762;
+    color: white;
+    border-radius: 15px;
+    top: -10px;
+}
+#estiloCheckbox {
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	margin: -1px 4px 0 0;
+	vertical-align: middle;
+	background-size: cover;
+	cursor: pointer;
+}
+
