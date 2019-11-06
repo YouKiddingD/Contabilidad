@@ -8,7 +8,12 @@ import json
 
 def GetPendientesEnviar(request):
 	PendingToSend = View_PendientesEnviarCxC.objects.all()
-	return render(request, 'PendienteEnviar.html', {'pendientes':PendingToSend})
+	ContadorTodos = len(list(PendingToSend))
+	ContadorPendientes = len(list(View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s", ['Pendiente'])))
+	ContadorFinalizados = len(list(View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s", ['Finalizado'])))
+	ContadorConEvidencias = len(list(View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE IsEvidenciaDigital = 1")))
+	ContadorSinEvidencias = ContadorTodos - ContadorConEvidencias
+	return render(request, 'PendienteEnviar.html', {'pendientes':PendingToSend, 'contadorPendientes': ContadorPendientes, 'contadorFinalizados': ContadorFinalizados, 'contadorConEvidencias': ContadorConEvidencias, 'contadorSinEvidencias': ContadorSinEvidencias})
 
 def GetPendientesByFilters(request):
 	Clientes = json.loads(request.GET["Cliente"])
@@ -32,5 +37,5 @@ def GetPendientesByFilters(request):
 def GetPendientesByStatus(request):
 	Status = request.GET["Status"]
 	PendientesEnviar = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s", [Status])
-	jRes = serializers.serialize('json', PendientesEnviar)
-	return render(request, 'PendienteEnviar.html', {'pendientes':jRes})
+	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendientesEnviar}, request = request,)
+	return JsonResponse({'htmlRes' : htmlRes})

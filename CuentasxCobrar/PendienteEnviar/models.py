@@ -61,3 +61,21 @@ class View_PendientesEnviarCxC(models.Model):
     class Meta:
         managed = False
         db_table = "View_PendientesEnviarCxC"
+
+
+class FacturasxCliente(models.Model):
+    IDFactura = models.AutoField(primary_key=True)
+    NombreCortoCliente = models.CharField(max_length=100)
+    FechaFactura = models.DateTimeField()
+    FechaRevision = models.DateTimeField()
+    FechaVencimiento = models.DateTimeField()
+    Moneda = models.CharField(max_length=10)
+    Subtotal = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    IVA = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    Retencion = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    Total = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    Saldo = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    IsAutorizada = models.BooleanField()
+    RutaXML = models.CharField(max_length=300)
+    RutaPDF = models.CharField(max_length=300)
+    TipoCambio = models.DecimalField(default=0, max_digits=10, decimal_places=5)
