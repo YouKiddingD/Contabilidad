@@ -446,7 +446,6 @@ function saveFactura() {
     console.log("success!");
   }).then(function(data){
     console.log("success!");
-    formatDataTable();
   }).catch(function(ex){
     console.log("no success!");
   });

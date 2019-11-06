@@ -1,10 +1,10 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from PendienteEnviar.models import View_PendientesEnviarCxC
+from PendienteEnviar.models import View_PendientesEnviarCxC, FacturasxCliente
 from django.core import serializers
 from .forms import FiltrosPendientesEnviar
 from django.template.loader import render_to_string
-import json
+import json, datetime
 
 def GetPendientesEnviar(request):
 	PendingToSend = View_PendientesEnviarCxC.objects.all()
@@ -52,11 +52,11 @@ def SaveFactura(request):
 	newFactura = FacturasxCliente()
 	newFactura.Folio = jParams["FolioFactura"]
 	newFactura.NombreCortoCliente = jParams["Cliente"]
-	newFactura.FechaFactura = jParams["FechaFactura"]
-	newFactura.FechaRevision = jParams["FechaRevision"]
-	newFactura.FechaVencimiento = jParams["FechaVencimiento"]
+	newFactura.FechaFactura = datetime.datetime.strptime(jParams["FechaFactura"],'%Y/%m/%d')
+	newFactura.FechaRevision = datetime.datetime.strptime(jParams["FechaRevision"],'%Y/%m/%d')
+	newFactura.FechaVencimiento = datetime.datetime.strptime(jParams["FechaVencimiento"],'%Y/%m/%d')
 	newFactura.Moneda = jParams["Moneda"]
-	newFactura.Subtotal = jParams["Subtotal"]
+	newFactura.Subtotal = jParams["SubTotal"]
 	newFactura.IVA = jParams["IVA"]
 	newFactura.Retencion = jParams["Retencion"]
 	newFactura.TipoCambio = jParams["TipoCambio"]
