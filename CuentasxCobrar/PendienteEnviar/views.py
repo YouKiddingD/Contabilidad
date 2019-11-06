@@ -15,6 +15,8 @@ def GetPendientesEnviar(request):
 	ContadorSinEvidencias = ContadorTodos - ContadorConEvidencias
 	return render(request, 'PendienteEnviar.html', {'pendientes':PendingToSend, 'contadorPendientes': ContadorPendientes, 'contadorFinalizados': ContadorFinalizados, 'contadorConEvidencias': ContadorConEvidencias, 'contadorSinEvidencias': ContadorSinEvidencias})
 
+
+
 def GetPendientesByFilters(request):
 	Clientes = json.loads(request.GET["Cliente"])
 	Status = json.loads(request.GET["Status"])
@@ -34,8 +36,29 @@ def GetPendientesByFilters(request):
 	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendientesEnviar}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
 
+
+
 def GetPendientesByStatus(request):
 	Status = request.GET["Status"]
 	PendientesEnviar = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s", [Status])
 	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendientesEnviar}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
+
+
+
+def SaveFactura(request):
+	jParams = json.loads(request.body.decode('utf-8'))
+	breakpoint()
+	newFactura = FacturasxCliente()
+	newFactura.Folio = jParams["FolioFactura"]
+	newFactura.NombreCortoCliente = jParams["Cliente"]
+	newFactura.FechaFactura = jParams["FechaFactura"]
+	newFactura.FechaRevision = jParams["FechaRevision"]
+	newFactura.FechaVencimiento = jParams["FechaVencimiento"]
+	newFactura.Moneda = jParams["Moneda"]
+	newFactura.Subtotal = jParams["Subtotal"]
+	newFactura.IVA = jParams["IVA"]
+	newFactura.Retencion = jParams["Retencion"]
+	newFactura.TipoCambio = jParams["TipoCambio"]
+	newFactura.Comentarios = jParams["Comentarios"]
+	newFactura.save()

@@ -1,11 +1,12 @@
 //var TestFile = null;
+var cliente;
+var moneda;
+var bandera;
+var table;
+var subtotal = 0, Tiva=0, TRetencion=0, total=0;
 $(document).ready(function() {
-
-  var cliente;
-  var moneda;
-  var bandera;
 //Tabla Pendientes de enviar
-var table = $('#TablePendientesEnviar').DataTable( {
+table = $('#TablePendientesEnviar').DataTable( {
  "language": {
    "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
  },
@@ -81,6 +82,8 @@ $('#BtnSubirFacturaPendietnesEnviar').on('click', function(){
 });
 
 $('#BtnAplicarFiltro').on('click', fnGetPendientesEnviar);
+
+$('#btnGuardarFactura').on('click', saveFactura);
 
 
 //ocultar columnas tabla pendientes enviar
@@ -225,48 +228,6 @@ function FiltroCheckboxCliente(){
   }
 });
 }
-
-
-
-//funcion para obtener los datos de cada checkbox seleccionado en la tabla pendientes de enviar
-function adddatos(){
-  var arrSelect=[];
-  $("input[name=checkPE]:checked").each(function () {
-    var datosRow = table.row($(this).parents('tr')).data();
-    arrSelect.push([datosRow[1], datosRow[4], datosRow[5], datosRow[6], datosRow[7]]);
-  });
-  return arrSelect;
-}
-
-
-//funcion para obtener los datos de la tabla pendiente de enviar para mostrarlos en la tabla del modal subir facturas
-function getDatos(){
- var datos = adddatos();
- var subtotal = 0, Tiva=0, TRetencion=0, total=0;
- for (var i=0; i<datos.length; i++)
- {
-  var sub = parseFloat(datos[i][1]);
-  var iva = parseFloat(datos[i][2]);
-  var retencion = parseFloat(datos[i][3]);
-  var tot = parseFloat(datos[i][4]);
-  subtotal = subtotal + sub;
-  Tiva = Tiva + iva;
-  TRetencion = TRetencion + retencion;
-  total = total + tot;
-  console.log(subtotal);
-}
-var h = [datos];
-var table = $('#ResumTable').DataTable({
-  destroy: true,
-  data: h[0]
-});
-$('#sub').html('<strong>$'+subtotal+'</strong>');
-$('#iva').html('<strong>$'+Tiva+'</strong>');
-$('#retencion').html('<strong>$'+TRetencion+'</strong>');
-$('#total').html('<strong>$'+total+'</strong>');
-
-}
-
 
 //funcion limpiar modal subir facturas de pendientes de enviar
 function LimpiarModalSF()
@@ -417,39 +378,78 @@ function LimpiarModalSF()
 
   });
 
-function saveFactura() {
-  var fechaFactura = $('#FechaFactura').val();
-  var fechaRevision = $('#FechaRevision').val();
-  var fechaVencimiento = $('#FechaVencimiento').val();
-  var tipoCambio = $('#txtTipoCambioT').val();
-  var strFolioFactura = $('#txtFolioFactura').val();
-  var strComentarios = $('#txtComentarios').val();
+//funcion para obtener los datos de cada checkbox seleccionado en la tabla pendientes de enviar
+function adddatos(){
+  var arrSelect=[];
+  $("input[name=checkPE]:checked").each(function () {
+    var datosRow = table.row($(this).parents('tr')).data();
+    arrSelect.push([datosRow[1], datosRow[4], datosRow[5], datosRow[6], datosRow[7]]);
+  });
+  return arrSelect;
+}
 
+
+//funcion para obtener los datos de la tabla pendiente de enviar para mostrarlos en la tabla del modal subir facturas
+function getDatos(){
+ var datos = adddatos();
+ subtotal = 0, Tiva=0, TRetencion=0, total=0;
+ for (var i=0; i<datos.length; i++)
+ {
+  var sub = parseFloat(datos[i][1]);
+  var iva = parseFloat(datos[i][2]);
+  var retencion = parseFloat(datos[i][3]);
+  var tot = parseFloat(datos[i][4]);
+  subtotal = subtotal + sub;
+  Tiva = Tiva + iva;
+  TRetencion = TRetencion + retencion;
+  total = total + tot;
+  console.log(subtotal);
+}
+var h = [datos];
+var table = $('#ResumTable').DataTable({
+  destroy: true,
+  data: h[0]
+});
+$('#sub').html('<strong>$'+subtotal+'</strong>');
+$('#iva').html('<strong>$'+Tiva+'</strong>');
+$('#retencion').html('<strong>$'+TRetencion+'</strong>');
+$('#total').html('<strong>$'+total+'</strong>');
+
+}
+
+function saveFactura() {
   jParams = {
-    FechaFactura: fechaFactura,
-    FechaRevision: fechaRevision,
-    FechaVencimiento: fechaVencimiento,
-    TipoCambio: tipoCambio,
-    strFolioFactura: strFolioFactura,
-    strComentarios: strComentarios
+    Cliente: cliente,
+    FechaFactura: $('#FechaFactura').val(),
+    FechaRevision: $('#FechaRevision').val(),
+    FechaVencimiento: $('#FechaVencimiento').val(),
+    TipoCambio: $('#txtTipoCambio').val(),
+    FolioFactura: $('#txtFolioFactura').val(),
+    Comentarios: $('#txtComentarios').val(),
+    Moneda: moneda,
+    SubTotal: subtotal,
+    IVA: Tiva,
+    Retencion: TRetencion,
+    Total: total,
   }
 
   fetch("/PendientesEnviar/SaveFactura", {
-    method: "GET",
+    method: "POST",
     credentials: "same-origin",
     headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
       "Accept": "application/json",
       "Content-Type": "application/json"
     },
-      //body: JSON.stringify(jParams)
-    }).then(function(response){
-      return response.clone().json();
-    }).then(function(data){
-      $('#divTablaPendientesEnviar').html(data.htmlRes)
-      formatDataTable();
-    }).catch(function(ex){
-      console.log("no success!");
-    });
+    body: JSON.stringify(jParams)
+  }).then(function(response){
+    console.log("success!");
+  }).then(function(data){
+    console.log("success!");
+    formatDataTable();
+  }).catch(function(ex){
+    console.log("no success!");
+  });
 }
 
 var fnGetPendientesEnviar = function () {
@@ -466,65 +466,64 @@ var fnGetPendientesEnviar = function () {
       "Accept": "application/json",
       "Content-Type": "application/json"
     },
-      //body: JSON.stringify(jParams)
-    }).then(function(response){
-      return response.clone().json();
-    }).then(function(data){
-      $('#divTablaPendientesEnviar').html(data.htmlRes)
-      formatDataTable();
-    }).catch(function(ex){
-      console.log("no success!");
-    });
-  }
+  }).then(function(response){
+    return response.clone().json();
+  }).then(function(data){
+    $('#divTablaPendientesEnviar').html(data.htmlRes)
+    formatDataTable();
+  }).catch(function(ex){
+    console.log("no success!");
+  });
+}
 
-  function formatDataTable() {
-    table = $('#TablePendientesEnviar').DataTable( {
-     "language": {
-       "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-     },
-     "responsive": true,
-     "paging": false,
+function formatDataTable() {
+  table = $('#TablePendientesEnviar').DataTable( {
+   "language": {
+     "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+   },
+   "responsive": true,
+   "paging": false,
 
-     columnDefs: [ {
-      orderable: false,
-      targets:   0,
-      "className": "dt-head-center dt-body-center",
-      "width": "1%",
-      "mRender": function (data, type, full) {
-        bandera = $('input[type=hidden]').val();
-        return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" />': '');
-      }
-    },
-    {
-      "name": "Status",
-      "width": "5%",
-      "className": "text-center bold",
-      "targets": 1
-    },
-    {
-      "name": "Status",
-      "width": "10%",
-      "className": "dt-head-center dt-body-center",
-      "targets": [2,3]
-    },
-    {
-      "width": "5%",
-      "className": "dt-head-center dt-body-center",
-      "targets": [8,9]
+   columnDefs: [ {
+    orderable: false,
+    targets:   0,
+    "className": "dt-head-center dt-body-center",
+    "width": "1%",
+    "mRender": function (data, type, full) {
+      bandera = $('input[type=hidden]').val();
+      return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" />': '');
+    }
+  },
+  {
+    "name": "Status",
+    "width": "5%",
+    "className": "text-center bold",
+    "targets": 1
+  },
+  {
+    "name": "Status",
+    "width": "10%",
+    "className": "dt-head-center dt-body-center",
+    "targets": [2,3]
+  },
+  {
+    "width": "5%",
+    "className": "dt-head-center dt-body-center",
+    "targets": [8,9]
 
-    },
-    {
-      "className": "dt-head-center dt-body-right",
-      'width' : '5%',
-      "targets": [4,5,6,7]
-    },
-    {
-      "width": "5%",
-      "className": "dt-head-center dt-body-center",
-      "targets": 10,
-      "mRender": function (data, type, full) {
-       return (bandera != 'False' && full[9] == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
-     }
-   }]
- } );
-  }
+  },
+  {
+    "className": "dt-head-center dt-body-right",
+    'width' : '5%',
+    "targets": [4,5,6,7]
+  },
+  {
+    "width": "5%",
+    "className": "dt-head-center dt-body-center",
+    "targets": 10,
+    "mRender": function (data, type, full) {
+     return (bandera != 'False' && full[9] == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
+   }
+ }]
+} );
+}
