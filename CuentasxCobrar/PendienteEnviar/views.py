@@ -48,7 +48,7 @@ def GetPendientesByStatus(request):
 
 def SaveFactura(request):
 	jParams = json.loads(request.body.decode('utf-8'))
-	breakpoint()
+	#breakpoint()
 	newFactura = FacturasxCliente()
 	newFactura.Folio = jParams["FolioFactura"]
 	newFactura.NombreCortoCliente = jParams["Cliente"]
@@ -61,4 +61,6 @@ def SaveFactura(request):
 	newFactura.Retencion = jParams["Retencion"]
 	newFactura.TipoCambio = jParams["TipoCambio"]
 	newFactura.Comentarios = jParams["Comentarios"]
+	newFactura.RutaXML = jParams["RutaXML"]
+	newFactura.RutaPDF = jParams["RutaPDF"]
 	newFactura.save()

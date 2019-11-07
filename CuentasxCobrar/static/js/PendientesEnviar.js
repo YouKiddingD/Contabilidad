@@ -343,22 +343,24 @@ function LimpiarModalSF()
 				uppyDashboard.use(GoogleDrive, { target: Dashboard, companionUrl: 'https://companion.uppy.io' });
         uppyDashboard.on('upload-success', (file, response) => {
           console.log(file)
+          const fileName = file.name
           if (file.extension === 'pdf')
           {
            const urlPDF = response.body
            $('#kt_uppy_1').data("rutaarchivoPDF", urlPDF)
+           document.querySelector('.uploaded-files').innerHTML +=
+           `<ol><li id="listaArchivos"><a href="${urlPDF}" target="_blank" name="url" id="RutaPDF">${fileName}</a></li></ol>`
                  //  console.log($('#kt_uppy_1').data("rutaarchivoPDF"))
                }
                else
                {
                  const urlPDF = response.body
                  $('#kt_uppy_1').data("rutaarchivoXML", urlPDF)
+                 document.querySelector('.uploaded-files').innerHTML +=
+                 `<ol><li id="listaArchivos"><a href="${urlPDF}" target="_blank" name="url" id="RutaXML">${fileName}</a></li></ol>`
                    //console.log($('#kt_uppy_1').data("rutaarchivoXML"))
                  }
-                 const url = response.body
-                 const fileName = file.name
-                 document.querySelector('.uploaded-files').innerHTML +=
-                 `<ol><li id="listaArchivos"><a href="${url}" target="_blank" name="url" id="ArchivosSubidosModal">${fileName}</a></li></ol>`
+                 //const url = response.body
    // `<embed src="${url}">`
  });
 
@@ -431,6 +433,8 @@ function saveFactura() {
     IVA: Tiva,
     Retencion: TRetencion,
     Total: total,
+    RutaXML: $('#RutaXML').attr('href'),
+    RutaPDF: $('#RutaPDF').attr('href'),
   }
 
   fetch("/PendientesEnviar/SaveFactura", {
