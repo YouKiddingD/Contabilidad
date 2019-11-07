@@ -433,8 +433,8 @@ function saveFactura() {
     IVA: Tiva,
     Retencion: TRetencion,
     Total: total,
-    RutaXML: $('#RutaXML').attr('href'),
-    RutaPDF: $('#RutaPDF').attr('href'),
+    RutaXML: $('#RutaXML').attr('href') != undefined ? $('#RutaXML').attr('href') : "",
+    RutaPDF: $('#RutaPDF').attr('href') != undefined ? $('#RutaPDF').attr('href') : "",
   }
 
   fetch("/PendientesEnviar/SaveFactura", {
@@ -447,9 +447,14 @@ function saveFactura() {
     },
     body: JSON.stringify(jParams)
   }).then(function(response){
-    console.log("success!");
-  }).then(function(data){
-    console.log("success!");
+    if(response.status == 200)
+    {
+      console.log("Factura guardada correctamente.");
+    }
+    else if(response.status == 500)
+    {
+      console.log("El folio indicado ya existe en el sistema");
+    }
   }).catch(function(ex){
     console.log("no success!");
   });

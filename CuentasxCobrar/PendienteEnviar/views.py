@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from PendienteEnviar.models import View_PendientesEnviarCxC, FacturasxCliente
 from django.core import serializers
-from .forms import FiltrosPendientesEnviar
+from .forms import FacturaForm
 from django.template.loader import render_to_string
 import json, datetime
 
@@ -48,7 +48,8 @@ def GetPendientesByStatus(request):
 
 def SaveFactura(request):
 	jParams = json.loads(request.body.decode('utf-8'))
-	#breakpoint()
+	formFactura = FacturaForm(jParams)
+	breakpoint()
 	newFactura = FacturasxCliente()
 	newFactura.Folio = jParams["FolioFactura"]
 	newFactura.NombreCortoCliente = jParams["Cliente"]
@@ -64,3 +65,4 @@ def SaveFactura(request):
 	newFactura.RutaXML = jParams["RutaXML"]
 	newFactura.RutaPDF = jParams["RutaPDF"]
 	newFactura.save()
+	return HttpResponse('')
