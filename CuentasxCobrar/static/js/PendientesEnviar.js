@@ -1,9 +1,10 @@
 //var TestFile = null;
+var cliente;
+var moneda;
+var bandera;
+var table;
+var subtotal = 0, Tiva=0, TRetencion=0, total=0;
 $(document).ready(function() {
-
-  var cliente;
-  var moneda;
-  var bandera;
 //Tabla Pendientes de enviar
 var table = $('#TablePendientesEnviar').DataTable( {
      "language": {
@@ -39,21 +40,21 @@ var table = $('#TablePendientesEnviar').DataTable( {
       "className": "dt-head-center dt-body-center",
       "targets": [8,9]
 
-    },
-    {
-      "className": "dt-head-center dt-body-right",
-      'width' : '5%',
-      "targets": [4,5,6,7]
-    },
-    {
-      "width": "5%",
-      "className": "dt-head-center dt-body-center",
-      "targets": 10,
-      "mRender": function (data, type, full) {
-       return (bandera != 'False' && full[9] == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
-     }
-   }]
- } );
+},
+{
+  "className": "dt-head-center dt-body-right",
+  'width' : '5%',
+  "targets": [4,5,6,7]
+},
+{
+  "width": "5%",
+  "className": "dt-head-center dt-body-center",
+  "targets": 10,
+  "mRender": function (data, type, full) {
+   return (bandera != 'False' && full[9] == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
+ }
+}]
+} );
 
 //on click select row checkbox
 
@@ -84,6 +85,8 @@ $('#BtnSubirFacturaPendietnesEnviar').on('click', function(){
 });
 
 $('#BtnAplicarFiltro').on('click', fnGetPendientesEnviar);
+
+$('#btnGuardarFactura').on('click', saveFactura);
 
 
 //ocultar columnas tabla pendientes enviar
@@ -132,30 +135,30 @@ $("#kt_select2_3").select2({
 
 //Fechas modal
 $('#kt_modal_2').on('shown.bs.modal', function(){
-                  $('#FechaFactura').datepicker({
-                        format: 'yyyy/mm/dd',
-				    	todayHighlight: true
-			    	 });
-				  $("#FechaFactura").datepicker('setDate', 'today' );
-        		 $('#FechaRevision').datepicker({
-        		    format: 'yyyy/mm/dd',
-				    todayHighlight: true,
-				    });
-				 $("#FechaRevision").datepicker('setDate', 'today' );
+  $('#FechaFactura').datepicker({
+    format: 'yyyy/mm/dd',
+    todayHighlight: true
+  });
+  $("#FechaFactura").datepicker('setDate', 'today' );
+  $('#FechaRevision').datepicker({
+    format: 'yyyy/mm/dd',
+    todayHighlight: true,
+  });
+  $("#FechaRevision").datepicker('setDate', 'today' );
 
-				 $('#FechaVencimiento').datepicker({
-				     format: 'yyyy/mm/dd',
-					 todayHighlight: true
-				 });
-				 $("#FechaVencimiento").datepicker('setDate', 'today' );
-				 $('#FechaVencimiento').prop('disabled', true);
+  $('#FechaVencimiento').datepicker({
+   format: 'yyyy/mm/dd',
+   todayHighlight: true
+ });
+  $("#FechaVencimiento").datepicker('setDate', 'today' );
+  $('#FechaVencimiento').prop('disabled', true);
 				//KTUppy.init()
-});
+      });
 
 //limpiar modal
 $('#kt_modal_2').on('hidden.bs.modal', function(){
-        LimpiarModalSF();
-        KTUppy.init()
+  LimpiarModalSF();
+  KTUppy.init()
 });
 
 
@@ -210,56 +213,14 @@ function FiltroCheckboxCliente(){
 });
 }
 
-
-
-//funcion para obtener los datos de cada checkbox seleccionado en la tabla pendientes de enviar
-function adddatos(){
-  var arrSelect=[];
-  $("input[name=checkPE]:checked").each(function () {
-    var datosRow = table.row($(this).parents('tr')).data();
-    arrSelect.push([datosRow[1], datosRow[4], datosRow[5], datosRow[6], datosRow[7]]);
-  });
-  return arrSelect;
-}
-
-
-//funcion para obtener los datos de la tabla pendiente de enviar para mostrarlos en la tabla del modal subir facturas
-function getDatos(){
- var datos = adddatos();
- var subtotal = 0, Tiva=0, TRetencion=0, total=0;
- for (var i=0; i<datos.length; i++)
- {
-  var sub = parseFloat(datos[i][1]);
-  var iva = parseFloat(datos[i][2]);
-  var retencion = parseFloat(datos[i][3]);
-  var tot = parseFloat(datos[i][4]);
-  subtotal = subtotal + sub;
-  Tiva = Tiva + iva;
-  TRetencion = TRetencion + retencion;
-  total = total + tot;
-  console.log(subtotal);
-}
-var h = [datos];
-var table = $('#ResumTable').DataTable({
-  destroy: true,
-  data: h[0]
-});
-$('#sub').html('<strong>$'+subtotal+'</strong>');
-$('#iva').html('<strong>$'+Tiva+'</strong>');
-$('#retencion').html('<strong>$'+TRetencion+'</strong>');
-$('#total').html('<strong>$'+total+'</strong>');
-
-}
-
-
 //funcion limpiar modal subir facturas de pendientes de enviar
 function LimpiarModalSF()
 {
-    $('input[name="FolioFactura"]').val("");
-    $('input[name="Comentarios"]').val("");
-    $('input[name="TipoCambio"]').val(1);
-    TestFile = null;
-    $('.uploaded-files ol').remove()
+  $('input[name="FolioFactura"]').val("");
+  $('input[name="Comentarios"]').val("");
+  $('input[name="TipoCambio"]').val(1);
+  TestFile = null;
+  $('.uploaded-files ol').remove()
 }
 
 
@@ -308,29 +269,29 @@ function LimpiarModalSF()
 						maxFileSize: 5000000, // 5mb
 						maxNumberOfFiles: 2,
 						minNumberOfFiles: 2,
-					  allowedFileTypes:['.pdf', '.xml']
-					},
-					locale: Uppy.locales.es_ES,
-					onBeforeFileAdded: (currentFile, file) => {
+           allowedFileTypes:['.pdf', '.xml']
+         },
+         locale: Uppy.locales.es_ES,
+         onBeforeFileAdded: (currentFile, file) => {
 
-					console.log(currentFile.type)
-					console.log($('.uppy-DashboardContent-title').length)
-					    if($('.uppy-DashboardContent-title').length == 0)
-					    {
-					        console.log("+1")
-					    }
-					    else
-					    {
-					        if((currentFile.type === Object.values(file)[0].meta.type))
-					        {
-					            uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
-					            return false
-					        }
-					        else
-					        {
-					            console.log("ok")
-					        }
-					    }
+           console.log(currentFile.type)
+           console.log($('.uppy-DashboardContent-title').length)
+           if($('.uppy-DashboardContent-title').length == 0)
+           {
+             console.log("+1")
+           }
+           else
+           {
+             if((currentFile.type === Object.values(file)[0].meta.type))
+             {
+               uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
+               return false
+             }
+             else
+             {
+               console.log("ok")
+             }
+           }
 /*
 					    if($('.uppy-DashboardContent-title').length == 0)
 					    {
@@ -354,34 +315,36 @@ function LimpiarModalSF()
 					            uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
 					            return false
 					        }
-					    }*/
+               }*/
 
-					}
-				});
+             }
+           });
 
 
          uppyDashboard.use(Dashboard, options);
          uppyDashboard.use(XHRUpload, { endpoint: 'https://api-bkg-test.logistikgo.com/api/Viaje/SaveevidenciaTest', method: 'post'});
 				//uppyDashboard.use(XHRUpload, { endpoint: 'http://localhost:63510/api/Viaje/SaveevidenciaTest', method: 'post'});
 				uppyDashboard.use(GoogleDrive, { target: Dashboard, companionUrl: 'https://companion.uppy.io' });
-                uppyDashboard.on('upload-success', (file, response) => {
-                console.log(file)
-                if (file.extension === 'pdf')
-                {
-                   const urlPDF = response.body
-                   $('#kt_uppy_1').data("rutaarchivoPDF", urlPDF)
+        uppyDashboard.on('upload-success', (file, response) => {
+          console.log(file)
+          const fileName = file.name
+          if (file.extension === 'pdf')
+          {
+           const urlPDF = response.body
+           $('#kt_uppy_1').data("rutaarchivoPDF", urlPDF)
+           document.querySelector('.uploaded-files').innerHTML +=
+           `<ol><li id="listaArchivos"><a href="${urlPDF}" target="_blank" name="url" id="RutaPDF">${fileName}</a></li></ol>`
                  //  console.log($('#kt_uppy_1').data("rutaarchivoPDF"))
-                }
-                else
-                {
-                   const urlPDF = response.body
-                   $('#kt_uppy_1').data("rutaarchivoXML", urlPDF)
+               }
+               else
+               {
+                 const urlPDF = response.body
+                 $('#kt_uppy_1').data("rutaarchivoXML", urlPDF)
+                 document.querySelector('.uploaded-files').innerHTML +=
+                 `<ol><li id="listaArchivos"><a href="${urlPDF}" target="_blank" name="url" id="RutaXML">${fileName}</a></li></ol>`
                    //console.log($('#kt_uppy_1').data("rutaarchivoXML"))
-                }
-                    const url = response.body
-                    const fileName = file.name
-                    document.querySelector('.uploaded-files').innerHTML +=
-                    `<ol><li id="listaArchivos"><a href="${url}" target="_blank" name="url" id="ArchivosSubidosModal">${fileName}</a></li></ol>`
+                 }
+                 //const url = response.body
    // `<embed src="${url}">`
  });
 
@@ -401,6 +364,86 @@ function LimpiarModalSF()
 
   });
 
+//funcion para obtener los datos de cada checkbox seleccionado en la tabla pendientes de enviar
+function adddatos(){
+  var arrSelect=[];
+  $("input[name=checkPE]:checked").each(function () {
+    var datosRow = table.row($(this).parents('tr')).data();
+    arrSelect.push([datosRow[1], datosRow[4], datosRow[5], datosRow[6], datosRow[7]]);
+  });
+  return arrSelect;
+}
+
+
+//funcion para obtener los datos de la tabla pendiente de enviar para mostrarlos en la tabla del modal subir facturas
+function getDatos(){
+ var datos = adddatos();
+ subtotal = 0, Tiva=0, TRetencion=0, total=0;
+ for (var i=0; i<datos.length; i++)
+ {
+  var sub = parseFloat(datos[i][1]);
+  var iva = parseFloat(datos[i][2]);
+  var retencion = parseFloat(datos[i][3]);
+  var tot = parseFloat(datos[i][4]);
+  subtotal = subtotal + sub;
+  Tiva = Tiva + iva;
+  TRetencion = TRetencion + retencion;
+  total = total + tot;
+  console.log(subtotal);
+}
+var h = [datos];
+var table = $('#ResumTable').DataTable({
+  destroy: true,
+  data: h[0]
+});
+$('#sub').html('<strong>$'+subtotal+'</strong>');
+$('#iva').html('<strong>$'+Tiva+'</strong>');
+$('#retencion').html('<strong>$'+TRetencion+'</strong>');
+$('#total').html('<strong>$'+total+'</strong>');
+
+}
+
+function saveFactura() {
+  jParams = {
+    Cliente: cliente,
+    FechaFactura: $('#FechaFactura').val(),
+    FechaRevision: $('#FechaRevision').val(),
+    FechaVencimiento: $('#FechaVencimiento').val(),
+    TipoCambio: $('#txtTipoCambio').val(),
+    FolioFactura: $('#txtFolioFactura').val(),
+    Comentarios: $('#txtComentarios').val(),
+    Moneda: moneda,
+    SubTotal: subtotal,
+    IVA: Tiva,
+    Retencion: TRetencion,
+    Total: total,
+    RutaXML: $('#RutaXML').attr('href') != undefined ? $('#RutaXML').attr('href') : "",
+    RutaPDF: $('#RutaPDF').attr('href') != undefined ? $('#RutaPDF').attr('href') : "",
+  }
+
+  fetch("/PendientesEnviar/SaveFactura", {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jParams)
+  }).then(function(response){
+    if(response.status == 200)
+    {
+      console.log("Factura guardada correctamente.");
+    }
+    else if(response.status == 500)
+    {
+      console.log("El folio indicado ya existe en el sistema");
+    }
+  }).catch(function(ex){
+    console.log("no success!");
+  });
+}
+
 var fnGetPendientesEnviar = function () {
   startDate = $('#cboFechaDescarga').data('daterangepicker').startDate._d;
   endDate = $('#cboFechaDescarga').data('daterangepicker').endDate._d;
@@ -415,65 +458,64 @@ var fnGetPendientesEnviar = function () {
       "Accept": "application/json",
       "Content-Type": "application/json"
     },
-      //body: JSON.stringify(jParams)
-    }).then(function(response){
-      return response.clone().json();
-    }).then(function(data){
-      $('#divTablaPendientesEnviar').html(data.htmlRes)
-      formatDataTable();
-    }).catch(function(ex){
-      console.log("no success!");
-    });
-  }
+  }).then(function(response){
+    return response.clone().json();
+  }).then(function(data){
+    $('#divTablaPendientesEnviar').html(data.htmlRes)
+    formatDataTable();
+  }).catch(function(ex){
+    console.log("no success!");
+  });
+}
 
-  function formatDataTable() {
-    table = $('#TablePendientesEnviar').DataTable( {
-     "language": {
-       "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-     },
-     "responsive": true,
-     "paging": false,
+function formatDataTable() {
+  table = $('#TablePendientesEnviar').DataTable( {
+   "language": {
+     "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+   },
+   "responsive": true,
+   "paging": false,
 
-     columnDefs: [ {
-      orderable: false,
-      targets:   0,
-      "className": "dt-head-center dt-body-center",
-      "width": "1%",
-      "mRender": function (data, type, full) {
-        bandera = $('input[type=hidden]').val();
-        return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" />': '');
-      }
-    },
-    {
-      "name": "Status",
-      "width": "5%",
-      "className": "text-center bold",
-      "targets": 1
-    },
-    {
-      "name": "Status",
-      "width": "10%",
-      "className": "dt-head-center dt-body-center",
-      "targets": [2,3]
-    },
-    {
-      "width": "5%",
-      "className": "dt-head-center dt-body-center",
-      "targets": [8,9]
+   columnDefs: [ {
+    orderable: false,
+    targets:   0,
+    "className": "dt-head-center dt-body-center",
+    "width": "1%",
+    "mRender": function (data, type, full) {
+      bandera = $('input[type=hidden]').val();
+      return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" />': '');
+    }
+  },
+  {
+    "name": "Status",
+    "width": "5%",
+    "className": "text-center bold",
+    "targets": 1
+  },
+  {
+    "name": "Status",
+    "width": "10%",
+    "className": "dt-head-center dt-body-center",
+    "targets": [2,3]
+  },
+  {
+    "width": "5%",
+    "className": "dt-head-center dt-body-center",
+    "targets": [8,9]
 
-    },
-    {
-      "className": "dt-head-center dt-body-right",
-      'width' : '5%',
-      "targets": [4,5,6,7]
-    },
-    {
-      "width": "5%",
-      "className": "dt-head-center dt-body-center",
-      "targets": 10,
-      "mRender": function (data, type, full) {
-       return (bandera != 'False' && full[9] == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
-     }
-   }]
- } );
-  }
+  },
+  {
+    "className": "dt-head-center dt-body-right",
+    'width' : '5%',
+    "targets": [4,5,6,7]
+  },
+  {
+    "width": "5%",
+    "className": "dt-head-center dt-body-center",
+    "targets": 10,
+    "mRender": function (data, type, full) {
+     return (bandera != 'False' && full[9] == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
+   }
+ }]
+} );
+}
