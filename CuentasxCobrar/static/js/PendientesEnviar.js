@@ -19,7 +19,7 @@ var table = $('#TablePendientesEnviar').DataTable( {
       "width": "1%",
       "mRender": function (data, type, full) {
         bandera = $('input[type=hidden]').val();
-        return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" />': '');
+        return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox"/>': '');
       }
     },
     {
@@ -59,16 +59,19 @@ var table = $('#TablePendientesEnviar').DataTable( {
 
         //var table = $('#TablePendientesEnviar').DataTable();
         $('#TablePendientesEnviar').on( 'change', 'input[name="checkPE"]', function () {
-         FiltroCheckboxCliente();
+          var input = 'input[name="checkPE"]';
+          var btnSubir = '#BtnSubirFacturaPendietnesEnviar';
          if($(this).is(':checked'))
          {
+            FiltroCheckboxCliente();
+
            adddatos();
-           ContadorCheck();
+           ContadorCheck(input, btnSubir);
          }
          else
          {
            var a = adddatos();
-           ContadorCheck();
+           ContadorCheck(input, btnSubir);
 
          }
 
@@ -163,26 +166,7 @@ $('#kt_modal_2').on('hidden.bs.modal', function(){
 //FUNCIONES PARA EL MENU PENDIENTES DE ENVIAR
 
 
-// funcion contador para los checkbox seleccionados
-function ContadorCheck()
-{
-  var cont = 0;
-  $('input[name="checkPE"').each(function (){
-   if($(this).is(':checked'))
-   {
-    cont++;
-  }
-});
 
-  if(cont != 0)
-  {
-    $('#BtnSubirFacturaPendietnesEnviar').prop('disabled', false);
-  }
-  else
-  {
-    $('#BtnSubirFacturaPendietnesEnviar').prop('disabled', true);
-  }
-}
 
 //validacion mismo cliente en los checkbox
 function FiltroCheckboxCliente(){

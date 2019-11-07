@@ -138,14 +138,14 @@
 							<h4 class="kt-menu__section-text">Facturas</h4>
 							<i class="kt-menu__section-icon flaticon-more-v2"></i>
 						</li>
-						<li class="kt-menu__item kt-menu__item--active" aria-haspopup="true"><a href="base.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-file-1"></i><span class="kt-menu__link-text">Pendientes de enviar</span></a></li>
+						<li class="kt-menu__item {% block activatePendientesEnviar %} {% endblock %}" aria-haspopup="true"><a href="{% url 'PendintesEnviar' %}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-file-1"></i><span class="kt-menu__link-text">Pendientes de enviar</span></a></li>
 
 
 						<li class="kt-menu__section ">
-							<h4 class="kt-menu__section-text">Pagos</h4>
+							<h4 class="kt-menu__section-text">Cobros</h4>
 							<i class="kt-menu__section-icon flaticon-more-v2"></i>
 						</li>
-						<li class="kt-menu__item " aria-haspopup="true"><a href="EstadosCuenta.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-coins"></i><span class="kt-menu__link-text">Estados de cuenta</span></a></li>
+						<li class="kt-menu__item {% block activateEstadosdeCuenta %} {% endblock %}" aria-haspopup="true"><a href="{% url 'EstadosdeCuenta' %}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-coins"></i><span class="kt-menu__link-text">Estados de cuenta</span></a></li>
 
 
 						<li class="kt-menu__section ">
@@ -262,17 +262,28 @@
 			<!-- contadores-->
 			{% block ContadoresPendientesEnviar %}
 			{% endblock %}
+
+			{% block ContadoresEstadosdeCuenta %}
+			{% endblock %}
 			<!-- fin contadores-->
 
 			<!--filtros-->
 			{% block FiltrosPendientesEnviar %}
+			{% endblock %}
+
+			{% block FiltrosEstadosdeCuenta %}
 			{% endblock %}
 			<!-- fin filtros-->
 
 			<!-- aqui va el contenido -->
 			{% block PendientesEnviar %}
 			{% endblock %}
+
+			{% block EstadosdeCuenta %}
+			{% endblock %}
 			<!--end contenido-->
+
+
 
 		</div>
 	</div>
@@ -445,6 +456,7 @@
 
 {% block scripts %}
 {% endblock %}
+
 </body>
 
 <!-- end::Body -->
