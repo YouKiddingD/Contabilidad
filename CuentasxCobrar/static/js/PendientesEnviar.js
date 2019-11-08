@@ -6,7 +6,7 @@ var table;
 var subtotal = 0, Tiva=0, TRetencion=0, total=0;
 $(document).ready(function() {
 //Tabla Pendientes de enviar
-var table = $('#TablePendientesEnviar').DataTable( {
+   table = $('#TablePendientesEnviar').DataTable( {
      "language": {
        "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
      },
@@ -405,13 +405,11 @@ $('#total').html('<strong>$'+total+'</strong>');
 
 function saveFactura() {
   jParams = {
+    FolioFactura: $('#txtFolioFactura').val(),
     Cliente: cliente,
     FechaFactura: $('#FechaFactura').val(),
     FechaRevision: $('#FechaRevision').val(),
     FechaVencimiento: $('#FechaVencimiento').val(),
-    TipoCambio: $('#txtTipoCambio').val(),
-    FolioFactura: $('#txtFolioFactura').val(),
-    Comentarios: $('#txtComentarios').val(),
     Moneda: moneda,
     SubTotal: subtotal,
     IVA: Tiva,
@@ -419,6 +417,8 @@ function saveFactura() {
     Total: total,
     RutaXML: $('#RutaXML').attr('href') != undefined ? $('#RutaXML').attr('href') : "",
     RutaPDF: $('#RutaPDF').attr('href') != undefined ? $('#RutaPDF').attr('href') : "",
+    TipoCambio: $('#txtTipoCambio').val(),
+    Comentarios: $('#txtComentarios').val(),
   }
 
   fetch("/PendientesEnviar/SaveFactura", {
@@ -429,7 +429,7 @@ function saveFactura() {
       "Accept": "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(jParams)
+    data: JSON.stringify(jParams)
   }).then(function(response){
     if(response.status == 200)
     {

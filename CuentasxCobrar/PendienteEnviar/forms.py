@@ -11,8 +11,6 @@ class FacturaForm(forms.Form):
 	IVA = forms.DecimalField(max_digits=30, decimal_places=5)
 	Retencion = forms.DecimalField(max_digits=30, decimal_places=5)
 	Total = forms.DecimalField(max_digits=30, decimal_places=5)
-	Saldo = forms.DecimalField(max_digits=30, decimal_places=5)
-	IsAutorizada = forms.BooleanField()
 	RutaXML = forms.CharField(max_length=300)
 	RutaPDF = forms.CharField(max_length=300)
 	TipoCambio = forms.DecimalField(max_digits=10, decimal_places=5)

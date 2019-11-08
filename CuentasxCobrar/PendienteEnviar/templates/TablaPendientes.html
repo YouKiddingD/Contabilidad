@@ -35,7 +35,7 @@
 				</thead>
 				<tbody>
 					{% for pendiente in pendientes %}
-					<tr>
+					<tr data-IDConcepto="{{pendiente.IDConcepto}}">
 						<td></td>
 						<td style="font-weight: bold;">{{pendiente.Folio}}</td>
 						<td>{{pendiente.NombreCliente}}</td>
