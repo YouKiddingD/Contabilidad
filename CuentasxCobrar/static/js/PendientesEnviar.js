@@ -6,39 +6,39 @@ var table;
 var subtotal = 0, Tiva=0, TRetencion=0, total=0;
 $(document).ready(function() {
 //Tabla Pendientes de enviar
-   table = $('#TablePendientesEnviar').DataTable( {
-     "language": {
-       "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-     },
-     "responsive": true,
-     "paging": false,
+table = $('#TablePendientesEnviar').DataTable( {
+ "language": {
+   "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+ },
+ "responsive": true,
+ "paging": false,
 
-     columnDefs: [ {
-      orderable: false,
-      targets:   0,
-      "className": "dt-head-center dt-body-center",
-      "width": "1%",
-      "mRender": function (data, type, full) {
-        bandera = $('input[type=hidden]').val();
-        return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox"/>': '');
-      }
-    },
-    {
-      "name": "Status",
-      "width": "5%",
-      "className": "text-center bold",
-      "targets": 1
-    },
-    {
-      "name": "Status",
-      "width": "10%",
-      "className": "dt-head-center dt-body-center",
-      "targets": [2,3]
-    },
-    {
-      "width": "5%",
-      "className": "dt-head-center dt-body-center",
-      "targets": [8,9]
+ columnDefs: [ {
+  orderable: false,
+  targets:   0,
+  "className": "dt-head-center dt-body-center",
+  "width": "1%",
+  "mRender": function (data, type, full) {
+    bandera = $('input[type=hidden]').val();
+    return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox"/>': '');
+  }
+},
+{
+  "name": "Status",
+  "width": "5%",
+  "className": "text-center bold",
+  "targets": 1
+},
+{
+  "name": "Status",
+  "width": "10%",
+  "className": "dt-head-center dt-body-center",
+  "targets": [2,3]
+},
+{
+  "width": "5%",
+  "className": "dt-head-center dt-body-center",
+  "targets": [8,9]
 
 },
 {
@@ -62,15 +62,15 @@ $(document).ready(function() {
         $('#TablePendientesEnviar').on( 'change', 'input[name="checkPE"]', function () {
           var input = 'input[name="checkPE"]';
           var btnSubir = '#BtnSubirFacturaPendietnesEnviar';
-         if($(this).is(':checked'))
-         {
+          if($(this).is(':checked'))
+          {
             FiltroCheckboxCliente();
 
-           adddatos();
-           ContadorCheck(input, btnSubir);
-         }
-         else
-         {
+            adddatos();
+            ContadorCheck(input, btnSubir);
+          }
+          else
+          {
            var a = adddatos();
            ContadorCheck(input, btnSubir);
 
@@ -429,7 +429,7 @@ function saveFactura() {
       "Accept": "application/json",
       "Content-Type": "application/json"
     },
-    data: JSON.stringify(jParams)
+    body: JSON.stringify(jParams)
   }).then(function(response){
     if(response.status == 200)
     {
@@ -439,6 +439,38 @@ function saveFactura() {
     {
       console.log("El folio indicado ya existe en el sistema");
     }
+    return response.clone().json();
+  }).then(function(IDFactura){
+    SavePartidasxFactura(IDFactura);
+  }).catch(function(ex){
+    console.log("no success!");
+  });
+}
+
+function SavePartidasxFactura(IDFactura) {
+  var arrConceptos = [];
+  var currentIDConcepto = 0;
+  $("#TablePendientesEnviar input[name=checkPE]:checked").each(function () {
+    currentIDConcepto = $($(this).parents('tr')[0]).data('idconcepto');
+    if(!arrConceptos.includes(currentIDConcepto))
+      arrConceptos.push(currentIDConcepto);
+  });
+  jParams = {
+    IDFactura: IDFactura,
+    arrConceptos: arrConceptos,
+  }
+
+  fetch("/PendientesEnviar/SavePartidasxFactura", {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jParams)
+  }).then(function(response){
+    console.log("success!");
   }).catch(function(ex){
     console.log("no success!");
   });
