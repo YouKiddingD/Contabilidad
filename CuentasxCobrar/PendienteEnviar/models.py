@@ -90,7 +90,7 @@ class FacturasxCliente(models.Model):
 class Partida(models.Model):
     IDPartida = models.AutoField(primary_key=True)
     FechaAlta = models.DateTimeField()
-    FechaBaja = models.DateTimeField()
+    FechaBaja = models.DateTimeField(null=True, blank=True)
     Subtotal = models.DecimalField(default=0, max_digits=30, decimal_places=5)
     IVA = models.DecimalField(default=0, max_digits=30, decimal_places=5)
     Retencion = models.DecimalField(default=0, max_digits=30, decimal_places=5)

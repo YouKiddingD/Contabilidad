@@ -404,6 +404,7 @@ $('#total').html('<strong>$'+total+'</strong>');
 }
 
 function saveFactura() {
+  $("#kt_modal_2").modal('hide');
   jParams = {
     FolioFactura: $('#txtFolioFactura').val(),
     Cliente: cliente,
@@ -434,12 +435,12 @@ function saveFactura() {
     if(response.status == 200)
     {
       console.log("Factura guardada correctamente.");
+      return response.clone().json();
     }
     else if(response.status == 500)
     {
       console.log("El folio indicado ya existe en el sistema");
     }
-    return response.clone().json();
   }).then(function(IDFactura){
     SavePartidasxFactura(IDFactura);
   }).catch(function(ex){
@@ -470,7 +471,14 @@ function SavePartidasxFactura(IDFactura) {
     },
     body: JSON.stringify(jParams)
   }).then(function(response){
-    console.log("success!");
+    if(response.status == 200)
+    {
+      console.log("Partida guardada correctamente.");
+    }
+    else if(response.status == 500)
+    {
+      console.log("Error al guardar la partida");
+    }
   }).catch(function(ex){
     console.log("no success!");
   });

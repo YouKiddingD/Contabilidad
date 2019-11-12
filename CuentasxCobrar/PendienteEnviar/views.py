@@ -71,11 +71,17 @@ def SavePartidasxFactura(request):
 	for IDConcepto in jParams["arrConceptos"]:
 		Viaje = View_PendientesEnviarCxC.objects.get(IDConcepto = IDConcepto)
 		newPartida = Partida()
-		newPartida.FechaAlta = datetime.now()
-		newPartida.Subtotal = Viaje.Subtotal
-		newPartida.IVA = Viaje.IVA
-		newPartida.Retencion = Viaje.Retencion
-		newPartida.Total = Viaje.Total
+		newPartida.FechaAlta = datetime.datetime.now()
+		newPartida.Subtotal = Viaje.PrecioSubtotal
+		newPartida.IVA = Viaje.PrecioIVA
+		newPartida.Retencion = Viaje.PrecioRetencion
+		newPartida.Total = Viaje.PrecioTotal
 		newPartida.save()
+		newRelacionFacturaxPartida = RelacionFacturaxPartidas()
+		newRelacionFacturaxPartida.IDFacturaxCliente = FacturasxCliente.objects.get(IDFactura = jParams["IDFactura"])
+		newRelacionFacturaxPartida.IDPartida = newPartida
+		newRelacionFacturaxPartida.IDConcepto = IDConcepto
+		newRelacionFacturaxPartida.IDUsuarioAlta = 1
+		newRelacionFacturaxPartida.IDUsuarioBaja = 1
+		newRelacionFacturaxPartida.save()
 	return HttpResponse('')
-	breakpoint()
