@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from PendienteEnviar.models import View_PendientesEnviarCxC, FacturasxCliente, Partida, RelacionFacturaxPartidas
+from PendienteEnviar.models import View_PendientesEnviarCxC, FacturasxCliente, Partida, RelacionFacturaxPartidas, PendientesEnviar
 from django.core import serializers
 from .forms import FacturaForm
 from django.template.loader import render_to_string
@@ -39,8 +39,8 @@ def GetPendientesByFilters(request):
 	QueryMoneda = "Moneda = %s "
 	FinalQuery = "SELECT * FROM View_PendientesEnviarCxC WHERE " + QueryStatus + QueryClientes + QueryMoneda
 	params = Status + Clientes + [Moneda]
-	PendientesEnviar = View_PendientesEnviarCxC.objects.raw(FinalQuery,params)
-	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendientesEnviar}, request = request,)
+	PendingToSend = View_PendientesEnviarCxC.objects.raw(FinalQuery,params)
+	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendingToSend}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
 
 
@@ -84,4 +84,9 @@ def SavePartidasxFactura(request):
 		newRelacionFacturaxPartida.IDUsuarioAlta = 1
 		newRelacionFacturaxPartida.IDUsuarioBaja = 1
 		newRelacionFacturaxPartida.save()
-	return HttpResponse('')
+		PendienteEnviar = PendientesEnviar.objects.get(IDConcepto = IDConcepto)
+		PendienteEnviar.IsFacturaCliente = True
+		PendienteEnviar.save()
+	PendingToSend = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s AND IsEvidenciaDigital = 1 AND IsEvidenciaFisica = 1", ['Finalizado'])
+	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendingToSend}, request = request,)
+	return JsonResponse({'htmlRes' : htmlRes})

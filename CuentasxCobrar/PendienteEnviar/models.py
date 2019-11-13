@@ -23,6 +23,9 @@ class PendientesEnviar(models.Model):
     IsEvidenciaFisica = models.BooleanField()
     IsEvidenciaDigital = models.BooleanField()
 
+    def __str__(self):
+        return str(self.IDPendienteEnviar)
+
     class Meta:
         db_table="PendientesEnviar"
         managed= False
@@ -42,7 +45,7 @@ class RelacionConceptoxProyecto(models.Model):
 
 
 class View_PendientesEnviarCxC(models.Model):
-    IDPendienteEnviar = models.ForeignKey(PendientesEnviar, on_delete=models.DO_NOTHING, db_column = 'IDPendienteEnviar', primary_key=True)
+    IDPendienteEnviar = models.OneToOneField(PendientesEnviar, on_delete=models.DO_NOTHING, db_column = 'IDPendienteEnviar', primary_key=True)
     IDConcepto = models.IntegerField(default=0)
     Folio = models.CharField(max_length=10, unique=True)
     IDCliente = models.IntegerField(default=0)
@@ -57,12 +60,14 @@ class View_PendientesEnviarCxC(models.Model):
     IsEvidenciaDigital = models.BooleanField()
     IsEvidenciaFisica = models.BooleanField()
     Proyecto = models.CharField(max_length=30)
+    IsFacturaCliente = models.BooleanField()
+    IsFacturaProveedor = models.BooleanField()
 
     class Meta:
         managed = False
         db_table = "View_PendientesEnviarCxC"
 #    def str(self):
-#        return self.IDPendienteEnviar    
+#        return self.IDPendienteEnviar
 
 
 class FacturasxCliente(models.Model):
