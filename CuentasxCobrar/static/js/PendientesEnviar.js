@@ -4,6 +4,7 @@ var moneda;
 var Ev;
 var EvDigital;
 var EvFisica;
+var idpendienteenviar;
 var table;
 var subtotal = 0, Tiva=0, TRetencion=0, total=0;
 $(document).ready(function() {
@@ -27,7 +28,8 @@ var table = $('#TablePendientesEnviar').DataTable( {
        "mRender": function (data, type, full) {
          EvDigital = $('input[name="isEvicencias"]').data("evidenciadigital");
          EvFisica = $('input[name="isEvicencias"]').data("evidenciafisica");
-         return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox"/>': '');
+         idpendienteenviar = $('input[name="isEvicencias"]').data("idpendienteenviar");
+         return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox" data-idconcepto = "idpendienteenviar"/>': '');
        }
      },
      {
@@ -70,7 +72,7 @@ var table = $('#TablePendientesEnviar').DataTable( {
           if($(this).is(':checked'))
           {
             FiltroCheckboxCliente();
-
+console.log($('input[name="isEvicencias"]').data("idpendienteenviar"));
             adddatos();
             ContadorCheck(input, btnSubir);
           }
@@ -514,12 +516,26 @@ function saveFactura() {
   }).then(function(response){
     if(response.status == 200)
     {
-      console.log("Factura guardada correctamente.");
+//      var table = $('#TablePendientesEnviar').DataTable();
+//      table.row($(jParams.FolioFactura).parents('tr')).remove().draw();
+      Swal.fire({
+        type: 'success',
+        title: 'Factura guardada correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      //console.log("Factura guardada correctamente.");
       return response.clone().json();
     }
     else if(response.status == 500)
     {
-      console.log("El folio indicado ya existe en el sistema");
+      Swal.fire({
+        type: 'error',
+        title: 'El folio indicado ya existe en el sistema',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      //console.log("El folio indicado ya existe en el sistema");
     }
   }).then(function(IDFactura){
     SavePartidasxFactura(IDFactura);
