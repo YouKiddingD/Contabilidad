@@ -474,6 +474,8 @@ function SavePartidasxFactura(IDFactura) {
     if(response.status == 200)
     {
       console.log("Partida guardada correctamente.");
+      $('#divTablaPendientesEnviar').html(data.htmlRes)
+      formatDataTable();
     }
     else if(response.status == 500)
     {
