@@ -19,6 +19,7 @@ $(btnSubir).prop('disabled', !cont !=0);
   }*/
 }
 
+
 // plugin para subir los archivos de las facturas en Modal Pendientes de enviar
 "use strict";
 
@@ -63,29 +64,29 @@ $(btnSubir).prop('disabled', !cont !=0);
 						maxFileSize: 5000000, // 5mb
 						maxNumberOfFiles: 2,
 						minNumberOfFiles: 2,
-					  allowedFileTypes:['.pdf', '.xml']
-					},
-					locale: Uppy.locales.es_ES,
-					onBeforeFileAdded: (currentFile, file) => {
+           allowedFileTypes:['.pdf', '.xml']
+         },
+         locale: Uppy.locales.es_ES,
+         onBeforeFileAdded: (currentFile, file) => {
 
-					console.log(currentFile.type)
-					console.log($('.uppy-DashboardContent-title').length)
-					    if($('.uppy-DashboardContent-title').length == 0)
-					    {
-					        console.log("+1")
-					    }
-					    else
-					    {
-					        if((currentFile.type === Object.values(file)[0].meta.type))
-					        {
-					            uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
-					            return false
-					        }
-					        else
-					        {
-					            console.log("ok")
-					        }
-					    }
+           console.log(currentFile.type)
+           console.log($('.uppy-DashboardContent-title').length)
+           if($('.uppy-DashboardContent-title').length == 0)
+           {
+             console.log("+1")
+           }
+           else
+           {
+             if((currentFile.type === Object.values(file)[0].meta.type))
+             {
+               uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
+               return false
+             }
+             else
+             {
+               console.log("ok")
+             }
+           }
 /*
 					    if($('.uppy-DashboardContent-title').length == 0)
 					    {
@@ -109,34 +110,36 @@ $(btnSubir).prop('disabled', !cont !=0);
 					            uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
 					            return false
 					        }
-					    }*/
+               }*/
 
-					}
-				});
+             }
+           });
 
 
          uppyDashboard.use(Dashboard, options);
          uppyDashboard.use(XHRUpload, { endpoint: 'https://api-bkg-test.logistikgo.com/api/Viaje/SaveevidenciaTest', method: 'post'});
 				//uppyDashboard.use(XHRUpload, { endpoint: 'http://localhost:63510/api/Viaje/SaveevidenciaTest', method: 'post'});
 				uppyDashboard.use(GoogleDrive, { target: Dashboard, companionUrl: 'https://companion.uppy.io' });
-                uppyDashboard.on('upload-success', (file, response) => {
-                console.log(file)
-                if (file.extension === 'pdf')
-                {
-                   const urlPDF = response.body
-                   $('#kt_uppy_1').data("rutaarchivoPDF", urlPDF)
+        uppyDashboard.on('upload-success', (file, response) => {
+          console.log(file)
+          const fileName = file.name
+          if (file.extension === 'pdf')
+          {
+           const urlPDF = response.body
+           $('#kt_uppy_1').data("rutaarchivoPDF", urlPDF)
+           document.querySelector('.uploaded-files').innerHTML +=
+           `<ol><li id="listaArchivos"><a href="${urlPDF}" target="_blank" name="url" id="RutaPDF">${fileName}</a></li></ol>`
                  //  console.log($('#kt_uppy_1').data("rutaarchivoPDF"))
-                }
-                else
-                {
-                   const urlPDF = response.body
-                   $('#kt_uppy_1').data("rutaarchivoXML", urlPDF)
+               }
+               else
+               {
+                 const urlPDF = response.body
+                 $('#kt_uppy_1').data("rutaarchivoXML", urlPDF)
+                 document.querySelector('.uploaded-files').innerHTML +=
+                 `<ol><li id="listaArchivos"><a href="${urlPDF}" target="_blank" name="url" id="RutaXML">${fileName}</a></li></ol>`
                    //console.log($('#kt_uppy_1').data("rutaarchivoXML"))
-                }
-                    const url = response.body
-                    const fileName = file.name
-                    document.querySelector('.uploaded-files').innerHTML +=
-                    `<ol><li id="listaArchivos"><a href="${url}" target="_blank" name="url" id="ArchivosSubidosModal">${fileName}</a></li></ol>`
+                 }
+                 //const url = response.body
    // `<embed src="${url}">`
  });
 
@@ -149,3 +152,25 @@ $(btnSubir).prop('disabled', !cont !=0);
 				}
 			};
 		}();
+
+
+
+
+function leerxml(xml)
+{
+  var arr = [];
+var req = new XMLHttpRequest();
+req.open('GET', xml, false);
+req.send(null);
+if (req.status == 200)
+{
+    var resp = req.responseXML;
+    var obNodos = resp.getElementsByTagName("Test");
+    for(var i=0; i< obNodos.length; i++)
+    {
+        arr.push(obNodos[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue);
+        console.log(arr);
+    }
+}
+return arr;
+}

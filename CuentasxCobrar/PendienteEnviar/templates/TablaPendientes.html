@@ -46,8 +46,8 @@
 						<td>{{pendiente.PrecioTotal}}</td>
 						<td>{{pendiente.Moneda}}</td>
 						<td id="status">{{pendiente.Status}}</td>
-						<td><input id="isEvicencias" name="isEvicencias" type="hidden" value="{{pendiente.IsEvidenciaDigital}}"></td>
-
+						<!--<td><input id="isEvicencias" name="isEvicencias" type="hidden" value="{{pendiente.IsEvidenciaDigital}}"></td>-->
+						<td><input name="isEvicencias" type="hidden"  data-idpendienteenviar="{{pendiente.IDPendienteEnviar}}" data-evidenciadigital="{{pendiente.IsEvidenciaDigital}}" data-evidenciafisica="{{pendiente.IsEvidenciaFisica}}"></td>
 					</tr>
 					{%endfor%}
 				</tbody>

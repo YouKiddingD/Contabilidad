@@ -1,59 +1,66 @@
 //var TestFile = null;
 var cliente;
 var moneda;
-var bandera;
+var Ev;
+var EvDigital;
+var EvFisica;
+var idpendienteenviar;
 var table;
 var subtotal = 0, Tiva=0, TRetencion=0, total=0;
 $(document).ready(function() {
 //Tabla Pendientes de enviar
-table = $('#TablePendientesEnviar').DataTable( {
- "language": {
-   "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
- },
- "responsive": true,
- "paging": false,
+var table = $('#TablePendientesEnviar').DataTable( {
+     "language": {
+       "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+     },
+     "responsive": true,
+     "paging": false,
+     "dom": 'Bfrtip',
+     "buttons": [
+               'excel'
+     ],
 
- columnDefs: [ {
-  orderable: false,
-  targets:   0,
-  "className": "dt-head-center dt-body-center",
-  "width": "1%",
-  "mRender": function (data, type, full) {
-    bandera = $('input[type=hidden]').val();
-    return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox"/>': '');
-  }
-},
-{
-  "name": "Status",
-  "width": "5%",
-  "className": "text-center bold",
-  "targets": 1
-},
-{
-  "name": "Status",
-  "width": "10%",
-  "className": "dt-head-center dt-body-center",
-  "targets": [2,3]
-},
-{
-  "width": "5%",
-  "className": "dt-head-center dt-body-center",
-  "targets": [8,9]
+     columnDefs: [ {
+       orderable: false,
+       targets:   0,
+       "className": "dt-head-center dt-body-center",
+       "width": "1%",
+       "mRender": function (data, type, full) {
+         EvDigital = $('input[name="isEvicencias"]').data("evidenciadigital");
+         EvFisica = $('input[name="isEvicencias"]').data("evidenciafisica");
+         idpendienteenviar = $('input[name="isEvicencias"]').data("idpendienteenviar");
+         return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox" data-idconcepto = "idpendienteenviar"/>': '');
+       }
+     },
+     {
+        "width": "5%",
+        "className": "text-center bold",
+        "targets": 1
+      },
+      {
+        "width": "10%",
+        "className": "dt-head-center dt-body-center",
+        "targets": [2,3]
+      },
+      {
+        "width": "5%",
+        "className": "dt-head-center dt-body-center",
+        "targets": [8,9]
 
-},
-{
-  "className": "dt-head-center dt-body-right",
-  'width' : '5%',
-  "targets": [4,5,6,7]
-},
-{
-  "width": "5%",
-  "className": "dt-head-center dt-body-center",
-  "targets": 10,
-  "mRender": function (data, type, full) {
-   return (bandera != 'False' && full[9] == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
- }
-}]
+      },
+      {
+        "className": "dt-head-center dt-body-right",
+        'width' : '5%',
+        "targets": [4,5,6,7]
+      },
+      {
+      "width": "5%",
+      "className": "dt-head-center dt-body-center",
+      "targets": 10,
+      "mRender": function (data, type, full) {
+        return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
+      }
+    }]
 } );
 
 //on click select row checkbox
@@ -65,7 +72,7 @@ table = $('#TablePendientesEnviar').DataTable( {
           if($(this).is(':checked'))
           {
             FiltroCheckboxCliente();
-
+console.log($('input[name="isEvicencias"]').data("idpendienteenviar"));
             adddatos();
             ContadorCheck(input, btnSubir);
           }
@@ -80,13 +87,38 @@ table = $('#TablePendientesEnviar').DataTable( {
 
 
 //on click para el boton del modal subir factura
-$('#BtnSubirFacturaPendietnesEnviar').on('click', function(){
- getDatos();
-});
+$('#BtnSubirFacturaPendietnesEnviar').on('click', getDatos);
 
 $('#BtnAplicarFiltro').on('click', fnGetPendientesEnviar);
 
-$('#btnGuardarFactura').on('click', saveFactura);
+$('#btnGuardarFactura').on('click', function(){
+    if($('#kt_uppy_1').data("rutaarchivoPDF") != undefined || $('#kt_uppy_1').data("rutaarchivoXML") != undefined)
+    {
+        saveFactura();
+    }
+    else
+    {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "200",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      toastr.error("Son necesarios los complementos PDF y XML");
+    }
+});
 
 
 //ocultar columnas tabla pendientes enviar
@@ -161,14 +193,14 @@ $('#kt_modal_2').on('hidden.bs.modal', function(){
   KTUppy.init()
 });
 
-
+$('input[name="TipoCambio"]').on('change', function(){
+    getDatos();
+});
 
 
 
 
 //FUNCIONES PARA EL MENU PENDIENTES DE ENVIAR
-
-
 
 
 //validacion mismo cliente en los checkbox
@@ -260,7 +292,8 @@ function LimpiarModalSF()
 						{ id: 'name', name: 'Name', placeholder: 'file name' },
 						{ id: 'caption', name: 'Caption', placeholder: 'describe what the image is about' }
            ],*/
-           browserBackButtonClose: true
+           browserBackButtonClose: true,
+
          }
 
          var uppyDashboard = Uppy.Core({
@@ -273,7 +306,6 @@ function LimpiarModalSF()
          },
          locale: Uppy.locales.es_ES,
          onBeforeFileAdded: (currentFile, file) => {
-
            console.log(currentFile.type)
            console.log($('.uppy-DashboardContent-title').length)
            if($('.uppy-DashboardContent-title').length == 0)
@@ -316,7 +348,6 @@ function LimpiarModalSF()
 					            return false
 					        }
                }*/
-
              }
            });
 
@@ -368,8 +399,9 @@ function LimpiarModalSF()
 function adddatos(){
   var arrSelect=[];
   $("input[name=checkPE]:checked").each(function () {
+    var table = $('#TablePendientesEnviar').DataTable();
     var datosRow = table.row($(this).parents('tr')).data();
-    arrSelect.push([datosRow[1], datosRow[4], datosRow[5], datosRow[6], datosRow[7]]);
+    arrSelect.push([datosRow[1], datosRow[4], datosRow[5], datosRow[6], datosRow[7], datosRow[8]]);
   });
   return arrSelect;
 }
@@ -378,30 +410,80 @@ function adddatos(){
 //funcion para obtener los datos de la tabla pendiente de enviar para mostrarlos en la tabla del modal subir facturas
 function getDatos(){
  var datos = adddatos();
- subtotal = 0, Tiva=0, TRetencion=0, total=0;
+ var newData = [];
+ subtotal = 0, Tiva=0, TRetencion=0, total=0, moneda, totalCambio=0;
  for (var i=0; i<datos.length; i++)
  {
-  var sub = parseFloat(datos[i][1]);
-  var iva = parseFloat(datos[i][2]);
-  var retencion = parseFloat(datos[i][3]);
-  var tot = parseFloat(datos[i][4]);
-  subtotal = subtotal + sub;
-  Tiva = Tiva + iva;
-  TRetencion = TRetencion + retencion;
-  total = total + tot;
-  console.log(subtotal);
-}
-var h = [datos];
-var table = $('#ResumTable').DataTable({
-  destroy: true,
-  data: h[0]
-});
+    moneda = datos[i][5];
+    if(datos[i][5] === "MXN")
+    {
+            var sub = parseFloat(datos[i][1]);
+            var iva = parseFloat(datos[i][2]);
+            var retencion = parseFloat(datos[i][3]);
+            var tot = parseFloat(datos[i][4]);
+            subtotal = subtotal + sub;
+            Tiva = Tiva + iva;
+            TRetencion = TRetencion + retencion;
+            total = total + tot;
+            datos[i].push("null");
+
+    }
+    if(datos[i][5] === "USD")
+    {
+      var tipoCambio = $('input[name="TipoCambio"]').val();
+
+        var folio = datos[i][0];
+        var sub = parseFloat(datos[i][1]);
+        var iva = parseFloat(datos[i][2]);
+        var retencion = parseFloat(datos[i][3]);
+        var tot = parseFloat(datos[i][4]);
+        var totCambio = (parseFloat(datos[i][4]) * tipoCambio);
+        datos[i].push(totCambio);
+        console.log(datos);
+        //newData.push([folio, sub, iva, retencion, tot]);
+        subtotal = subtotal + sub;
+        Tiva = Tiva + iva;
+        TRetencion = TRetencion + retencion;
+        total = total + tot;
+        totalCambio = totalCambio + totCambio;
+
+    }
+ }
+
+ var h = [datos];
+ var table = $('#ResumTable').DataTable({
+     destroy: true,
+     data: h[0],
+     columnDefs: [
+       {
+         "targets": 0,
+         "className": "dt-head-center dt-body-center bold"
+       },
+       {
+         "targets": [1,2,3,4],
+         "className": "dt-head-center dt-body-right"
+       },
+       {
+       "targets": 5,
+       "className": "dt-head-center dt-body-center"
+     },
+     {
+       "targets": 6,
+       "width": "10%",
+       "className": "dt-head-center dt-body-center"
+     }
+   ]
+
+     });
+
 $('#sub').html('<strong>$'+subtotal+'</strong>');
 $('#iva').html('<strong>$'+Tiva+'</strong>');
 $('#retencion').html('<strong>$'+TRetencion+'</strong>');
 $('#total').html('<strong>$'+total+'</strong>');
-
+$('#Moneda').html('');
+$('#totalCambio').html('<strong>$'+totalCambio+'<strong>');
 }
+
 
 function saveFactura() {
   $("#kt_modal_2").modal('hide');
@@ -434,12 +516,26 @@ function saveFactura() {
   }).then(function(response){
     if(response.status == 200)
     {
-      console.log("Factura guardada correctamente.");
+//      var table = $('#TablePendientesEnviar').DataTable();
+//      table.row($(jParams.FolioFactura).parents('tr')).remove().draw();
+      Swal.fire({
+        type: 'success',
+        title: 'Factura guardada correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      //console.log("Factura guardada correctamente.");
       return response.clone().json();
     }
     else if(response.status == 500)
     {
-      console.log("El folio indicado ya existe en el sistema");
+      Swal.fire({
+        type: 'error',
+        title: 'El folio indicado ya existe en el sistema',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      //console.log("El folio indicado ya existe en el sistema");
     }
   }).then(function(IDFactura){
     SavePartidasxFactura(IDFactura);
@@ -524,8 +620,9 @@ function formatDataTable() {
     "className": "dt-head-center dt-body-center",
     "width": "1%",
     "mRender": function (data, type, full) {
-      bandera = $('input[type=hidden]').val();
-      return (bandera != 'False' && full[9] == 'Finalizado' ? '<input type="checkbox" name="checkPE" />': '');
+      EvDigital = $('input[name="isEvicencias"]').data("evidenciadigital");
+      EvFisica = $('input[name="isEvicencias"]').data("evidenciafisica");
+      return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<input type="checkbox" name="checkPE" />': '');
     }
   },
   {
@@ -556,7 +653,7 @@ function formatDataTable() {
     "className": "dt-head-center dt-body-center",
     "targets": 10,
     "mRender": function (data, type, full) {
-     return (bandera != 'False' && full[9] == 'Finalizado' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
+     return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
    }
  }]
 } );

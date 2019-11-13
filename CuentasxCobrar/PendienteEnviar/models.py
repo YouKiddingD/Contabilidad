@@ -25,7 +25,7 @@ class PendientesEnviar(models.Model):
 
     def __str__(self):
         return str(self.IDPendienteEnviar)
-    
+
     class Meta:
         db_table="PendientesEnviar"
         managed= False
@@ -66,6 +66,8 @@ class View_PendientesEnviarCxC(models.Model):
     class Meta:
         managed = False
         db_table = "View_PendientesEnviarCxC"
+#    def str(self):
+#        return self.IDPendienteEnviar
 
 
 class FacturasxCliente(models.Model):
