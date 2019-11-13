@@ -1,20 +1,27 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from PendienteEnviar.models import View_PendientesEnviarCxC, FacturasxCliente
+from PendienteEnviar.models import View_PendientesEnviarCxC, FacturasxCliente, Partida, RelacionFacturaxPartidas
 from django.core import serializers
 from .forms import FacturaForm
 from django.template.loader import render_to_string
 import json, datetime
 
+
+
 def GetPendientesEnviar(request):
-	PendingToSend = View_PendientesEnviarCxC.objects.all()
-	ContadorTodos = len(list(PendingToSend))
-	ContadorPendientes = len(list(View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s", ['Pendiente'])))
-	ContadorFinalizados = len(list(View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s", ['Finalizado'])))
-	ContadorConEvidencias = len(list(View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE IsEvidenciaDigital = 1")))
-	ContadorSinEvidencias = ContadorTodos - ContadorConEvidencias
+	PendingToSend = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s AND IsEvidenciaDigital = 1 AND IsEvidenciaFisica = 1", ['Finalizado'])
+	ContadorTodos, ContadorPendientes, ContadorFinalizados, ContadorConEvidencias, ContadorSinEvidencias = GetContadores()
 	return render(request, 'PendienteEnviar.html', {'pendientes':PendingToSend, 'contadorPendientes': ContadorPendientes, 'contadorFinalizados': ContadorFinalizados, 'contadorConEvidencias': ContadorConEvidencias, 'contadorSinEvidencias': ContadorSinEvidencias})
 
+
+
+def GetContadores():
+	ContadorTodos = len(list(View_PendientesEnviarCxC.objects.all()))
+	ContadorPendientes = len(list(View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s", ['Pendiente'])))
+	ContadorFinalizados = len(list(View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s", ['Finalizado'])))
+	ContadorConEvidencias = len(list(View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE IsEvidenciaDigital = 1 AND IsEvidenciaFisica = 1")))
+	ContadorSinEvidencias = ContadorTodos - ContadorConEvidencias
+	return ContadorTodos, ContadorPendientes, ContadorFinalizados, ContadorConEvidencias, ContadorSinEvidencias
 
 
 def GetPendientesByFilters(request):
@@ -38,18 +45,8 @@ def GetPendientesByFilters(request):
 
 
 
-def GetPendientesByStatus(request):
-	Status = request.GET["Status"]
-	PendientesEnviar = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s", [Status])
-	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendientesEnviar}, request = request,)
-	return JsonResponse({'htmlRes' : htmlRes})
-
-
-
 def SaveFactura(request):
 	jParams = json.loads(request.body.decode('utf-8'))
-	formFactura = FacturaForm(jParams)
-	breakpoint()
 	newFactura = FacturasxCliente()
 	newFactura.Folio = jParams["FolioFactura"]
 	newFactura.NombreCortoCliente = jParams["Cliente"]
@@ -65,4 +62,26 @@ def SaveFactura(request):
 	newFactura.RutaXML = jParams["RutaXML"]
 	newFactura.RutaPDF = jParams["RutaPDF"]
 	newFactura.save()
+	return HttpResponse(newFactura.IDFactura)
+
+
+
+def SavePartidasxFactura(request):
+	jParams = json.loads(request.body.decode('utf-8'))
+	for IDConcepto in jParams["arrConceptos"]:
+		Viaje = View_PendientesEnviarCxC.objects.get(IDConcepto = IDConcepto)
+		newPartida = Partida()
+		newPartida.FechaAlta = datetime.datetime.now()
+		newPartida.Subtotal = Viaje.PrecioSubtotal
+		newPartida.IVA = Viaje.PrecioIVA
+		newPartida.Retencion = Viaje.PrecioRetencion
+		newPartida.Total = Viaje.PrecioTotal
+		newPartida.save()
+		newRelacionFacturaxPartida = RelacionFacturaxPartidas()
+		newRelacionFacturaxPartida.IDFacturaxCliente = FacturasxCliente.objects.get(IDFactura = jParams["IDFactura"])
+		newRelacionFacturaxPartida.IDPartida = newPartida
+		newRelacionFacturaxPartida.IDConcepto = IDConcepto
+		newRelacionFacturaxPartida.IDUsuarioAlta = 1
+		newRelacionFacturaxPartida.IDUsuarioBaja = 1
+		newRelacionFacturaxPartida.save()
 	return HttpResponse('')

@@ -47,7 +47,7 @@ class View_PendientesEnviarCxC(models.Model):
     Folio = models.CharField(max_length=10, unique=True)
     IDCliente = models.IntegerField(default=0)
     NombreCliente = models.CharField(max_length=100)
-    FechaDescarga = models.CharField(max_length=100, null=True)
+    FechaDescarga = models.DateTimeField()
     PrecioSubtotal = models.DecimalField(default=0, max_digits=30, decimal_places=5)
     PrecioIVA = models.DecimalField(default=0, max_digits=30, decimal_places=5)
     PrecioRetencion = models.DecimalField(default=0, max_digits=30, decimal_places=5)
@@ -81,6 +81,33 @@ class FacturasxCliente(models.Model):
     RutaPDF = models.CharField(max_length=300)
     TipoCambio = models.DecimalField(default=0, max_digits=10, decimal_places=5)
     Comentarios = models.CharField(max_length=500)
+    TotalConvertido = models.DecimalField(default=0, max_digits=30, decimal_places=5)
 
     class Meta:
         db_table = "FacturasxCliente"
+
+
+class Partida(models.Model):
+    IDPartida = models.AutoField(primary_key=True)
+    FechaAlta = models.DateTimeField()
+    FechaBaja = models.DateTimeField(null=True, blank=True)
+    Subtotal = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    IVA = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    Retencion = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    Total = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    IsActiva = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = "Partida"
+
+
+class RelacionFacturaxPartidas(models.Model):
+    IDRelacionFacturaxPartidas = models.AutoField(primary_key=True)
+    IDFacturaxCliente = models.ForeignKey(FacturasxCliente, on_delete=models.CASCADE, db_column = 'IDFacturaxCliente')
+    IDPartida = models.ForeignKey(Partida, on_delete=models.CASCADE, db_column = 'IDPartida')
+    IDConcepto = models.IntegerField(default=0)
+    IDUsuarioAlta = models.IntegerField(default=0)
+    IDUsuarioBaja = models.IntegerField(default=0)
+
+    class Meta:
+        db_table = "RelacionFacturaxPartidas"

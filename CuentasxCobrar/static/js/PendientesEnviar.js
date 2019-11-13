@@ -67,15 +67,15 @@ var table = $('#TablePendientesEnviar').DataTable( {
         $('#TablePendientesEnviar').on( 'change', 'input[name="checkPE"]', function () {
           var input = 'input[name="checkPE"]';
           var btnSubir = '#BtnSubirFacturaPendietnesEnviar';
-         if($(this).is(':checked'))
-         {
+          if($(this).is(':checked'))
+          {
             FiltroCheckboxCliente();
 
-           adddatos();
-           ContadorCheck(input, btnSubir);
-         }
-         else
-         {
+            adddatos();
+            ContadorCheck(input, btnSubir);
+          }
+          else
+          {
            var a = adddatos();
            ContadorCheck(input, btnSubir);
 
@@ -484,14 +484,13 @@ $('#totalCambio').html('<strong>$'+totalCambio+'<strong>');
 
 
 function saveFactura() {
+  $("#kt_modal_2").modal('hide');
   jParams = {
+    FolioFactura: $('#txtFolioFactura').val(),
     Cliente: cliente,
     FechaFactura: $('#FechaFactura').val(),
     FechaRevision: $('#FechaRevision').val(),
     FechaVencimiento: $('#FechaVencimiento').val(),
-    TipoCambio: $('#txtTipoCambio').val(),
-    FolioFactura: $('#txtFolioFactura').val(),
-    Comentarios: $('#txtComentarios').val(),
     Moneda: moneda,
     SubTotal: subtotal,
     IVA: Tiva,
@@ -499,6 +498,8 @@ function saveFactura() {
     Total: total,
     RutaXML: $('#RutaXML').attr('href') != undefined ? $('#RutaXML').attr('href') : "",
     RutaPDF: $('#RutaPDF').attr('href') != undefined ? $('#RutaPDF').attr('href') : "",
+    TipoCambio: $('#txtTipoCambio').val(),
+    Comentarios: $('#txtComentarios').val(),
   }
 
   fetch("/PendientesEnviar/SaveFactura", {
@@ -514,10 +515,49 @@ function saveFactura() {
     if(response.status == 200)
     {
       console.log("Factura guardada correctamente.");
+      return response.clone().json();
     }
     else if(response.status == 500)
     {
       console.log("El folio indicado ya existe en el sistema");
+    }
+  }).then(function(IDFactura){
+    SavePartidasxFactura(IDFactura);
+  }).catch(function(ex){
+    console.log("no success!");
+  });
+}
+
+function SavePartidasxFactura(IDFactura) {
+  var arrConceptos = [];
+  var currentIDConcepto = 0;
+  $("#TablePendientesEnviar input[name=checkPE]:checked").each(function () {
+    currentIDConcepto = $($(this).parents('tr')[0]).data('idconcepto');
+    if(!arrConceptos.includes(currentIDConcepto))
+      arrConceptos.push(currentIDConcepto);
+  });
+  jParams = {
+    IDFactura: IDFactura,
+    arrConceptos: arrConceptos,
+  }
+
+  fetch("/PendientesEnviar/SavePartidasxFactura", {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jParams)
+  }).then(function(response){
+    if(response.status == 200)
+    {
+      console.log("Partida guardada correctamente.");
+    }
+    else if(response.status == 500)
+    {
+      console.log("Error al guardar la partida");
     }
   }).catch(function(ex){
     console.log("no success!");
