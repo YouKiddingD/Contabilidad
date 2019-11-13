@@ -72,7 +72,6 @@ var table = $('#TablePendientesEnviar').DataTable( {
           if($(this).is(':checked'))
           {
             FiltroCheckboxCliente();
-console.log($('input[name="isEvicencias"]').data("idpendienteenviar"));
             adddatos();
             ContadorCheck(input, btnSubir);
           }
@@ -94,7 +93,9 @@ $('#BtnAplicarFiltro').on('click', fnGetPendientesEnviar);
 $('#btnGuardarFactura').on('click', function(){
     if($('#kt_uppy_1').data("rutaarchivoPDF") != undefined || $('#kt_uppy_1').data("rutaarchivoXML") != undefined)
     {
+        WaitMe_Show('#divTablaPendientesEnviar');
         saveFactura();
+
     }
     else
     {
@@ -498,8 +499,8 @@ function saveFactura() {
     IVA: Tiva,
     Retencion: TRetencion,
     Total: total,
-    RutaXML: $('#RutaXML').attr('href') != undefined ? $('#RutaXML').attr('href') : "",
-    RutaPDF: $('#RutaPDF').attr('href') != undefined ? $('#RutaPDF').attr('href') : "",
+    RutaXML: $('#kt_uppy_1').data("rutaarchivoXML"),
+    RutaPDF: $('#kt_uppy_1').data("rutaarchivoPDF"),
     TipoCambio: $('#txtTipoCambio').val(),
     Comentarios: $('#txtComentarios').val(),
   }
@@ -514,6 +515,7 @@ function saveFactura() {
     },
     body: JSON.stringify(jParams)
   }).then(function(response){
+
     if(response.status == 200)
     {
 //      var table = $('#TablePendientesEnviar').DataTable();
@@ -524,6 +526,7 @@ function saveFactura() {
         showConfirmButton: false,
         timer: 1500
       })
+      WaitMe_Hide('#divTablaPendientesEnviar');
       //console.log("Factura guardada correctamente.");
       return response.clone().json();
     }
@@ -533,10 +536,11 @@ function saveFactura() {
         type: 'error',
         title: 'El folio indicado ya existe en el sistema',
         showConfirmButton: false,
-        timer: 1500
+        timer: 2500
       })
       //console.log("El folio indicado ya existe en el sistema");
     }
+
   }).then(function(IDFactura){
     SavePartidasxFactura(IDFactura);
   }).catch(function(ex){

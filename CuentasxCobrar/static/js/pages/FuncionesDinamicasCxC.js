@@ -158,19 +158,31 @@ $(btnSubir).prop('disabled', !cont !=0);
 
 function leerxml(xml)
 {
-  var arr = [];
-var req = new XMLHttpRequest();
-req.open('GET', xml, false);
-req.send(null);
-if (req.status == 200)
-{
-    var resp = req.responseXML;
-    var obNodos = resp.getElementsByTagName("Test");
-    for(var i=0; i< obNodos.length; i++)
+    var rest;
+    var req = new XMLHttpRequest();
+    req.open('GET', xml, false);
+    req.send(null);
+    if (req.status == 200)
     {
-        arr.push(obNodos[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue);
-        console.log(arr);
+        var resp = req.responseXML;
+        var obNodos = resp.getElementsByTagName("cfdi:Comprobante");
+        rest = obNodos[0].attributes[14].nodeValue;
     }
+return rest;
 }
-return arr;
-}
+
+function WaitMe_Show(idForm) {
+    $(idForm).waitMe({
+        effect: 'ios',
+        text: 'Guardando...',
+        bg: 'rgb(255,255,255)',
+        color: '#38227F',
+        sizeW: '',
+        sizeH: '',
+        source: ''
+    });
+};
+
+function WaitMe_Hide(idForm) {
+        $(idForm).waitMe('hide');
+};
