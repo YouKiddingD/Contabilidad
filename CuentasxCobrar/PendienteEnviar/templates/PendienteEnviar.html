@@ -118,8 +118,8 @@ kt-menu__item--active
 
 															<div class="container">
 																<div class="form-inline">
-																	<button type="button" name="button" class="btn btn-danger btn-elevate btn-pill btn-elevate-air btn-sm" id="kt_quick_panel_close_btn">Cancelar</button>
 																	<button type="Submit" name="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" id="BtnAplicarFiltro">Aplicar</button>
+																	<button type="button" name="button" class="btn btn-danger btn-elevate btn-pill btn-elevate-air btn-sm" id="kt_quick_panel_close_btn">Cancelar</button>
 																</div>
 															</div>
 														</div>
@@ -171,15 +171,13 @@ kt-menu__item--active
 																				<div class="col">
 																					<label for="FechaVencimiento">Fecha Vencimiento</label>
 																				</div>
-																				<div class="col">
-																					<label for="TipoCambio">Tipo Cambio</label>
-																				</div>
+
 																			</div>
 																		</div></br>
 
 																		<div class="container">
 																			<div class="row">
-																				<div class="input-group date col col-3">
+																				<div class="input-group date col col-4">
 																					<input type="text" class="form-control" name="FechaFactura" id="FechaFactura">
 																					<div class="input-group-append">
 																						<span class="input-group-text">
@@ -188,7 +186,7 @@ kt-menu__item--active
 																					</div>
 																				</div>
 
-																				<div class="input-group date col col-3">
+																				<div class="input-group date col col-4">
 																					<input type="text" class="form-control" name="FechaRevision" id="FechaRevision">
 																					<div class="input-group-append">
 																						<span class="input-group-text">
@@ -197,7 +195,7 @@ kt-menu__item--active
 																					</div>
 																				</div>
 
-																				<div class="input-group date col col-3">
+																				<div class="input-group date col col-4">
 																					<input type="text" class="form-control" name="FechaVencimiento" id="FechaVencimiento">
 																					<div class="input-group-append">
 																						<span class="input-group-text">
@@ -206,19 +204,19 @@ kt-menu__item--active
 																					</div>
 																				</div>
 
-																				<div class="input-group date col col-3">
-																					<input type="number" class="form-control" name="TipoCambio" id="txtTipoCambio" value="1">
+<!--																				<div class="input-group date col col-3">
+																					<input type="number" class="form-control" name="TipoCambio" id="txtTipoCambio" value="1" step="any">
 																					<div class="input-group-append">
 																						<span class="input-group-text">
 																							<i class="la la-dollar"></i>
 																						</span>
 																					</div>
-																				</div>
+																				</div>-->
 																			</div>
 																		</div>
 																	</br>
 
-                                                                        <div class="container">
+                                  <div class="container">
 																			<div class="row">
 																				<div class="col col-md-4">
 																					<label for="Folio">Folio Factura:</label>
@@ -263,14 +261,27 @@ kt-menu__item--active
 
 																<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 																	<div class="container">
+																		<div class="col">
+																			<label for="TipoCambio">Tipo Cambio: </label>
+																		</div>
+																			<div class="row justify-content-start">
+																			<div class="input-group date col col-3">
+																				<input type="number" class="form-control" name="TipoCambio" id="txtTipoCambio" value="1" step="any">
+
+																			 </div>
+																			</div>
+																		<div class="py-4">
 																		<table class="display" id="ResumTable">
 																			<thead>
+
 																				<tr>
 																					<th>Folio</th>
 																					<th>Subtotal</th>
 																					<th>Iva</th>
 																					<th>Retencion</th>
-																					<th>Total</th>
+																					<th>Total Real</th>
+																					<th>Moneda</th>
+																					<th>Total Cambio</th>
 																				</tr>
 																			</thead>
 																			<tfoot>
@@ -280,10 +291,12 @@ kt-menu__item--active
 																					<td id="iva"></td>
 																					<td id="retencion"></td>
 																					<td id="total"></td>
+																					<td id="Moneda"></td>
+																					<td id="totalCambio"></td>
 																				</tr>
 																			</tfoot>
 																		</table>
-
+																		</div>
 																	</div>
 																</div>
 															</div>
@@ -293,8 +306,8 @@ kt-menu__item--active
 													</div>
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-danger btn-elevate " data-dismiss="modal" id="cerrarModalSF">Close</button>
 													<button type="button" id="btnGuardarFactura" class="btn btn-success btn-elevate">Guardar</button>
+													<button type="button" class="btn btn-danger btn-elevate " data-dismiss="modal" id="cerrarModalSF">Close</button>
 												</div>
 											</div>
 										</div>
@@ -307,7 +320,7 @@ kt-menu__item--active
 										<div class="modal-dialog modal-md" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title" >Modal title</h5>
+													<h5 class="modal-title" >Evidencias</h5>
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 														<span aria-hidden="true">&times;</span>
 													</button>

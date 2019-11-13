@@ -10,6 +10,10 @@ var calculo =0;
      },
      "responsive": true,
      "paging": false,
+     "dom": 'Bfrtip',
+     "buttons": [
+               'excel'
+     ],
 
      columnDefs: [ {
       orderable: false,
@@ -49,7 +53,7 @@ var calculo =0;
       "className": "dt-head-center dt-body-center",
       "targets": 10,
       "mRender": function (data, type, full) {
-       return '<button tyoe ="button" class="btn btn-primary btn-elevate btn-pill btn-sm" id="BtnVerXML"><i class="flaticon2-file"></i></button>';
+       return '<button type ="button" class="btn btn-primary btn-elevate btn-pill btn-sm" id="BtnVerXML"><i class="flaticon2-file"></i></button>';
      }
    },
        {
@@ -57,7 +61,7 @@ var calculo =0;
       "className": "dt-head-center dt-body-center",
       "targets": 11,
       "mRender": function (data, type, full) {
-       return '<button tyoe ="button" class="btn btn-danger btn-elevate btn-pill btn-sm" id="BtnEliminarFactura"><i class="flaticon-delete"></i></button>';
+       return ( full[9] === 'Pendiente' ? '<button type ="button" class="btn btn-danger btn-elevate btn-pill btn-sm" id="BtnEliminarFactura"><i class="flaticon-delete"></i></button>':'');
      }
      }
    ]
@@ -112,7 +116,9 @@ var calculo =0;
 				    	todayHighlight: true
 			    	 });
 				  $("#FechaCobro").datepicker('setDate', 'today' );
-            });
+
+        });
+
 
 // cerrar modal de subir facturas
      $('#modalSubirCobro').on('hidden.bs.modal', function(){
@@ -122,10 +128,7 @@ var calculo =0;
 
 
 //muestra los datos para la tabla del modal subir cobros al hacer click en el boton de  subir cobro
-$('#BtnSubirCobros').on('click', function(){
- showDatosObtenidos();
-});
-
+$('#BtnSubirCobros').on('click', showDatosObtenidos);
 
 //validar el total del cobro por cada factura seleccionada -- en el modal subir cobros
 $('#tableAddCobro').on("change", 'input[name="totalCobro"]', function(){
@@ -142,6 +145,55 @@ $('#AddCosto').val(calculo);
 calculo = 0;
 });
 
+
+//validacion si tienes los archivos pdf y xml
+$('#btnSaveCobro').on('click', function(){
+    if($('#kt_uppy_1').data("rutaarchivoPDF") != undefined || $('#kt_uppy_1').data("rutaarchivoXML") != undefined)
+    {
+        alert("puedes subir el pago");
+    }
+    else
+    {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "200",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      toastr.error("Son necesarios los complementos PDF y XML");
+    }
+});
+
+//ocultar o mostrar campos de la tabla
+$('input[name="Subtotal"]').on('change', function(e){
+  e.preventDefault();
+  var column = table.column(4);
+  column.visible( ! column.visible() );
+});
+
+$('input[name="IVA"]').on('change', function(e){
+ e.preventDefault();
+ var column = table.column(5);
+ column.visible( ! column.visible() );
+});
+
+$('input[name="Retencion"]').on('change', function(e){
+ e.preventDefault();
+ var column = table.column(6);
+ column.visible( ! column.visible() );
+});
 
 //inicia el modal de subir complementos
 KTUtil.ready(function() {
@@ -192,7 +244,6 @@ $('#tableAddCobro').DataTable({
     destroy: true,
     data: h[0],
      columnDefs: [ {
-      "width": "10%",
       "className": "dt-head-center dt-body-right",
       "targets": 3,
       "mRender": function (data, type, full) {
