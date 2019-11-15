@@ -160,21 +160,26 @@ function leerxml(xml)
 {
     var rest;
     var req = new XMLHttpRequest();
-    req.open('GET', xml, false);
-    req.send(null);
-    if (req.status == 200)
-    {
-        var resp = req.responseXML;
-        var obNodos = resp.getElementsByTagName("cfdi:Comprobante");
-        rest = obNodos[0].attributes[14].nodeValue;
-    }
-return rest;
+       req.open('GET', xml, false);
+       req.send(null);
+       if (req.status == 200)
+       {
+           var resp = req.responseXML;
+           var obNodos = resp.children[0].attributes;
+           var total = obNodos.Total;
+           (total != undefined) ? rest = total.nodeValue : rest = 0;
+       }
+       else
+       {
+           rest = 0;
+       }
+    return rest;
 }
 
 function WaitMe_Show(idForm) {
     $(idForm).waitMe({
         effect: 'ios',
-        text: 'Guardando...',
+        text: 'Por favor espera...',
         bg: 'rgb(255,255,255)',
         color: '#38227F',
         sizeW: '',
@@ -186,3 +191,34 @@ function WaitMe_Show(idForm) {
 function WaitMe_Hide(idForm) {
         $(idForm).waitMe('hide');
 };
+
+function alertToastError(msj)
+{
+  toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-bottom-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "200",
+    "hideDuration": "1000",
+    "timeOut": "6000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  };
+
+  toastr.error(msj);
+}
+
+function truncarDecimales (x, posiciones = 0) {
+  var s = x.toString()
+    var l = s.length
+    var decimalLength = s.indexOf('.') + 1
+    var numStr = s.substr(0, decimalLength + posiciones)
+    return Number(numStr)
+}

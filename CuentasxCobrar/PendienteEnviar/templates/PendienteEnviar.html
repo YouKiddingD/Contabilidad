@@ -139,8 +139,9 @@ kt-menu__item--active
 
 										{% block SubirFactura %}
 										<!-- modal subir facturas-->
+
 										<div class="modal fade" id="kt_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-											<div class="modal-dialog modal-lg" role="document">
+											<div class="modal-dialog modal-lg" role="document" id="WaitModalPE">
 												<div class="modal-content">
 													<div class="modal-header">
 														<h5 class="modal-title" id="exampleModalLongTitle">Subir Facturas</h5>
@@ -312,6 +313,7 @@ kt-menu__item--active
 											</div>
 										</div>
 									</div>
+									</div>
 									<!--end modal subir facturas-->
 
 
@@ -338,7 +340,7 @@ kt-menu__item--active
 												</div>
 											</div>
 										</div>
-									</div>
+								
 									<!-- end modal ver evidencias -->
 
 									{% endblock %}
