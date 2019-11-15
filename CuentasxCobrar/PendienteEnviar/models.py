@@ -66,8 +66,8 @@ class View_PendientesEnviarCxC(models.Model):
     class Meta:
         managed = False
         db_table = "View_PendientesEnviarCxC"
-#    def str(self):
-#        return self.IDPendienteEnviar
+    def str(self):
+        return self.IDPendienteEnviar
 
 
 class FacturasxCliente(models.Model):
@@ -89,6 +89,7 @@ class FacturasxCliente(models.Model):
     TipoCambio = models.DecimalField(default=0, max_digits=10, decimal_places=5)
     Comentarios = models.CharField(max_length=500)
     TotalConvertido = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    Status = models.CharField(max_length=15, default="Pendiente")
 
     class Meta:
         db_table = "FacturasxCliente"
