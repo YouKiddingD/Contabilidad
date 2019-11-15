@@ -84,9 +84,8 @@ def SavePartidasxFactura(request):
 		newRelacionFacturaxPartida.IDUsuarioAlta = 1
 		newRelacionFacturaxPartida.IDUsuarioBaja = 1
 		newRelacionFacturaxPartida.save()
-		PendienteEnviar = PendientesEnviar.objects.get(IDConcepto = IDConcepto)
-		PendienteEnviar.IsFacturaCliente = True
-		PendienteEnviar.save()
+		Viaje.IDPendienteEnviar.IsFacturaCliente = True
+		Viaje.IDPendienteEnviar.save()
 	PendingToSend = View_PendientesEnviarCxC.objects.raw("SELECT * FROM View_PendientesEnviarCxC WHERE Status = %s AND IsEvidenciaDigital = 1 AND IsEvidenciaFisica = 1", ['Finalizado'])
 	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendingToSend}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
