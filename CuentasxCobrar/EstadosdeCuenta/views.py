@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from EstadosdeCuenta.models import RelacionFacturaxPartidas
 
 
 def EstadosdeCuenta(request):
-    return render(request, 'EstadosdeCuenta.html')
+	Facturas = RelacionFacturaxPartidas.objects.all()
+	return render(request, 'EstadosdeCuenta.html', {'Facturas': Facturas})

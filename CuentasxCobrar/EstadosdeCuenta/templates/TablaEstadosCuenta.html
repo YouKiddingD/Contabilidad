@@ -23,34 +23,22 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					{% for Factura in Facturas %}
+					<tr data-IDFactura="{{Factura.IDFacturaxCliente.IDFactura}}">
 						<td></td>
-						<td style="font-weight: bold;">folio0001</td>
-						<td>3M</td>
-						<td>2019/11/05</td>
-						<td>5000.00</td>
-						<td>500.00</td>
-						<td>250.00</td>
-						<td>5100.00</td>
-						<td>5000.00</td>
-						<td>Pendiente</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td style="font-weight: bold;">folio0002</td>
-						<td>3M</td>
-						<td>2019/11/05</td>
-						<td>5000.00</td>
-						<td>500.00</td>
-						<td>250.00</td>
-						<td>5100.00</td>
-						<td>4000.00</td>
-						<td>Abonada</td>
+						<td style="font-weight: bold;">{{Factura.IDFacturaxCliente.Folio}}</td>
+						<td>{{Factura.IDFacturaxCliente.NombreCortoCliente}}</td>
+						<td>{{Factura.IDFacturaxCliente.FechaFactura|date:'Y/m/d'}}</td>
+						<td>{{Factura.IDFacturaxCliente.Subtotal}}</td>
+						<td>{{Factura.IDFacturaxCliente.IVA}}</td>
+						<td>{{Factura.IDFacturaxCliente.Retencion}}</td>
+						<td>{{Factura.IDFacturaxCliente.Total}}</td>
+						<td>{{Factura.IDFacturaxCliente.Saldo}}</td>
+						<td id="status">{{Factura.IDFacturaxCliente.Status}}</td>
 						<td></td>
 						<td></td>
 					</tr>
+					{%endfor%}
 				</tbody>
 			</table>
 			</div>
