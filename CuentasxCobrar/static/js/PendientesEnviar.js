@@ -346,14 +346,20 @@ function LimpiarModalSF()
                    alertToastError("el total de la factura no coincide con el total calculado del sistema")
                     //uppyDashboard.reset()
                     uppyDashboard.cancelAll()
+
                  }
-                 $("#btnGuardarFactura").prop("disabled", false)
-                 const urlPDF = response.body
-                 $('#kt_uppy_1').data("rutaarchivoXML", urlPDF)
-                 document.querySelector('.uploaded-files').innerHTML +=
-                 `<ol><li id="listaArchivos"><a href="${urlPDF}" target="_blank" name="url" id="RutaXML">${fileName}</a></li></ol>`
+                 else
+                 {
+                   $("#btnGuardarFactura").prop("disabled", false)
+                   const urlPDF = response.body
+                   $('#kt_uppy_1').data("rutaarchivoXML", urlPDF)
+                   document.querySelector('.uploaded-files').innerHTML +=
+                   `<ol><li id="listaArchivos"><a href="${urlPDF}" target="_blank" name="url" id="RutaXML">${fileName}</a></li></ol>`
+                 }
+
                    //console.log($('#kt_uppy_1').data("rutaarchivoXML"))
                  }
+                 //$("#btnGuardarFactura").prop("disabled", false)
                  //const url = response.body
    // `<embed src="${url}">`
  });
@@ -459,7 +465,7 @@ $('#iva').html('<strong>$'+Tiva+'</strong>');
 $('#retencion').html('<strong>$'+TRetencion+'</strong>');
 $('#total').html('<strong>$'+total+'</strong>');
 $('#Moneda').html('');
-$('#totalCambio').html('<strong>$'+totalCambio+'<strong>');
+$('#totalCambio').html('<strong>$'+truncarDecimales(totalCambio, 2)+'<strong>');
 }
 
 

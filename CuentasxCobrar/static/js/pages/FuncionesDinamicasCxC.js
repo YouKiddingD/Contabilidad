@@ -3,12 +3,12 @@ function ContadorCheck(input, btnSubir)
 {
   var cont = 0;
   $(input).each(function (){
-   if($(this).is(':checked'))
-   {
-    cont++;
-  }
-});
-$(btnSubir).prop('disabled', !cont !=0);
+    if($(this).is(':checked'))
+    {
+      cont++;
+    }
+   });
+   $(btnSubir).prop('disabled', !cont !=0);
  /* if(cont != 0)
   {
 
@@ -87,30 +87,6 @@ $(btnSubir).prop('disabled', !cont !=0);
                console.log("ok")
              }
            }
-/*
-					    if($('.uppy-DashboardContent-title').length == 0)
-					    {
-					        if(currentFile.type != 'application/pdf' && currentFile.type != 'text/xml')
-					        {
-					            console.log("solo pdf y xml")
-					        }
-					        else
-					        {
-
-					            TestFile = currentFile.type
-					        }
-
-					    }
-
-					    if($('.uppy-DashboardContent-title').length == 2)
-					    {
-                            console.log(Object.values(file)[0].meta.type)
-					        if(TestFile == currentFile.type)
-					        {
-					            uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
-					            return false
-					        }
-               }*/
 
              }
            });
@@ -148,7 +124,6 @@ $(btnSubir).prop('disabled', !cont !=0);
 				// public functions
 				init: function() {
 					initUppy1();
-
 				}
 			};
 		}();
@@ -219,6 +194,14 @@ function truncarDecimales (x, posiciones = 0) {
   var s = x.toString()
     var l = s.length
     var decimalLength = s.indexOf('.') + 1
-    var numStr = s.substr(0, decimalLength + posiciones)
-    return Number(numStr)
+    if(decimalLength === 0)
+    {
+         var numStr = s
+         return Number(numStr)
+    }
+  else
+    {
+        var numStr = s.slice(0, decimalLength + posiciones)
+        return Number(numStr)
+    }
 }
