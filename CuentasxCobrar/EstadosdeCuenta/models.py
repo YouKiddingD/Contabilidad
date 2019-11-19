@@ -59,8 +59,8 @@ class RelacionFacturaxPartidas(models.Model):
 
 
 class View_FacturasxCliente(models.Model):
-    IDFactura = models.ForeignKey(FacturasxCliente, on_delete=models.DO_NOTHING, db_column = 'IDFactura')
-    Folio = models.CharField(max_length=50, unique=True)
+    IDFactura = models.IntegerField(primary_key=True)
+    Folio = models.CharField(max_length=50)
     Cliente = models.CharField(max_length=100)
     FechaFactura = models.DateTimeField()
     Subtotal = models.DecimalField(default=0, max_digits=30, decimal_places=5)
@@ -70,7 +70,8 @@ class View_FacturasxCliente(models.Model):
     Saldo = models.DecimalField(default=0, max_digits=30, decimal_places=5)
     RutaXML = models.CharField(max_length=300)
     Status = models.CharField(max_length=15)
-    IsAutorizada = models.BooleanField(default=False)
+    IsAutorizada = models.BooleanField()
+
     class Meta:
         db_table = "View_FacturasxCliente"
         managed= False
