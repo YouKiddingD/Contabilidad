@@ -301,8 +301,8 @@ function ValidacionCheckboxCobros(){
 });
 
 var fnGetFacturas = function () {
-  startDate = ($('#cboFechaDescarga').data('daterangepicker').startDate._d).toLocaleDateString('en-US');
-  endDate = ($('#cboFechaDescarga').data('daterangepicker').endDate._d).toLocaleDateString('en-US');
+  startDate = /*($('#cboFechaDescarga').data('daterangepicker').startDate._d).toLocaleDateString('en-US');*/"06/01/2019";
+  endDate = /*($('#cboFechaDescarga').data('daterangepicker').endDate._d).toLocaleDateString('en-US');*/ "11/01/2019";
   arrStatus = $('#cboStatus').val();
   arrClientes = $('#cboCliente').val();
   strMoneda = $('#rdMXN').is(':checked') ? 'MXN' : 'USD';

@@ -25,5 +25,6 @@ def GetFacturasByFilters(request):
 	FinalQuery = "SELECT * FROM View_FacturasxCliente WHERE " + QueryStatus + QueryClientes + QueryFecha + "IsAutorizada = 1"
 	params = Status + Clientes + [FechaDescargaDesde, FechaDescargaHasta]
 	Facturas = View_FacturasxCliente.objects.raw(FinalQuery,params)
+	breakpoint()
 	htmlRes = render_to_string('TablaEstadosCuenta.html', {'Facturas':Facturas}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
