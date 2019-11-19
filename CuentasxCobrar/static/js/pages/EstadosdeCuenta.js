@@ -22,7 +22,7 @@ var calculo =0;
       "width": "1%",
       "mRender": function (data, type, full) {
         bandera = $('input[type=hidden]').val();
-        return '<input type="checkbox" name="checkEC" id="estiloCheckbox"/>';
+        return (full[9] != 'Cobrada' ? '<input type="checkbox" name="checkEC" id="estiloCheckbox"/>': '');
       }
     },
     {
