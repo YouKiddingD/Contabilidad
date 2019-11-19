@@ -3,11 +3,12 @@
 }
 
 footer{
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   background: #757376;
 }
+
 .modal-header {
     background-color: #d9dce65c;
     /*height: 40px;*/
@@ -45,4 +46,3 @@ footer{
 	background-size: cover;
 	cursor: pointer;
 }
-

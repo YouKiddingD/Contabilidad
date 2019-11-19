@@ -35,28 +35,28 @@ kt-menu__item--active
 							<label class="col-form-label col-lg-3 col-sm-12"><strong>Fecha: </strong></label>
 								<div class="col-lg-12 col-md-8 col-sm-12">
 									<div class="kt-input-icon pull-right" id='kt_daterangepicker_2_modal'>
-										<input type="text" class="form-control " placeholder="Desde - Hasta" name="FiltroFecha" id="cboFechaDescarga">
+										<input type="text" class="form-control " placeholder="Desde - Hasta" name="FiltroFechaCobros" id="cboFechaDescarga">
 										<span class="kt-input-icon__icon kt-input-icon__icon--right"><span><i class="la la-calendar-check-o"></i></span></span>
-                                    </div>
-                                </div>
-                        </div></br>
+                  </div>
+                </div>
+             </div></br>
 						<label class="col-form-label col-lg-3 col-sm-12"><strong>Estatus: </strong></label>
 						<div class="container">
 							<select class="selectpicker" id="cboStatus" multiple name="Status" title="Selecciona un estatus" data-width="100%" data-live-search="true">
 								<option>Pendientes</option>
-                                <option>Abonadas</option>
-                                <option>Cobradas</option>
-                            </select>
-                        </div></br>
+                <option>Abonadas</option>
+                <option>Cobradas</option>
+              </select>
+            </div></br>
 						<div class="container">
 							<label class="col-form-label col-lg-3 col-sm-12"><strong>Cliente: </strong></label>
 							<div>
 								<select class="selectpicker" id="cboCliente" multiple name="Cliente" title="Selecciona un cliente" data-width="100%" data-live-search="true">
 									<option value="Eaton">Eaton</option>
-                                    <option value="3M">3M</option>
-                                </select>
-                            </div>
-                        </div></br>
+                  <option value="3M">3M</option>
+                </select>
+              </div>
+            </div></br>
 						<div class="container">
 							<div class="dropdown dropdown-inline" data-toggle="kt-tooltip" data-placement="left">
 								<div class="form-group col-1">
@@ -64,14 +64,14 @@ kt-menu__item--active
 									<label class="kt-radio kt-radio--bold kt-radio--success">
 										<input type="radio" id="rdMXN" name="radio6" checked> MXN
 										<span></span>
-                                    </label>
+                  </label>
 									<label class="kt-radio kt-radio--bold kt-radio--brand">
 										<input type="radio" id="rdUSD" name="radio6"> USD
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div></br>
+                    <span></span>
+                  </label>
+                </div>
+              </div>
+            </div></br>
 
 						<div class="container">
 							<div class="form-group">
@@ -79,26 +79,26 @@ kt-menu__item--active
 								<div class="kt-checkbox-list">
 									<label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
 										<input type="checkbox" checked="checked" name="Subtotal"> Subtotal
-                                        <span></span>
-                                    </label>
+                    <span></span>
+                  </label>
 									<label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
 										<input type="checkbox" checked="checked" name="IVA"> IVA
 										<span></span>
-                                    </label>
+                  </label>
 									<label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
 										<input type="checkbox" checked="checked" name="Retencion"> Retencion
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                    <span></span>
+                  </label>
+                 </div>
+                </div>
+              </div>
 						<div class="container">
 							<div class="form-inline">
 								<button type="button" name="button" class="btn btn-danger btn-elevate btn-pill btn-elevate-air btn-sm" id="kt_quick_panel_close_btn">Cancelar</button>
-                                <button type="Submit" name="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" id="BtnAplicarFiltro">Aplicar</button>
-                            </div>
-                        </div>
-                    </div>
+                <button type="Submit" name="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" id="BtnAplicarFiltro">Aplicar</button>
+              </div>
+            </div>
+          </div>
                 </div>
                 <div class="tab-pane kt-quick-panel__content-padding-x fade kt-scroll" id="kt_quick_panel_tab_settings" role="tabpanel">
                 </div>
@@ -155,7 +155,7 @@ kt-menu__item--active
 									<div class="row">
 										<div class="col col-4 py-2">
 											<label for="TipoCambio">Tipo Cambio</label>
-											<input type="number" class="form-control" value="1" step="any">
+											<input type="number" name="TipoCambioCobro" class="form-control" value="1" step="any">
 										</div>
 									</div>
 								</div></br>
@@ -166,6 +166,7 @@ kt-menu__item--active
 												<th>Factura</th>
 												<th>Total</th>
 												<th>Balance</th>
+												<th>Moneda</th>
 												<th>Agregar Cobro</th>
 											</tr>
 										</thead>
@@ -174,6 +175,7 @@ kt-menu__item--active
 												<td id="folio"></td>
 												<td id="total"></td>
 												<td id="balance"></td>
+												<td></td>
 												<td id="columTotal"></td>
 											</tr>
 										</tbody>

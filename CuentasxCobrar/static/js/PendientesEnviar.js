@@ -294,30 +294,7 @@ function LimpiarModalSF()
                console.log("ok")
              }
            }
-/*
-					    if($('.uppy-DashboardContent-title').length == 0)
-					    {
-					        if(currentFile.type != 'application/pdf' && currentFile.type != 'text/xml')
-					        {
-					            console.log("solo pdf y xml")
-					        }
-					        else
-					        {
 
-					            TestFile = currentFile.type
-					        }
-
-					    }
-
-					    if($('.uppy-DashboardContent-title').length == 2)
-					    {
-                            console.log(Object.values(file)[0].meta.type)
-					        if(TestFile == currentFile.type)
-					        {
-					            uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
-					            return false
-					        }
-               }*/
              }
            });
 
