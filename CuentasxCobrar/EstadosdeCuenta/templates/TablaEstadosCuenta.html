@@ -24,17 +24,17 @@
 				</thead>
 				<tbody>
 					{% for Factura in Facturas %}
-					<tr data-IDFactura="{{Factura.IDFacturaxCliente.IDFactura}}">
+					<tr data-IDFactura="{{Factura.IDFactura}}">
 						<td></td>
-						<td style="font-weight: bold;">{{Factura.IDFacturaxCliente.Folio}}</td>
-						<td>{{Factura.IDFacturaxCliente.NombreCortoCliente}}</td>
-						<td>{{Factura.IDFacturaxCliente.FechaFactura|date:'Y/m/d'}}</td>
-						<td>{{Factura.IDFacturaxCliente.Subtotal}}</td>
-						<td>{{Factura.IDFacturaxCliente.IVA}}</td>
-						<td>{{Factura.IDFacturaxCliente.Retencion}}</td>
-						<td>{{Factura.IDFacturaxCliente.Total}}</td>
-						<td>{{Factura.IDFacturaxCliente.Saldo}}</td>
-						<td id="status">{{Factura.IDFacturaxCliente.Status}}</td>
+						<td style="font-weight: bold;">{{Factura.Folio}}</td>
+						<td>{{Factura.Cliente}}</td>
+						<td>{{Factura.FechaFactura|date:'Y/m/d'}}</td>
+						<td>{{Factura.Subtotal}}</td>
+						<td>{{Factura.IVA}}</td>
+						<td>{{Factura.Retencion}}</td>
+						<td>{{Factura.Total}}</td>
+						<td>{{Factura.Saldo}}</td>
+						<td id="status">{{Factura.Status}}</td>
 						<td></td>
 						<td></td>
 					</tr>
