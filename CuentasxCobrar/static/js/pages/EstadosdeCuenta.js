@@ -89,6 +89,7 @@ $(document).on( 'change', 'input[name="checkEC"]', function () {
           }
      });
 
+    $('#BtnAplicarFiltro').on('click', fnGetFacturas);
 
 //eliminar row de la tabla estados de cuenta
 $('#TableEstadosdeCuenta').on( 'click', '#BtnEliminarFactura', function () {
@@ -125,13 +126,13 @@ $('#TableEstadosdeCuenta').on( 'click', '#BtnEliminarFactura', function () {
 
 //elementos a mostrar al abrirse el modeal de subir cobros
 $('#modalSubirCobro').on('shown.bs.modal', function(){
-                  $('#FechaCobro').datepicker({
-                        format: 'yyyy/mm/dd',
-				    	todayHighlight: true
-			    	 });
-				  $("#FechaCobro").datepicker('setDate', 'today' );
+  $('#FechaCobro').datepicker({
+    format: 'yyyy/mm/dd',
+    todayHighlight: true
+  });
+  $("#FechaCobro").datepicker('setDate', 'today' );
 
-        });
+});
 
 
 //rago fecha para el Filtro
@@ -146,9 +147,9 @@ $('input[name="FiltroFechaCobros"]').on('apply.daterangepicker', function(ev, pi
 
 // cerrar modal de subir facturas
 $('#modalSubirCobro').on('hidden.bs.modal', function(){
-           CleanModal()
-           KTUppy.init()
-     });
+ CleanModal()
+ KTUppy.init()
+});
 
 
 //muestra los datos para la tabla del modal subir cobros al hacer click en el boton de  subir cobro
@@ -164,9 +165,9 @@ if(parseFloat($(this).val()) >= datosRow[2])
 }
 $('input#valCobro').each(function(){
    calculo = calculo + parseFloat($(this).val());
-});
-$('#AddCosto').val(calculo);
-calculo = 0;
+ });
+  $('#AddCosto').val(calculo);
+  calculo = 0;
 });
 
 
@@ -212,7 +213,7 @@ $('input[name="Retencion"]').on('change', function(e){
 
 //inicia el modal de subir complementos
 KTUtil.ready(function() {
-    KTUppy.init();
+  KTUppy.init();
 });
 
 
@@ -321,3 +322,28 @@ function ValidacionCheckboxCobros(){
 }
 
 });
+
+var fnGetFacturas = function () {
+  startDate = /*($('#cboFechaDescarga').data('daterangepicker').startDate._d).toLocaleDateString('en-US');*/"06/01/2019";
+  endDate = /*($('#cboFechaDescarga').data('daterangepicker').endDate._d).toLocaleDateString('en-US');*/ "11/01/2019";
+  arrStatus = $('#cboStatus').val();
+  arrClientes = $('#cboCliente').val();
+  strMoneda = $('#rdMXN').is(':checked') ? 'MXN' : 'USD';
+  WaitMe_Show('#divTablaFacturas');
+  fetch("/EstadosdeCuenta/FilterBy?FechaDescargaDesde="+ startDate +"&FechaDescargaHasta="+ endDate +"&Status="+ JSON.stringify(arrStatus) +"&Cliente="+ JSON.stringify(arrClientes) +"&Moneda="+ strMoneda, {
+    method: "GET",
+    credentials: "same-origin",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+  }).then(function(response){
+    return response.clone().json();
+  }).then(function(data){
+    WaitMe_Show('#divTablaFacturas');
+    $('#divTablaFacturas').html(data.htmlRes);
+    formatDataTable();
+  }).catch(function(ex){
+    console.log("no success!");
+  });
+}

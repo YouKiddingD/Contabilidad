@@ -25,6 +25,8 @@ def GetContadores():
 
 
 def GetPendientesByFilters(request):
+	FechaDescargaDesde = request.GET["FechaDescargaDesde"]
+	FechaDescargaHasta = request.GET["FechaDescargaHasta"]
 	Clientes = json.loads(request.GET["Cliente"])
 	Status = json.loads(request.GET["Status"])
 	Moneda = request.GET["Moneda"]
@@ -36,9 +38,10 @@ def GetPendientesByFilters(request):
 		QueryClientes = ""
 	else:
 		QueryClientes = "NombreCliente IN ({}) AND ".format(','.join(['%s' for _ in range(len(Clientes))]))
+	QueryFecha = "FechaDescarga BETWEEN %s AND %s AND "
 	QueryMoneda = "Moneda = %s "
-	FinalQuery = "SELECT * FROM View_PendientesEnviarCxC WHERE " + QueryStatus + QueryClientes + QueryMoneda
-	params = Status + Clientes + [Moneda]
+	FinalQuery = "SELECT * FROM View_PendientesEnviarCxC WHERE " + QueryStatus + QueryClientes + QueryFecha + QueryMoneda
+	params = Status + Clientes + [FechaDescargaDesde, FechaDescargaHasta] + [Moneda]
 	PendingToSend = View_PendientesEnviarCxC.objects.raw(FinalQuery,params)
 	htmlRes = render_to_string('TablaPendientes.html', {'pendientes':PendingToSend}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})

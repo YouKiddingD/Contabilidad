@@ -21,6 +21,9 @@ class FacturasxCliente(models.Model):
     TotalConvertido = models.DecimalField(default=0, max_digits=30, decimal_places=5)
     Status = models.CharField(max_length=15, default="Pendiente")
 
+    def __str__(self):
+        return str(self.IDFactura)
+
     class Meta:
         db_table = "FacturasxCliente"
         managed= False
@@ -51,4 +54,24 @@ class RelacionFacturaxPartidas(models.Model):
 
     class Meta:
         db_table = "RelacionFacturaxPartidas"
+        managed= False
+
+
+
+class View_FacturasxCliente(models.Model):
+    IDFactura = models.IntegerField(primary_key=True)
+    Folio = models.CharField(max_length=50)
+    Cliente = models.CharField(max_length=100)
+    FechaFactura = models.DateTimeField()
+    Subtotal = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    IVA = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    Retencion = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    Total = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    Saldo = models.DecimalField(default=0, max_digits=30, decimal_places=5)
+    RutaXML = models.CharField(max_length=300)
+    Status = models.CharField(max_length=15)
+    IsAutorizada = models.BooleanField()
+
+    class Meta:
+        db_table = "View_FacturasxCliente"
         managed= False

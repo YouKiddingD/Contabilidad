@@ -552,13 +552,13 @@ function SavePartidasxFactura(IDFactura) {
 }
 
 var fnGetPendientesEnviar = function () {
-  startDate = $('#cboFechaDescarga').data('daterangepicker').startDate._d;
-  endDate = $('#cboFechaDescarga').data('daterangepicker').endDate._d;
+  startDate = ($('#cboFechaDescarga').data('daterangepicker').startDate._d).toLocaleDateString('en-US');
+  endDate = ($('#cboFechaDescarga').data('daterangepicker').endDate._d).toLocaleDateString('en-US');
   arrStatus = $('#cboStatus').val();
   arrClientes = $('#cboCliente').val();
   strMoneda = $('#rdMXN').is(':checked') ? 'MXN' : 'USD';
   WaitMe_Show('#divTablaPendientesEnviar');
-  fetch("/PendientesEnviar/FilterBy?FechaDescargaDesde=19-mar-2019&FechaDescargaHasta=19-mar-2019&Status="+ JSON.stringify(arrStatus) +"&Cliente="+ JSON.stringify(arrClientes) +"&Moneda="+ strMoneda, {
+  fetch("/PendientesEnviar/FilterBy?FechaDescargaDesde="+ startDate +"&FechaDescargaHasta="+ endDate +"&Status="+ JSON.stringify(arrStatus) +"&Cliente="+ JSON.stringify(arrClientes) +"&Moneda="+ strMoneda, {
     method: "GET",
     credentials: "same-origin",
     headers: {
