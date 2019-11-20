@@ -1,3 +1,4 @@
+var table;
 $(document).ready(function()
 {
   var cliente;
@@ -7,70 +8,7 @@ $(document).ready(function()
   var totConv=0;
 
 //tabla estados de cuenta
-var table = $('#TableEstadosdeCuenta').DataTable({
-  "language": {
-    "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-  },
-  "responsive": false,
-  "paging": false,
-  "dom": 'Bfrtip',
-  "buttons": [
-  'excel'
-  ],
-
-  columnDefs: [ {
-    orderable: false,
-    targets:   0,
-    "className": "dt-head-center dt-body-center",
-    "width": "1%",
-    "mRender": function (data, type, full) {
-      idfac = $('input[name="EvidenciaXML"]').data("facturaid");
-      return (full[10] != 'Cobrada' ? '<input type="checkbox" name="checkEC" id="estiloCheckbox"/>': '');
-    }
-  },
-  {
-    "name": "Status",
-    "width": "5%",
-    "className": "text-center bold",
-    "targets": 1
-  },
-  {
-    "name": "Status",
-    "width": "10%",
-    "className": "dt-head-center dt-body-center",
-    "targets": [2,3]
-  },
-  {
-    "width": "5%",
-    "className": "dt-head-center dt-body-center",
-    "targets": [8,9, 10]
-
-  },
-  {
-    "className": "dt-head-center dt-body-right",
-    'width' : '5%',
-    "targets": [4,5,6,7]
-  },
-  {
-    "width": "3%",
-    "className": "dt-head-center dt-body-center",
-    "targets": 11,
-    "mRender": function (data, type, full) {
-      evXML = $('input[name="EvidenciaXML"]').data("evidenciaxml");
-      return '<a href="'+evXML+'" target="_blank" class="BtnVerXML btn btn-primary btn-elevate btn-pill btn-sm"><i class="flaticon2-file"></i></a>';
-    }
-  },
-  {
-    "width": "3%",
-    "className": "dt-head-center dt-body-center",
-    "targets": 12,
-    "mRender": function (data, type, full) {
-     return ( full[10] === 'Pendiente' ? '<button type ="button" class="BtnEliminarFactura btn btn-danger btn-elevate btn-pill btn-sm" data-idfact="'+idfac+'"><i class="flaticon-delete"></i></button>':'');
-   }
- }
- ]
-});
-
+formatDataTableFacturas();
 
 //ejecuta varias funciones cada que el checkbox es seleccionado en la tabla estados de cuenta
 $(document).on( 'change', 'input[name="checkEC"]', function () {
@@ -338,7 +276,7 @@ var fnGetFacturas = function () {
   }).then(function(data){
     WaitMe_Hide('#divTablaFacturas');
     $('#divTablaFacturas').html(data.htmlRes);
-    formatDataTable();
+    formatDataTableFacturas();
   }).catch(function(ex){
     console.log("no success!");
   });
@@ -373,4 +311,70 @@ var fnCancelarFactura = async function (IDFactura) {
   });
   WaitMe_Hide('#divTablaFacturas');
   return res;
+}
+
+function formatDataTableFacturas(){
+  table = $('#TableEstadosdeCuenta').DataTable({
+    "language": {
+      "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+    },
+    "responsive": false,
+    "paging": false,
+    "dom": 'Bfrtip',
+    "buttons": [
+    'excel'
+    ],
+
+    columnDefs: [ {
+      orderable: false,
+      targets:   0,
+      "className": "dt-head-center dt-body-center",
+      "width": "1%",
+      "mRender": function (data, type, full) {
+        idfac = $('input[name="EvidenciaXML"]').data("facturaid");
+        return (full[10] != 'Cobrada' ? '<input type="checkbox" name="checkEC" id="estiloCheckbox"/>': '');
+      }
+    },
+    {
+      "name": "Status",
+      "width": "5%",
+      "className": "text-center bold",
+      "targets": 1
+    },
+    {
+      "name": "Status",
+      "width": "10%",
+      "className": "dt-head-center dt-body-center",
+      "targets": [2,3]
+    },
+    {
+      "width": "5%",
+      "className": "dt-head-center dt-body-center",
+      "targets": [8,9, 10]
+
+    },
+    {
+      "className": "dt-head-center dt-body-right",
+      'width' : '5%',
+      "targets": [4,5,6,7]
+    },
+    {
+      "width": "3%",
+      "className": "dt-head-center dt-body-center",
+      "targets": 11,
+      "mRender": function (data, type, full) {
+        evXML = $('input[name="EvidenciaXML"]').data("evidenciaxml");
+        return '<a href="'+evXML+'" target="_blank" class="BtnVerXML btn btn-primary btn-elevate btn-pill btn-sm"><i class="flaticon2-file"></i></a>';
+      }
+    },
+    {
+      "width": "3%",
+      "className": "dt-head-center dt-body-center",
+      "targets": 12,
+      "mRender": function (data, type, full) {
+       return ( full[10] === 'Pendiente' ? '<button type ="button" class="BtnEliminarFactura btn btn-danger btn-elevate btn-pill btn-sm" data-idfact="'+idfac+'"><i class="flaticon-delete"></i></button>':'');
+     }
+   }
+   ]
+ });
 }

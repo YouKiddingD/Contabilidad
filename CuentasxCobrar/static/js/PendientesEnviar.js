@@ -9,59 +9,7 @@ var table;
 var subtotal = 0, Tiva=0, TRetencion=0, total=0;
 $(document).ready(function() {
 //Tabla Pendientes de enviar
-table = $('#TablePendientesEnviar').DataTable( {
- "language": {
-   "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
- },
- "responsive": true,
- "paging": false,
- "dom": 'Bfrtip',
- "buttons": [
- 'excel'
- ],
-
- columnDefs: [ {
-   orderable: false,
-   targets:   0,
-   "className": "dt-head-center dt-body-center",
-   "width": "1%",
-   "mRender": function (data, type, full) {
-     EvDigital = $('input[name="isEvicencias"]').data("evidenciadigital");
-     EvFisica = $('input[name="isEvicencias"]').data("evidenciafisica");
-         //idpendienteenviar = $('input[name="isEvicencias"]').data("idpendienteenviar");
-         return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox" />': '');
-       }
-     },
-     {
-      "width": "5%",
-      "className": "text-center bold",
-      "targets": 1
-    },
-    {
-      "width": "10%",
-      "className": "dt-head-center dt-body-center",
-      "targets": [2,3]
-    },
-    {
-      "width": "5%",
-      "className": "dt-head-center dt-body-center",
-      "targets": [8,9]
-
-    },
-    {
-      "className": "dt-head-center dt-body-right",
-      'width' : '5%',
-      "targets": [4,5,6,7]
-    },
-    {
-      "width": "5%",
-      "className": "dt-head-center dt-body-center",
-      "targets": 10,
-      "mRender": function (data, type, full) {
-        return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
-      }
-    }]
-  } );
+formatDataTable();
 
 //on click select row checkbox
 
@@ -578,56 +526,56 @@ var fnGetPendientesEnviar = function () {
 
 function formatDataTable() {
   table = $('#TablePendientesEnviar').DataTable( {
-   "language": {
-     "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-   },
-   "responsive": true,
-   "paging": false,
-   "dom": 'Bfrtip',
-   "buttons": [
-   'excel'
-   ],
+ "language": {
+   "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+ },
+ "responsive": true,
+ "paging": false,
+ "dom": 'Bfrtip',
+ "buttons": [
+ 'excel'
+ ],
 
-   columnDefs: [ {
-     orderable: false,
-     targets:   0,
-     "className": "dt-head-center dt-body-center",
-     "width": "1%",
-     "mRender": function (data, type, full) {
-       EvDigital = $('input[name="isEvicencias"]').data("evidenciadigital");
-       EvFisica = $('input[name="isEvicencias"]').data("evidenciafisica");
-           //idpendienteenviar = $('input[name="isEvicencias"]').data("idpendienteenviar");
-           return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox" />': '');
-         }
-       },
-       {
-        "width": "5%",
-        "className": "text-center bold",
-        "targets": 1
-      },
-      {
-        "width": "10%",
-        "className": "dt-head-center dt-body-center",
-        "targets": [2,3]
-      },
-      {
-        "width": "5%",
-        "className": "dt-head-center dt-body-center",
-        "targets": [8,9]
+ columnDefs: [ {
+   orderable: false,
+   targets:   0,
+   "className": "dt-head-center dt-body-center",
+   "width": "1%",
+   "mRender": function (data, type, full) {
+     EvDigital = $('input[name="isEvicencias"]').data("evidenciadigital");
+     EvFisica = $('input[name="isEvicencias"]').data("evidenciafisica");
+         //idpendienteenviar = $('input[name="isEvicencias"]').data("idpendienteenviar");
+         return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox" />': '');
+       }
+     },
+     {
+      "width": "5%",
+      "className": "text-center bold",
+      "targets": 1
+    },
+    {
+      "width": "10%",
+      "className": "dt-head-center dt-body-center",
+      "targets": [2,3]
+    },
+    {
+      "width": "5%",
+      "className": "dt-head-center dt-body-center",
+      "targets": [8,9]
 
-      },
-      {
-        "className": "dt-head-center dt-body-right",
-        'width' : '5%',
-        "targets": [4,5,6,7]
-      },
-      {
-        "width": "5%",
-        "className": "dt-head-center dt-body-center",
-        "targets": 10,
-        "mRender": function (data, type, full) {
-          return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
-        }
-      }]
-    } );
+    },
+    {
+      "className": "dt-head-center dt-body-right",
+      'width' : '5%',
+      "targets": [4,5,6,7]
+    },
+    {
+      "width": "5%",
+      "className": "dt-head-center dt-body-center",
+      "targets": 10,
+      "mRender": function (data, type, full) {
+        return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
+      }
+    }]
+  } );
 }
