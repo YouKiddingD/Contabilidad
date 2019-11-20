@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
     path('EstadosdeCuenta', views.EstadosdeCuenta, name='EstadosdeCuenta'),
-    path('FilterBy', views.GetFacturasByFilters, name='FilterBy'),
+    path('EstadosdeCuenta/FilterBy', views.GetFacturasByFilters, name='FilterBy'),
+    path('EstadosdeCuenta/CancelarFactura', views.CancelarFactura, name='CancelarFactura'),
 ]

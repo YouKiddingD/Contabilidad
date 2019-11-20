@@ -1,9 +1,12 @@
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from EstadosdeCuenta.models import RelacionFacturaxPartidas, View_FacturasxCliente
+from EstadosdeCuenta.models import RelacionFacturaxPartidas, View_FacturasxCliente, PendientesEnviar, RelacionConceptoxProyecto
+from django.template.loader import render_to_string
+import json, datetime
 
 
 def EstadosdeCuenta(request):
-	Facturas = View_FacturasxCliente.objects.all()
+	Facturas = View_FacturasxCliente.objects.exclude(Status = "Cancelada")
 	return render(request, 'EstadosdeCuenta.html', {'Facturas': Facturas})
 
 
@@ -21,10 +24,25 @@ def GetFacturasByFilters(request):
 		QueryClientes = ""
 	else:
 		QueryClientes = "Cliente IN ({}) AND ".format(','.join(['%s' for _ in range(len(Clientes))]))
-	QueryFecha = "FechaDescarga BETWEEN %s AND %s AND "
-	FinalQuery = "SELECT * FROM View_FacturasxCliente WHERE " + QueryStatus + QueryClientes + QueryFecha + "IsAutorizada = 1"
+	QueryFecha = "FechaFactura BETWEEN %s AND %s AND "
+	FinalQuery = "SELECT * FROM View_FacturasxCliente WHERE " + QueryStatus + QueryClientes + QueryFecha + "IsAutorizada = 0"
 	params = Status + Clientes + [FechaDescargaDesde, FechaDescargaHasta]
 	Facturas = View_FacturasxCliente.objects.raw(FinalQuery,params)
-	breakpoint()
 	htmlRes = render_to_string('TablaEstadosCuenta.html', {'Facturas':Facturas}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
+
+
+
+def CancelarFactura(request):
+	IDFactura = json.loads(request.body.decode('utf-8'))["IDFactura"]
+	conRelacionFacturaxPartidas = RelacionFacturaxPartidas.objects.filter(IDFacturaxCliente = IDFactura)
+	if conRelacionFacturaxPartidas:
+		conRelacionFacturaxPartidas[0].IDFacturaxCliente.Status = 'Cancelada'
+		conRelacionFacturaxPartidas[0].IDFacturaxCliente.save()
+		for Partida in conRelacionFacturaxPartidas:
+			Partida.IDPartida.IsActiva = False
+			conPendienteEnviar = RelacionConceptoxProyecto.objects.get(IDConcepto = Partida.IDConcepto)
+			conPendienteEnviar.IDPendienteEnviar.IsFacturaCliente = False
+			conPendienteEnviar.IDPendienteEnviar.save()
+			Partida.IDPartida.save()
+	return HttpResponse("")

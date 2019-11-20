@@ -53,7 +53,7 @@ var table = $('#TableEstadosdeCuenta').DataTable({
     "className": "dt-head-center dt-body-center",
     "targets": 10,
     "mRender": function (data, type, full) {
-     return '<button type ="button" class="btn btn-primary btn-elevate btn-pill btn-sm" id="BtnVerXML"><i class="flaticon2-file"></i></button>';
+     return '<button type ="button" class="BtnVerXML btn btn-primary btn-elevate btn-pill btn-sm" ><i class="flaticon2-file"></i></button>';
    }
  },
  {
@@ -61,7 +61,7 @@ var table = $('#TableEstadosdeCuenta').DataTable({
   "className": "dt-head-center dt-body-center",
   "targets": 11,
   "mRender": function (data, type, full) {
-   return ( full[9] === 'Pendiente' ? '<button type ="button" class="btn btn-danger btn-elevate btn-pill btn-sm" id="BtnEliminarFactura"><i class="flaticon-delete"></i></button>':'');
+   return ( full[9] === 'Pendiente' ? '<button type ="button" class="BtnEliminarFactura btn btn-danger btn-elevate btn-pill btn-sm" ><i class="flaticon-delete"></i></button>':'');
  }
 }
 ]
@@ -88,7 +88,7 @@ var table = $('#TableEstadosdeCuenta').DataTable({
     $('#BtnAplicarFiltro').on('click', fnGetFacturas);
 
         //eliminar row de la tabla estados de cuenta
-        $('#TableEstadosdeCuenta').on( 'click', '#BtnEliminarFactura', function () {
+        $('#TableEstadosdeCuenta').on( 'click', '.BtnEliminarFactura', function () {
          Swal.fire({
           title: '¿Estas Seguro?',
           text: "Estas a un click de eliminar algo importante",
@@ -97,15 +97,21 @@ var table = $('#TableEstadosdeCuenta').DataTable({
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Si'
-        }).then((result) => {
-          if (result.value) {
-            table.row($(this).parents('tr')).remove().draw();
-            Swal.fire(
-              'Eliminado!',
-              'Eliminado con exito',
-              'success'
-              )
-          }
+        }).then(function(result) {
+          if(result.value)
+            return fnCancelarFactura($(this).parents('tr').data('idfactura'));
+        }.bind(this)
+        ).then((result) => {
+            if (result) {
+              table.row($(this).parents('tr')).remove().draw();
+              Swal.fire(
+                'Eliminado!',
+                'Eliminado con exito',
+                'success'
+                )
+            }
+          else
+            alertToastError("Error al eliminar la factura");
         })
       });
 
@@ -323,4 +329,34 @@ var fnGetFacturas = function () {
   }).catch(function(ex){
     console.log("no success!");
   });
+}
+
+var fnCancelarFactura = async function (IDFactura) {
+  var res = false;
+  jParams = {
+    IDFactura: IDFactura,
+  }
+
+  await fetch("/EstadosdeCuenta/CancelarFactura", {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jParams)
+  }).then(function(response){
+    if(response.status == 200)
+    {
+      res = true;
+    }
+    else if(response.status == 500)
+    {
+      res = false;
+    }
+  }).catch(function(ex){
+    res = false;
+  });
+  return res;
 }
