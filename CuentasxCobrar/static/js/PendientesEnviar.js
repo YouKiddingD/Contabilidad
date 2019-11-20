@@ -9,51 +9,51 @@ var table;
 var subtotal = 0, Tiva=0, TRetencion=0, total=0;
 $(document).ready(function() {
 //Tabla Pendientes de enviar
- table = $('#TablePendientesEnviar').DataTable( {
-     "language": {
-       "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-     },
-     "responsive": true,
-     "paging": false,
-     "dom": 'Bfrtip',
-     "buttons": [
-               'excel'
-     ],
+table = $('#TablePendientesEnviar').DataTable( {
+ "language": {
+   "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+ },
+ "responsive": true,
+ "paging": false,
+ "dom": 'Bfrtip',
+ "buttons": [
+ 'excel'
+ ],
 
-     columnDefs: [ {
-       orderable: false,
-       targets:   0,
-       "className": "dt-head-center dt-body-center",
-       "width": "1%",
-       "mRender": function (data, type, full) {
-         EvDigital = $('input[name="isEvicencias"]').data("evidenciadigital");
-         EvFisica = $('input[name="isEvicencias"]').data("evidenciafisica");
+ columnDefs: [ {
+   orderable: false,
+   targets:   0,
+   "className": "dt-head-center dt-body-center",
+   "width": "1%",
+   "mRender": function (data, type, full) {
+     EvDigital = $('input[name="isEvicencias"]').data("evidenciadigital");
+     EvFisica = $('input[name="isEvicencias"]').data("evidenciafisica");
          //idpendienteenviar = $('input[name="isEvicencias"]').data("idpendienteenviar");
          return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox" />': '');
        }
      },
      {
-        "width": "5%",
-        "className": "text-center bold",
-        "targets": 1
-      },
-      {
-        "width": "10%",
-        "className": "dt-head-center dt-body-center",
-        "targets": [2,3]
-      },
-      {
-        "width": "5%",
-        "className": "dt-head-center dt-body-center",
-        "targets": [8,9]
+      "width": "5%",
+      "className": "text-center bold",
+      "targets": 1
+    },
+    {
+      "width": "10%",
+      "className": "dt-head-center dt-body-center",
+      "targets": [2,3]
+    },
+    {
+      "width": "5%",
+      "className": "dt-head-center dt-body-center",
+      "targets": [8,9]
 
-      },
-      {
-        "className": "dt-head-center dt-body-right",
-        'width' : '5%',
-        "targets": [4,5,6,7]
-      },
-      {
+    },
+    {
+      "className": "dt-head-center dt-body-right",
+      'width' : '5%',
+      "targets": [4,5,6,7]
+    },
+    {
       "width": "5%",
       "className": "dt-head-center dt-body-center",
       "targets": 10,
@@ -61,7 +61,7 @@ $(document).ready(function() {
         return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
       }
     }]
-} );
+  } );
 
 //on click select row checkbox
 
@@ -89,24 +89,24 @@ $(document).on('click', '#BtnSubirFacturaPendietnesEnviar',getDatos);
 $('#BtnAplicarFiltro').on('click', fnGetPendientesEnviar);
 
 $('#btnGuardarFactura').on('click', function(){
-    if($('#kt_uppy_1').data("rutaarchivoPDF") != undefined && $('#kt_uppy_1').data("rutaarchivoXML") != undefined)
+  if($('#kt_uppy_1').data("rutaarchivoPDF") != undefined && $('#kt_uppy_1').data("rutaarchivoXML") != undefined)
+  {
+    if($('#txtFolioFactura').val() != "")
     {
-      if($('#txtFolioFactura').val() != "")
-      {
-        WaitMe_Show('#WaitModalPE');
-        saveFactura();
-      }
-      else
-      {
-        alertToastError("El folio no puede estar vacio");
-      }
-
+      WaitMe_Show('#WaitModalPE');
+      saveFactura();
     }
     else
     {
-      alertToastError("Son necesarios los complementos PDF y XML");
-
+      alertToastError("El folio no puede estar vacio");
     }
+
+  }
+  else
+  {
+    alertToastError("Son necesarios los complementos PDF y XML");
+
+  }
 });
 
 
@@ -183,7 +183,7 @@ $('#kt_modal_2').on('hidden.bs.modal', function(){
 });
 
 $('input[name="TipoCambio"]').on('change', function(){
-    getDatos();
+  getDatos();
 });
 
 
@@ -295,8 +295,8 @@ function LimpiarModalSF()
              }
            }
 
-             }
-           });
+         }
+       });
 
 
          uppyDashboard.use(Dashboard, options);
@@ -324,9 +324,9 @@ function LimpiarModalSF()
                     //uppyDashboard.reset()
                     uppyDashboard.cancelAll()
 
-                 }
-                 else
-                 {
+                  }
+                  else
+                  {
                    $("#btnGuardarFactura").prop("disabled", false)
                    const urlPDF = response.body
                    $('#kt_uppy_1').data("rutaarchivoXML", urlPDF)
@@ -376,31 +376,31 @@ function getDatos(){
  subtotal = 0, Tiva=0, TRetencion=0, total=0, moneda, totalCambio=0;
  for (var i=0; i<datos.length; i++)
  {
-    moneda = datos[i][5];
-    if(datos[i][5] === "MXN")
-    {
-            var sub = parseFloat(datos[i][1]);
-            var iva = parseFloat(datos[i][2]);
-            var retencion = parseFloat(datos[i][3]);
-            var tot = parseFloat(datos[i][4]);
-            subtotal = subtotal + sub;
-            Tiva = Tiva + iva;
-            TRetencion = TRetencion + retencion;
-            total = total + tot;
-            datos[i].push("null");
+  moneda = datos[i][5];
+  if(datos[i][5] === "MXN")
+  {
+    var sub = parseFloat(datos[i][1]);
+    var iva = parseFloat(datos[i][2]);
+    var retencion = parseFloat(datos[i][3]);
+    var tot = parseFloat(datos[i][4]);
+    subtotal = subtotal + sub;
+    Tiva = Tiva + iva;
+    TRetencion = TRetencion + retencion;
+    total = total + tot;
+    datos[i].push("null");
 
-    }
-    if(datos[i][5] === "USD")
-    {
-      var tipoCambio = $('input[name="TipoCambio"]').val();
+  }
+  if(datos[i][5] === "USD")
+  {
+    var tipoCambio = $('input[name="TipoCambio"]').val();
 
-        var folio = datos[i][0];
-        var sub = parseFloat(datos[i][1]);
-        var iva = parseFloat(datos[i][2]);
-        var retencion = parseFloat(datos[i][3]);
-        var tot = parseFloat(datos[i][4]);
-        var totCambio = (parseFloat(datos[i][4]) * tipoCambio);
-        datos[i].push(totCambio);
+    var folio = datos[i][0];
+    var sub = parseFloat(datos[i][1]);
+    var iva = parseFloat(datos[i][2]);
+    var retencion = parseFloat(datos[i][3]);
+    var tot = parseFloat(datos[i][4]);
+    var totCambio = (parseFloat(datos[i][4]) * tipoCambio);
+    datos[i].push(totCambio);
         //newData.push([folio, sub, iva, retencion, tot]);
         subtotal = subtotal + sub;
         Tiva = Tiva + iva;
@@ -408,23 +408,23 @@ function getDatos(){
         total = total + tot;
         totalCambio = totalCambio + totCambio;
 
+      }
     }
- }
 
- var h = [datos];
- var table = $('#ResumTable').DataTable({
+    var h = [datos];
+    var table = $('#ResumTable').DataTable({
      destroy: true,
      data: h[0],
      columnDefs: [
-       {
-         "targets": 0,
-         "className": "dt-head-center dt-body-center bold"
-       },
-       {
-         "targets": [1,2,3,4],
-         "className": "dt-head-center dt-body-right"
-       },
-       {
+     {
+       "targets": 0,
+       "className": "dt-head-center dt-body-center bold"
+     },
+     {
+       "targets": [1,2,3,4],
+       "className": "dt-head-center dt-body-right"
+     },
+     {
        "targets": 5,
        "className": "dt-head-center dt-body-center"
      },
@@ -433,65 +433,63 @@ function getDatos(){
        "width": "10%",
        "className": "dt-head-center dt-body-center"
      }
-   ]
+     ]
 
-     });
+   });
 
-$('#sub').html('<strong>$'+subtotal+'</strong>');
-$('#iva').html('<strong>$'+Tiva+'</strong>');
-$('#retencion').html('<strong>$'+TRetencion+'</strong>');
-$('#total').html('<strong>$'+total+'</strong>');
-$('#Moneda').html('');
-$('#totalCambio').html('<strong>$'+truncarDecimales(totalCambio, 2)+'<strong>');
-}
-
-
-function saveFactura() {
-  jParams = {
-    FolioFactura: $('#txtFolioFactura').val(),
-    Cliente: cliente,
-    FechaFactura: $('#FechaFactura').val(),
-    FechaRevision: $('#FechaRevision').val(),
-    FechaVencimiento: $('#FechaVencimiento').val(),
-    Moneda: moneda,
-    SubTotal: subtotal,
-    IVA: Tiva,
-    Retencion: TRetencion,
-    Total: total,
-    RutaXML: $('#kt_uppy_1').data("rutaarchivoXML"),
-    RutaPDF: $('#kt_uppy_1').data("rutaarchivoPDF"),
-    TipoCambio: $('#txtTipoCambio').val(),
-    Comentarios: $('#txtComentarios').val(),
+    $('#sub').html('<strong>$'+subtotal+'</strong>');
+    $('#iva').html('<strong>$'+Tiva+'</strong>');
+    $('#retencion').html('<strong>$'+TRetencion+'</strong>');
+    $('#total').html('<strong>$'+total+'</strong>');
+    $('#Moneda').html('');
+    $('#totalCambio').html('<strong>$'+truncarDecimales(totalCambio, 2)+'<strong>');
   }
 
-  fetch("/PendientesEnviar/SaveFactura", {
-    method: "POST",
-    credentials: "same-origin",
-    headers: {
-      "X-CSRFToken": getCookie("csrftoken"),
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(jParams)
-  }).then(function(response){
 
-    if(response.status == 200)
-    {
-      WaitMe_Hide('#WaitModalPE');
-      $("#kt_modal_2").modal('hide');
-      $('#BtnSubirFacturaPendietnesEnviar').prop("disabled", true);
-    //  console.log(ids);
-      return response.clone().json();
+  function saveFactura() {
+    jParams = {
+      FolioFactura: $('#txtFolioFactura').val(),
+      Cliente: cliente,
+      FechaFactura: $('#FechaFactura').val(),
+      FechaRevision: $('#FechaRevision').val(),
+      FechaVencimiento: $('#FechaVencimiento').val(),
+      Moneda: moneda,
+      SubTotal: subtotal,
+      IVA: Tiva,
+      Retencion: TRetencion,
+      Total: total,
+      RutaXML: $('#kt_uppy_1').data("rutaarchivoXML"),
+      RutaPDF: $('#kt_uppy_1').data("rutaarchivoPDF"),
+      TipoCambio: $('#txtTipoCambio').val(),
+      Comentarios: $('#txtComentarios').val(),
     }
-    else if(response.status == 500)
-    {
-      Swal.fire({
-        type: 'error',
-        title: 'El folio indicado ya existe en el sistema',
-        showConfirmButton: false,
-        timer: 2500
-      })
-      WaitMe_Hide('#WaitModalPE');
+
+    fetch("/PendientesEnviar/SaveFactura", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken"),
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(jParams)
+    }).then(function(response){
+
+      if(response.status == 200)
+      {
+        $('#BtnSubirFacturaPendietnesEnviar').prop("disabled", true);
+    //  console.log(ids);
+    return response.clone().json();
+  }
+  else if(response.status == 500)
+  {
+    Swal.fire({
+      type: 'error',
+      title: 'El folio indicado ya existe en el sistema',
+      showConfirmButton: false,
+      timer: 2500
+    })
+    WaitMe_Hide('#WaitModalPE');
       //console.log("El folio indicado ya existe en el sistema");
     }
 
@@ -527,9 +525,12 @@ function SavePartidasxFactura(IDFactura) {
   }).then(function(response){
     if(response.status == 200)
     {
-      let inputCheck = $("input[name='checkPE']:checked");
+      WaitMe_Hide('#WaitModalPE');
+      $("#kt_modal_2").modal('hide');
       var table = $('#TablePendientesEnviar').DataTable();
-      table.row($(inputCheck).parents('tr')).remove().draw();
+      $("#TablePendientesEnviar input[name=checkPE]:checked").each(function () {
+        table.row($(this).parents('tr')).remove().draw();
+      });
 
       Swal.fire({
         type: 'success',
@@ -577,50 +578,50 @@ var fnGetPendientesEnviar = function () {
 
 function formatDataTable() {
   table = $('#TablePendientesEnviar').DataTable( {
-       "language": {
-         "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-       },
-       "responsive": true,
-       "paging": false,
-       "dom": 'Bfrtip',
-       "buttons": [
-                 'excel'
-       ],
+   "language": {
+     "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+   },
+   "responsive": true,
+   "paging": false,
+   "dom": 'Bfrtip',
+   "buttons": [
+   'excel'
+   ],
 
-       columnDefs: [ {
-         orderable: false,
-         targets:   0,
-         "className": "dt-head-center dt-body-center",
-         "width": "1%",
-         "mRender": function (data, type, full) {
-           EvDigital = $('input[name="isEvicencias"]').data("evidenciadigital");
-           EvFisica = $('input[name="isEvicencias"]').data("evidenciafisica");
+   columnDefs: [ {
+     orderable: false,
+     targets:   0,
+     "className": "dt-head-center dt-body-center",
+     "width": "1%",
+     "mRender": function (data, type, full) {
+       EvDigital = $('input[name="isEvicencias"]').data("evidenciadigital");
+       EvFisica = $('input[name="isEvicencias"]').data("evidenciafisica");
            //idpendienteenviar = $('input[name="isEvicencias"]').data("idpendienteenviar");
            return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<input type="checkbox" name="checkPE" id="estiloCheckbox" />': '');
          }
        },
        {
-          "width": "5%",
-          "className": "text-center bold",
-          "targets": 1
-        },
-        {
-          "width": "10%",
-          "className": "dt-head-center dt-body-center",
-          "targets": [2,3]
-        },
-        {
-          "width": "5%",
-          "className": "dt-head-center dt-body-center",
-          "targets": [8,9]
+        "width": "5%",
+        "className": "text-center bold",
+        "targets": 1
+      },
+      {
+        "width": "10%",
+        "className": "dt-head-center dt-body-center",
+        "targets": [2,3]
+      },
+      {
+        "width": "5%",
+        "className": "dt-head-center dt-body-center",
+        "targets": [8,9]
 
-        },
-        {
-          "className": "dt-head-center dt-body-right",
-          'width' : '5%',
-          "targets": [4,5,6,7]
-        },
-        {
+      },
+      {
+        "className": "dt-head-center dt-body-right",
+        'width' : '5%',
+        "targets": [4,5,6,7]
+      },
+      {
         "width": "5%",
         "className": "dt-head-center dt-body-center",
         "targets": 10,
@@ -628,5 +629,5 @@ function formatDataTable() {
           return (EvDigital != 'False' && full[9] == 'Finalizado' && EvFisica != 'False' ? '<a class="kt-badge kt-badge--warning kt-badge--inline" data-toggle="modal" data-target="#ModalVerEvidencias" data-backdrop="static" data-keyboard="false"><i class="flaticon2-image-file"></i></a>':'');
         }
       }]
-  } );
+    } );
 }
