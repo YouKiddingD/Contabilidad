@@ -477,16 +477,6 @@ function saveFactura() {
 
     if(response.status == 200)
     {
-      let inputCheck = $("input[name='checkPE']:checked");
-      var table = $('#TablePendientesEnviar').DataTable();
-      table.row($(inputCheck).parents('tr')).remove().draw();
-
-      Swal.fire({
-        type: 'success',
-        title: 'Factura guardada correctamente',
-        showConfirmButton: false,
-        timer: 1500
-      })
       WaitMe_Hide('#WaitModalPE');
       $("#kt_modal_2").modal('hide');
       $('#BtnSubirFacturaPendietnesEnviar').prop("disabled", true);
@@ -537,7 +527,16 @@ function SavePartidasxFactura(IDFactura) {
   }).then(function(response){
     if(response.status == 200)
     {
-      console.log("Partida guardada correctamente.");
+      let inputCheck = $("input[name='checkPE']:checked");
+      var table = $('#TablePendientesEnviar').DataTable();
+      table.row($(inputCheck).parents('tr')).remove().draw();
+
+      Swal.fire({
+        type: 'success',
+        title: 'Factura guardada correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
       $('#divTablaPendientesEnviar').html(data.htmlRes)
       formatDataTable();
     }

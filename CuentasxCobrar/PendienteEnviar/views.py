@@ -59,6 +59,8 @@ def SaveFactura(request):
 	newFactura.Moneda = jParams["Moneda"]
 	newFactura.Subtotal = jParams["SubTotal"]
 	newFactura.IVA = jParams["IVA"]
+	newFactura.Total = jParams["Total"]
+	newFactura.Saldo = jParams["Total"]
 	newFactura.Retencion = jParams["Retencion"]
 	newFactura.TipoCambio = jParams["TipoCambio"]
 	newFactura.Comentarios = jParams["Comentarios"]
