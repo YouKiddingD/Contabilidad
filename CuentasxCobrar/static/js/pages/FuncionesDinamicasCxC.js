@@ -9,14 +9,7 @@ function ContadorCheck(input, btnSubir)
     }
    });
    $(btnSubir).prop('disabled', !cont !=0);
- /* if(cont != 0)
-  {
-
-  }
-  else
-  {
-    $(btnSubir).prop('disabled', true);
-  }*/
+return cont;
 }
 
 
@@ -24,7 +17,7 @@ function ContadorCheck(input, btnSubir)
 "use strict";
 
 		// Class definition
-		var KTUppy = function () {
+		var KTUppyEvidencias = function () {
 			const Tus = Uppy.Tus;
 			const ProgressBar = Uppy.ProgressBar;
 			const StatusBar = Uppy.StatusBar;
@@ -39,9 +32,9 @@ function ContadorCheck(input, btnSubir)
 
 
 			// Private functions
-			var initUppy1 = function(){
-				var id = '#kt_uppy_1';
-
+			var PluginEvicencias = function(idP, ver){
+				//var id = '#kt_uppy_1';
+        var id = idP;
 				var options = {
 					proudlyDisplayPoweredByUppy: false,
 					target: id,
@@ -58,7 +51,7 @@ function ContadorCheck(input, btnSubir)
            browserBackButtonClose: true
          }
 
-         var uppyDashboard = Uppy.Core({
+         var uppyDashboard1 = Uppy.Core({
            autoProceed: false,
            restrictions: {
 						maxFileSize: 5000000, // 5mb
@@ -68,10 +61,11 @@ function ContadorCheck(input, btnSubir)
          },
          locale: Uppy.locales.es_ES,
          onBeforeFileAdded: (currentFile, file) => {
-
-           console.log(currentFile.type)
-           console.log($('.uppy-DashboardContent-title').length)
-           if($('.uppy-DashboardContent-title').length == 0)
+           console.log(Object.values(file));
+          // console.log(currentFile.type)
+          // console.log($('.uppy-DashboardContent-title').length)
+           //if($('.uppy-DashboardContent-title').length == 0)
+           if(Object.values(file)[0] === undefined)
            {
              console.log("+1")
            }
@@ -79,7 +73,7 @@ function ContadorCheck(input, btnSubir)
            {
              if((currentFile.type === Object.values(file)[0].meta.type))
              {
-               uppyDashboard.info(`Los archivos deben ser diferentes`, 'error', 500)
+               uppyDashboard1.info(`Los archivos deben ser diferentes`, 'error', 500)
                return false
              }
              else
@@ -92,26 +86,26 @@ function ContadorCheck(input, btnSubir)
            });
 
 
-         uppyDashboard.use(Dashboard, options);
-         uppyDashboard.use(XHRUpload, { endpoint: 'https://api-bkg-test.logistikgo.com/api/Viaje/SaveevidenciaTest', method: 'post'});
+         uppyDashboard1.use(Dashboard, options);
+         uppyDashboard1.use(XHRUpload, { endpoint: 'https://api-bkg-test.logistikgo.com/api/Viaje/SaveevidenciaTest', method: 'post'});
 				//uppyDashboard.use(XHRUpload, { endpoint: 'http://localhost:63510/api/Viaje/SaveevidenciaTest', method: 'post'});
-				uppyDashboard.use(GoogleDrive, { target: Dashboard, companionUrl: 'https://companion.uppy.io' });
-        uppyDashboard.on('upload-success', (file, response) => {
+				uppyDashboard1.use(GoogleDrive, { target: Dashboard, companionUrl: 'https://companion.uppy.io' });
+        uppyDashboard1.on('upload-success', (file, response) => {
           console.log(file)
           const fileName = file.name
           if (file.extension === 'pdf')
           {
            const urlPDF = response.body
-           $('#kt_uppy_1').data("rutaarchivoPDF", urlPDF)
-           document.querySelector('.uploaded-files').innerHTML +=
+           $(idP).data("rutaarchivoPDF", urlPDF)
+           document.querySelector(ver).innerHTML +=
            `<ol><li id="listaArchivos"><a href="${urlPDF}" target="_blank" name="url" id="RutaPDF">${fileName}</a></li></ol>`
                  //  console.log($('#kt_uppy_1').data("rutaarchivoPDF"))
                }
                else
                {
                  const urlPDF = response.body
-                 $('#kt_uppy_1').data("rutaarchivoXML", urlPDF)
-                 document.querySelector('.uploaded-files').innerHTML +=
+                 $(idP).data("rutaarchivoXML", urlPDF)
+                 document.querySelector(ver).innerHTML +=
                  `<ol><li id="listaArchivos"><a href="${urlPDF}" target="_blank" name="url" id="RutaXML">${fileName}</a></li></ol>`
                    //console.log($('#kt_uppy_1').data("rutaarchivoXML"))
                  }
@@ -122,8 +116,8 @@ function ContadorCheck(input, btnSubir)
       }
       return {
 				// public functions
-				init: function() {
-					initUppy1();
+				init: function(id, ver) {
+					PluginEvicencias(id, ver);
 				}
 			};
 		}();
