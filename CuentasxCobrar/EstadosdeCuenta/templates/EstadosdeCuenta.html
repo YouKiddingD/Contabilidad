@@ -15,102 +15,102 @@ kt-menu__item--active
 			<span class="badge badge-pill badge-success"> Cobradas <span class="badge badge-pill badge-secondary"><strong>0</strong></span></span>
 		</div>
 
-        <div class="kt-header__topbar-item kt-header__topbar-item--quick-panel" data-toggle="kt-tooltip" title="Filtros" data-placement="right">
+		<div class="kt-header__topbar-item kt-header__topbar-item--quick-panel" data-toggle="kt-tooltip" title="Filtros" data-placement="right">
 			<span class="kt-header__topbar-icon" id="kt_quick_panel_toggler_btn">
-                <button type="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm" id="BtnOpenFiltros">Filtros</button>
-            </span>
-        </div>
-
-    </div>
+				<button type="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm" id="BtnOpenFiltros">Filtros</button>
+			</span>
+		</div>
+	</div>
 </div>
 {% endblock %}
 
 {% block FiltrosEstadosdeCuenta %}
-    <div id="kt_quick_panel" class="kt-quick-panel">
-		<div class="kt-quick-panel__content">
-			<div class="tab-content">
-				<div class="tab-pane fade show kt-scroll active" id="kt_quick_panel_tab_notifications" role="tabpanel">
-					<div class="kt-notification">
-						<div class="kt-subheader__main">
-							<label class="col-form-label col-lg-3 col-sm-12"><strong>Fecha: </strong></label>
-								<div class="col-lg-12 col-md-8 col-sm-12">
-									<div class="kt-input-icon pull-right" id='kt_daterangepicker_2_modal'>
-										<input type="text" class="form-control " placeholder="Desde - Hasta" name="FiltroFechaCobros" id="cboFechaDescarga">
-										<span class="kt-input-icon__icon kt-input-icon__icon--right"><span><i class="la la-calendar-check-o"></i></span></span>
-                  </div>
-                </div>
-             </div></br>
-						<label class="col-form-label col-lg-3 col-sm-12"><strong>Estatus: </strong></label>
-						<div class="container">
-							<select class="selectpicker" id="cboStatus" multiple name="Status" title="Selecciona un estatus" data-width="100%" data-live-search="true">
-								<option>Pendientes</option>
-                <option>Abonadas</option>
-                <option>Cobradas</option>
-              </select>
-            </div></br>
-						<div class="container">
-							<label class="col-form-label col-lg-3 col-sm-12"><strong>Cliente: </strong></label>
-							<div>
-								<select class="selectpicker" id="cboCliente" multiple name="Cliente" title="Selecciona un cliente" data-width="100%" data-live-search="true">
-									<option value="Eaton">Eaton</option>
-                  <option value="3M">3M</option>
-                </select>
-              </div>
-            </div></br>
-						<div class="container">
-							<div class="dropdown dropdown-inline" data-toggle="kt-tooltip" data-placement="left">
-								<div class="form-group col-1">
-									<label class="col-form-label col-lg-3 col-sm-12"><strong>Moneda: </strong></label>
-									<label class="kt-radio kt-radio--bold kt-radio--success">
-										<input type="radio" id="rdMXN" name="radio6" checked> MXN
-										<span></span>
-                  </label>
-									<label class="kt-radio kt-radio--bold kt-radio--brand">
-										<input type="radio" id="rdUSD" name="radio6"> USD
-                    <span></span>
-                  </label>
-                </div>
-              </div>
-            </div></br>
+<div id="kt_quick_panel" class="kt-quick-panel">
+	<div class="kt-quick-panel__content">
+		<div class="tab-content">
+			<div class="tab-pane fade show kt-scroll active" id="kt_quick_panel_tab_notifications" role="tabpanel">
+				<div class="kt-notification">
+					<div class="kt-subheader__main">
+						<label class="col-form-label col-lg-3 col-sm-12"><strong>Fecha: </strong></label>
+						<div class="col-lg-12 col-md-8 col-sm-12">
+							<div class="kt-input-icon pull-right" id='kt_daterangepicker_2_modal'>
+								<input type="text" class="form-control " placeholder="Desde - Hasta" name="FiltroFechaCobros" id="cboFechaDescarga">
+								<span class="kt-input-icon__icon kt-input-icon__icon--right"><span><i class="la la-calendar-check-o"></i></span></span>
+							</div>
+						</div>
+					</div></br>
+					<label class="col-form-label col-lg-3 col-sm-12"><strong>Estatus: </strong></label>
+					<div class="container">
+						<select class="selectpicker" id="cboStatus" multiple name="Status" title="Selecciona un estatus" data-width="100%" data-live-search="true">
+							<option>Pendiente</option>
+							<option>Abonada</option>
+							<option>Cobrada</option>
+							<option>Cancelada</option>
+						</select>
+					</div></br>
+					<div class="container">
+						<label class="col-form-label col-lg-3 col-sm-12"><strong>Cliente: </strong></label>
+						<div>
+							<select class="selectpicker" id="cboCliente" multiple name="Cliente" title="Selecciona un cliente" data-width="100%" data-live-search="true">
+								<option value="Eaton">Eaton</option>
+								<option value="3M">3M</option>
+							</select>
+						</div>
+					</div></br>
+					<div class="container">
+						<div class="dropdown dropdown-inline" data-toggle="kt-tooltip" data-placement="left">
+							<div class="form-group col-1">
+								<label class="col-form-label col-lg-3 col-sm-12"><strong>Moneda: </strong></label>
+								<label class="kt-radio kt-radio--bold kt-radio--success">
+									<input type="radio" id="rdMXN" name="radio6" checked> MXN
+									<span></span>
+								</label>
+								<label class="kt-radio kt-radio--bold kt-radio--brand">
+									<input type="radio" id="rdUSD" name="radio6"> USD
+									<span></span>
+								</label>
+							</div>
+						</div>
+					</div></br>
 
-						<div class="container">
-							<div class="form-group">
-							    <label>Campos de la tabla</label>
-								<div class="kt-checkbox-list">
-									<label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
-										<input type="checkbox" checked="checked" name="Subtotal"> Subtotal
-                    <span></span>
-                  </label>
-									<label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
-										<input type="checkbox" checked="checked" name="IVA"> IVA
-										<span></span>
-                  </label>
-									<label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
-										<input type="checkbox" checked="checked" name="Retencion"> Retencion
-                    <span></span>
-                  </label>
-                 </div>
-                </div>
-              </div>
-						<div class="container">
-							<div class="form-inline">
-								<button type="button" name="button" class="btn btn-danger btn-elevate btn-pill btn-elevate-air btn-sm" id="kt_quick_panel_close_btn">Cancelar</button>
-                <button type="Submit" name="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" id="BtnAplicarFiltro">Aplicar</button>
-              </div>
-            </div>
-          </div>
-                </div>
-                <div class="tab-pane kt-quick-panel__content-padding-x fade kt-scroll" id="kt_quick_panel_tab_settings" role="tabpanel">
-                </div>
-            </div>
-        </div>
-    </div>
+					<div class="container">
+						<div class="form-group">
+							<label>Campos de la tabla</label>
+							<div class="kt-checkbox-list">
+								<label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+									<input type="checkbox" checked="checked" name="Subtotal"> Subtotal
+									<span></span>
+								</label>
+								<label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+									<input type="checkbox" checked="checked" name="IVA"> IVA
+									<span></span>
+								</label>
+								<label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+									<input type="checkbox" checked="checked" name="Retencion"> Retencion
+									<span></span>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="container">
+						<div class="form-inline">
+							<button type="button" name="button" class="btn btn-danger btn-elevate btn-pill btn-elevate-air btn-sm" id="kt_quick_panel_close_btn">Cancelar</button>
+							<button type="Submit" name="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air btn-sm float-right" id="BtnAplicarFiltro">Aplicar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane kt-quick-panel__content-padding-x fade kt-scroll" id="kt_quick_panel_tab_settings" role="tabpanel">
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}
 
 {% block EstadosdeCuenta %}
-	<div id="divTablaFacturas">
+<div id="divTablaFacturas">
 	{% include "TablaEstadosCuenta.html" %}
-	</div>
+</div>
 {% endblock %}
 
 {% block SubirCobro %}
@@ -144,14 +144,14 @@ kt-menu__item--active
 										</div>
 										<div class="col-md-4 offset-md-4">
 											<label for="FechaCobro">Fecha Cobro:</label>
-										<div class="input-group date">
-											<input type="text" class="form-control" name="FechaCobro" id="FechaCobro">
-											<div class="input-group-append">
-												<span class="input-group-text">
-													<i class="la la-calendar"></i>
-												</span>
+											<div class="input-group date">
+												<input type="text" class="form-control" name="FechaCobro" id="FechaCobro">
+												<div class="input-group-append">
+													<span class="input-group-text">
+														<i class="la la-calendar"></i>
+													</span>
+												</div>
 											</div>
-										</div>
 										</div>
 									</div>
 									<div class="row">
@@ -189,46 +189,46 @@ kt-menu__item--active
 										</div>
 									</div>
 								</div>
-						 	</div>
+							</div>
 
-						<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-							<div class="container">
-							  <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-								<div class="col-lg-12">
-									<div class="kt-portlet kt-portlet--height-fluid">
-										<div class="kt-portlet__head">
-											<div class="kt-portlet__head-label">
-												<h3 class="kt-portlet__head-title">
-													PDF y XML
-												</h3>
-											</div>
-										</div>
-										<div class="kt-portlet__body">
-											<div class="kt-uppy" id="kt_uppy_1" data-rutaarchivoPDF="" data-rutaarchivoXML="">
-												<div  class="kt-uppy__dashboard"></div>
-												<div class="kt-uppy__progress"></div>
+							<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+								<div class="container">
+									<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+										<div class="col-lg-12">
+											<div class="kt-portlet kt-portlet--height-fluid">
+												<div class="kt-portlet__head">
+													<div class="kt-portlet__head-label">
+														<h3 class="kt-portlet__head-title">
+															PDF y XML
+														</h3>
+													</div>
+												</div>
+												<div class="kt-portlet__body">
+													<div class="kt-uppy" id="kt_uppy_1" data-rutaarchivoPDF="" data-rutaarchivoXML="">
+														<div  class="kt-uppy__dashboard"></div>
+														<div class="kt-uppy__progress"></div>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
+									<!--ver archivos subidos (PDF y XML)-->
+									<div class="uploaded-files">
+										<h5>Archivos Subidos:</h5>
+										<ol></ol>
+									</div>
 								</div>
-							  </div>
-							<!--ver archivos subidos (PDF y XML)-->
-							<div class="uploaded-files">
-								<h5>Archivos Subidos:</h5>
-								<ol></ol>
-							</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-success btn-elevate" id="btnSaveCobro">Guardar</button>
-			<button type="button" class="btn btn-danger btn-elevate " data-dismiss="modal" id="cerrarModalSF">Close</button>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success btn-elevate" id="btnSaveCobro">Guardar</button>
+				<button type="button" class="btn btn-danger btn-elevate " data-dismiss="modal" id="cerrarModalSF">Close</button>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 <!--end modal subir facturas-->
 {% endblock %}
