@@ -12,8 +12,6 @@ $(document).ready(function() {
 formatDataTable();
 
 //on click select row checkbox
-
-        //var table = $('#TablePendientesEnviar').DataTable();
         $(document).on( 'change', 'input[name="checkPE"]', function () {
           var input = 'input[name="checkPE"]';
           var btnSubir = '#BtnSubirFacturaPendietnesEnviar';

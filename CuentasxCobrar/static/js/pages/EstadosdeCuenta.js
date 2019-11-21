@@ -313,6 +313,10 @@ var fnCancelarFactura = async function (IDFactura) {
   return res;
 }
 
+function SaveCobro(){
+  
+}
+
 function formatDataTableFacturas(){
   table = $('#TableEstadosdeCuenta').DataTable({
     "language": {
