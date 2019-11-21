@@ -11,11 +11,15 @@ footer{
 
 .modal-header {
     background-color: #d9dce65c;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
     /*height: 40px;*/
  }
-/*.modal-footer {
-   height: 45px
- }*/
+ .modal-content
+ {
+   border-radius: 20px;
+ }
+
 #exampleModalLabel{
   color: white;
 }
@@ -54,4 +58,12 @@ footer{
 #seeAlert
 {
   display: none;
+}
+
+#seeFolioAndComen
+{
+  display: none;
+}
+#fragmentada{
+  padding-left: 400px;
 }

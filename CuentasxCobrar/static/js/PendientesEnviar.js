@@ -39,6 +39,8 @@ $('input[name="Fragmentada"]').on("change", function()
   {
     $('#see').show();
     $('#seeAlert').show();
+    $('#seeFolioAndComen').show();
+
     var verEv = ".uploaded-files-fragmentadas";
         KTUppyEvidencias.init(divID, verEv);
   }
@@ -47,6 +49,7 @@ $('input[name="Fragmentada"]').on("change", function()
     $(divID).remove();
     $('#see').hide();
     $('#seeAlert').hide();
+    $('#seeFolioAndComen').hide();
   }
 });
 

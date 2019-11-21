@@ -140,9 +140,9 @@ kt-menu__item--active
 									<div class="row">
 										<div class="col-md-4">
 											<label>Folio Cobro:</label>
-											<input type="text" class="form-control form-control-sm" name="FolioCobro" required>
+											<input type="text" class="form-control" name="FolioCobro" required>
 										</div>
-										<div class="col-md-4 offset-md-4">
+										<div class="col-md-4">
 											<label for="FechaCobro">Fecha Cobro:</label>
 											<div class="input-group date">
 												<input type="text" class="form-control" name="FechaCobro" id="FechaCobro">
@@ -153,11 +153,15 @@ kt-menu__item--active
 												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col col-4 py-2">
+										<div class="col col-4">
 											<label for="TipoCambio">Tipo Cambio</label>
 											<input type="number" name="TipoCambioCobro" class="form-control" value="1" step="any">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col col-12 py-2">
+											<label for="TipoCambio">Comentarios</label>
+											<input type="text" name="comentariosEC" class="form-control">
 										</div>
 									</div>
 								</div></br>
@@ -185,7 +189,12 @@ kt-menu__item--active
 									<div class="row justify-content-end">
 										<div class="col-md-3 offset-md-3">
 											<label><strong>Total: </strong></label>
-											<input type="text" id="AddCosto" disabled>
+											<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text">$</span>
+													</div>
+													<input type="text" class="form-control" id="AddCosto" disabled>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -204,7 +213,7 @@ kt-menu__item--active
 													</div>
 												</div>
 												<div class="kt-portlet__body">
-													<div class="kt-uppy" id="kt_uppy_1" data-rutaarchivoPDF="" data-rutaarchivoXML="">
+													<div class="kt-uppy" id="ComplementosCobros" data-rutaarchivoPDF="" data-rutaarchivoXML="">
 														<div  class="kt-uppy__dashboard"></div>
 														<div class="kt-uppy__progress"></div>
 													</div>
@@ -213,7 +222,7 @@ kt-menu__item--active
 										</div>
 									</div>
 									<!--ver archivos subidos (PDF y XML)-->
-									<div class="uploaded-files">
+									<div class="uploaded-files-pagos">
 										<h5>Archivos Subidos:</h5>
 										<ol></ol>
 									</div>
@@ -231,6 +240,46 @@ kt-menu__item--active
 	</div>
 </div>
 <!--end modal subir facturas-->
+
+<!-- Modal ver detalles de la factura(viajes en esa factura) -->
+<div class="modal fade" id="detallesFactura" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-dark" id="exampleModalLabel">Detalles de la factura</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+        	<thead>
+        			<th>Folio viaje</th>
+							<th>Fecha Factura</th>
+							<th>Subtotal</th>
+							<th>IVA</th>
+							<th>Retencion</th>
+							<th>Total</th>
+        	</thead>
+					<tbody>
+						<tr>
+							<td>BKG000001</td>
+							<td>2019/03/12</td>
+							<td>8000.00</td>
+							<td>350.00</td>
+							<td>150.00</td>
+							<td>75.20</td>
+						</tr>
+					</tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
