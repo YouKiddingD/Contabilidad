@@ -27,17 +27,17 @@
 					{% for Factura in Facturas %}
 					<tr>
 						<td></td>
-						<td style="font-weight: bold;">{{Factura.IDFacturaxCliente.Folio}}</td>
-						<td>{{Factura.IDFacturaxCliente.NombreCortoCliente}}</td>
-						<td>{{Factura.IDFacturaxCliente.FechaFactura|date:'Y/m/d'}}</td>
-						<td>{{Factura.IDFacturaxCliente.Subtotal}}</td>
-						<td>{{Factura.IDFacturaxCliente.IVA}}</td>
-						<td>{{Factura.IDFacturaxCliente.Retencion}}</td>
-						<td>{{Factura.IDFacturaxCliente.Total}}</td>
-						<td>{{Factura.IDFacturaxCliente.Saldo}}</td>
+						<td style="font-weight: bold;">{{Factura.Folio}}</td>
+						<td>{{Factura.Cliente}}</td>
+						<td>{{Factura.FechaFactura|date:'Y/m/d'}}</td>
+						<td>{{Factura.Subtotal}}</td>
+						<td>{{Factura.IVA}}</td>
+						<td>{{Factura.Retencion}}</td>
+						<td>{{Factura.Total}}</td>
+						<td>{{Factura.Saldo}}</td>
 						<td>{{Factura.IDFacturaxCliente.Moneda}}</td>
-						<td>{{Factura.IDFacturaxCliente.Status}}</td>
-						<td><input name="EvidenciaXML" type="hidden" data-facturaid="{{Factura.IDFacturaxCliente.IDFactura}}"  data-evidenciaxml="{{Factura.IDFacturaxCliente.RutaXML}}"></td>
+						<td>{{Factura.Status}}</td>
+						<td><input name="EvidenciaXML" type="hidden" data-facturaid="{{Factura.IDFactura}}"  data-evidenciaxml="{{Factura.RutaXML}}"></td>
 						<td></td>
 					</tr>
 					{%endfor%}

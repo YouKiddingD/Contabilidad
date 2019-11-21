@@ -73,15 +73,36 @@ $(document).ready(function() {
           {
             FiltroCheckboxCliente();
             adddatos();
-            ContadorCheck(input, btnSubir);
+          var a =  ContadorCheck(input, btnSubir);
+          (a != 1) ? $('input[name="Fragmentada"]').prop('disabled', true) : $('input[name="Fragmentada"]').prop('disabled', false);
           }
           else
           {
-           var a = adddatos();
-           ContadorCheck(input, btnSubir);
+            adddatos();
+           var a = ContadorCheck(input, btnSubir);
+           (a != 1) ? $('input[name="Fragmentada"]').prop('disabled', true) : $('input[name="Fragmentada"]').prop('disabled', false);
          }
        });
 
+$('input[name="Fragmentada"]').on("change", function()
+{
+  document.querySelector('#divFragmentada').innerHTML +=
+  `<div class="kt-portlet__body"><div class"kt-uppy" id="Fragmentada"><div class="kt-uppy__dashboard"><div class="kt-uppy__progress"></div></div></div></div>`
+  var divID = "#Fragmentada";
+  if($(this).is(':checked'))
+  {
+    $('#see').show();
+    $('#seeAlert').show();
+    var verEv = ".uploaded-files-fragmentadas";
+        KTUppyEvidencias.init(divID, verEv);
+  }
+  else
+  {
+    $(divID).remove();
+    $('#see').hide();
+    $('#seeAlert').hide();
+  }
+});
 
 //on click para el boton del modal subir factura
 $(document).on('click', '#BtnSubirFacturaPendietnesEnviar',getDatos);
@@ -224,6 +245,10 @@ function LimpiarModalSF()
   $('input[name="TipoCambio"]').val(1);
   TestFile = null;
   $('.uploaded-files ol').remove();
+  $('#Fragmentada').remove();
+  $('input[name="Fragmentada"]').prop('checked', false);
+  $('#see').hide();
+  $('#seeAlert').hide();
   //ids = [];
 }
 
@@ -245,7 +270,6 @@ function LimpiarModalSF()
 			// to get uppy companions working, please refer to the official documentation here: https://uppy.io/docs/companion/
 			const Dashboard = Uppy.Dashboard;
 			const GoogleDrive = Uppy.GoogleDrive;
-
 
 			// Private functions
 			var initUppy1 = function(){
@@ -278,7 +302,8 @@ function LimpiarModalSF()
          },
          locale: Uppy.locales.es_ES,
          onBeforeFileAdded: (currentFile, file) => {
-           if($('.uppy-DashboardContent-title').length == 0)
+           //if($('.uppy-DashboardContent-title').length == 0)
+           if(Object.values(file)[0] === undefined)
            {
              console.log("+1")
            }

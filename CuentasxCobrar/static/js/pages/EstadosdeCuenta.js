@@ -148,7 +148,7 @@ $('input[name="FiltroFechaCobros"]').on('apply.daterangepicker', function(ev, pi
 // cerrar modal de subir facturas
 $('#modalSubirCobro').on('hidden.bs.modal', function(){
  CleanModal()
- KTUppy.init()
+ KTUppyEvidencias.init()
 });
 
 
@@ -213,7 +213,7 @@ $('input[name="Retencion"]').on('change', function(e){
 
 //inicia el modal de subir complementos
 KTUtil.ready(function() {
-  KTUppy.init();
+  KTUppyEvidencias.init();
 });
 
 
