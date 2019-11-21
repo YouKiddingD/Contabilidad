@@ -47,3 +47,16 @@ def CancelarFactura(request):
 			conPendienteEnviar.IDPendienteEnviar.save()
 			Partida.IDPartida.save()
 	return HttpResponse("")
+
+
+
+def GetDetallesFactura(request):
+	ListaViajes = list()
+	IDFactura = json.loads(request.body.decode('utf-8'))["IDFactura"]
+	conRelacionFacturaxPartidas = RelacionFacturaxPartidas.objects.filter(IDFacturaxCliente = IDFactura)
+	if conRelacionFacturaxPartidas:
+		for Partida in conRelacionFacturaxPartidas:
+			ListaViajes.append(RelacionConceptoxProyecto.objects.get(IDConcepto = Partida.IDConcepto))
+	breakpoint()
+	htmlRes = render_to_string('TablaDetallesFactura.html', {'Pendientes':ListaViajes}, request = request,)
+	return JsonResponse({'htmlRes' : htmlRes})
