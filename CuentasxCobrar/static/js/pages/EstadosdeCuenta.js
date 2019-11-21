@@ -53,8 +53,8 @@ $('#TableEstadosdeCuenta').on( 'click', '.BtnEliminarFactura', function () {
       'success'
       )
   }
-  else
-    alertToastError("Error al eliminar la factura");
+  //else
+  //  alertToastError("Error al eliminar la factura");
 })
 });
 
@@ -82,7 +82,9 @@ $('input[name="FiltroFechaCobros"]').on('apply.daterangepicker', function(ev, pi
 // cerrar modal de subir facturas
 $('#modalSubirCobro').on('hidden.bs.modal', function(){
  CleanModal()
- KTUppyEvidencias.init()
+ var id = '#ComplementosCobros';
+ var verComp = '.uploaded-files-pagos';
+ KTUppyEvidencias.init(id, verComp)
 });
 
 
@@ -147,7 +149,9 @@ $('input[name="Retencion"]').on('change', function(e){
 
 //inicia el modal de subir complementos
 KTUtil.ready(function() {
-  KTUppyEvidencias.init();
+  var id = '#ComplementosCobros';
+  var verComp = '.uploaded-files-pagos';
+  KTUppyEvidencias.init(id, verComp);
 });
 
 
@@ -222,7 +226,7 @@ function showDatosObtenidos(){
     "className": "dt-head-center dt-body-right",
     "targets": 4,
     "mRender": function (data, type, full) {
-     return (full[3] === 'MXN' ? `<input type="number" name="totalCobro" id="valCobro" value="${full[2]}">` : '<input type="number" name="totalCobro" id="valCobro" value="'+totConv+'">');
+     return (full[3] === 'MXN' ? `$ <input class="col-6 text-right" type="number" name="totalCobro" id="valCobro" value="${full[2]}">` : '<input type="number" name="totalCobro" id="valCobro" value="'+totConv+'">');
    }
  }]
 });
@@ -315,6 +319,7 @@ var fnCancelarFactura = async function (IDFactura) {
 
 function formatDataTableFacturas(){
   table = $('#TableEstadosdeCuenta').DataTable({
+    "scrollX": true,
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
     },
@@ -332,7 +337,7 @@ function formatDataTableFacturas(){
       "width": "1%",
       "mRender": function (data, type, full) {
         idfac = $('input[name="EvidenciaXML"]').data("facturaid");
-        return (full[10] != 'Cobrada' ? '<input type="checkbox" name="checkEC" id="estiloCheckbox"/>': '');
+        return (full[10] != 'Cobrada' && full[10] != 'Cancelada' ? '<input type="checkbox" name="checkEC" id="estiloCheckbox"/>': '');
       }
     },
     {
@@ -350,7 +355,7 @@ function formatDataTableFacturas(){
     {
       "width": "5%",
       "className": "dt-head-center dt-body-center",
-      "targets": [8,9, 10]
+      "targets": [8,9, 10, 11]
 
     },
     {
@@ -361,7 +366,7 @@ function formatDataTableFacturas(){
     {
       "width": "3%",
       "className": "dt-head-center dt-body-center",
-      "targets": 11,
+      "targets": 12,
       "mRender": function (data, type, full) {
         evXML = $('input[name="EvidenciaXML"]').data("evidenciaxml");
         return '<a href="'+evXML+'" target="_blank" class="BtnVerXML btn btn-primary btn-elevate btn-pill btn-sm"><i class="flaticon2-file"></i></a>';
@@ -370,7 +375,7 @@ function formatDataTableFacturas(){
     {
       "width": "3%",
       "className": "dt-head-center dt-body-center",
-      "targets": 12,
+      "targets": 13,
       "mRender": function (data, type, full) {
        return ( full[10] === 'Pendiente' ? '<button type ="button" class="BtnEliminarFactura btn btn-danger btn-elevate btn-pill btn-sm" data-idfact="'+idfac+'"><i class="flaticon-delete"></i></button>':'');
      }

@@ -160,7 +160,7 @@ kt-menu__item--active
 																		<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Viajes</a>
 																	</li>
 
-																	<div class="form-group row justify-content-end">
+																	<div class="form-group row justify-content-end" id="fragmentada">
 																		<label class="col-6 col-form-label kt-badge kt-badge--warning kt-badge--inline kt-badge--pill kt-badge--rounded">Fragmentada</label>
 																		<div class="col-3">
 																				<span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--success">
@@ -279,9 +279,21 @@ kt-menu__item--active
 																	<!-- fragmentada -->
 																	<div class="alert alert-light alert-elevate" role="alert" id="seeAlert">
 																			<div class="alert-icon"><i class="flaticon-warning"></i></div>
-																			<div class="alert-text">Componentes</div>
+																			<div class="alert-text"><p class="h3 text-center text-danger">Servicios</p></div>
 																	</div>
 
+																  	<div class="container" id="seeFolioAndComen">
+																			<div class="row">
+																				<div class="col col-md-4">
+																					<label for="Folio">Folio Servicio:</label>
+																					<input type="text" class="form-control form-control-sm" id="txtFolioServicios" name="FolioServicios" required>
+																				</div>
+																				<div class="col">
+																					<label for="Comentarios">Comentarios:</label>
+																					<input type="text" class="form-control form-control-sm" id="txtComentariosServicios" name="ComentariosServicios">
+																				</div>
+																			</div>
+																		</div></br>
 
 																	<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid" id="see">
 
@@ -290,7 +302,7 @@ kt-menu__item--active
 																				<div class="kt-portlet__head">
 																					<div class="kt-portlet__head-label">
 																						<h3 class="kt-portlet__head-title">
-																							PDF y XML Componentes
+																							PDF y XML Servicios
 																						</h3>
 																					</div>
 																				</div>
