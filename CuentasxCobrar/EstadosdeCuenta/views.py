@@ -34,7 +34,7 @@ def GetFacturasByFilters(request):
 
 
 def CancelarFactura(request):
-	IDFactura = json.loads(request.body.decode('utf-8'))["IDFactura"]
+	IDFactura = request.GET["IDFactura"]
 	conRelacionFacturaxPartidas = RelacionFacturaxPartidas.objects.filter(IDFacturaxCliente = IDFactura)
 	if conRelacionFacturaxPartidas:
 		conRelacionFacturaxPartidas[0].IDFacturaxCliente.Status = 'Cancelada'
@@ -52,11 +52,10 @@ def CancelarFactura(request):
 
 def GetDetallesFactura(request):
 	ListaViajes = list()
-	IDFactura = json.loads(request.body.decode('utf-8'))["IDFactura"]
+	IDFactura = request.GET["IDFactura"]
 	conRelacionFacturaxPartidas = RelacionFacturaxPartidas.objects.filter(IDFacturaxCliente = IDFactura)
 	if conRelacionFacturaxPartidas:
 		for Partida in conRelacionFacturaxPartidas:
 			ListaViajes.append(RelacionConceptoxProyecto.objects.get(IDConcepto = Partida.IDConcepto))
-	breakpoint()
 	htmlRes = render_to_string('TablaDetallesFactura.html', {'Pendientes':ListaViajes}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
