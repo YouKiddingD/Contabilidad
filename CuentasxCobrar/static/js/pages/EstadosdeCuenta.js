@@ -89,7 +89,7 @@ $('#modalSubirCobro').on('hidden.bs.modal', function(){
 
 
 //muestra los datos para la tabla del modal subir cobros al hacer click en el boton de  subir cobro
-$('#BtnSubirCobros').on('click', showDatosObtenidos);
+$(document).on('click', '#BtnSubirCobros',showDatosObtenidos);
 
 //validar el total del cobro por cada factura seleccionada -- en el modal subir cobros
 $('#tableAddCobro').on("change", 'input[name="totalCobro"]', function(){
@@ -108,9 +108,9 @@ $('#tableAddCobro').on("change", 'input[name="totalCobro"]', function(){
 
 
 //validacion si tienes los archivos pdf y xml
-$('#btnSaveCobro').on('click', function(){
-  console.log($('input[name="TipoCambioCobro"]').val());
-  if($('#kt_uppy_1').data("rutaarchivoPDF") != undefined || $('#kt_uppy_1').data("rutaarchivoXML") != undefined)
+$(document).on('click', '#btnSaveCobro', function(){
+  //console.log($('input[name="TipoCambioCobro"]').val());
+  if($('#ComplementosCobros').data("rutaarchivoPDF") != undefined || $('#ComplementosCobros').data("rutaarchivoXML") != undefined)
   {
     if($('input[name="FolioCobro"]').val() != "")
     {
@@ -318,7 +318,7 @@ var fnCancelarFactura = async function (IDFactura) {
 }
 
 function SaveCobro(){
-  
+
 }
 
 function formatDataTableFacturas(){

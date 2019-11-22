@@ -1,3 +1,10 @@
+/*@media only screen and (max-width: 500px) {
+.buttons-excel {
+
+    background: red;
+}
+}*/
+
 #TbPading{
   padding: 12px 20px 15px 20px;
 }
@@ -35,12 +42,14 @@ footer{
 #folio{
     font-weight: bold;
 }
+
 .buttons-excel {
     background: #51A762;
     color: white;
     border-radius: 15px;
     top: -10px;
 }
+
 #estiloCheckbox {
 	display: inline-block;
 	width: 15px;
