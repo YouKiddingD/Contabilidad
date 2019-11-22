@@ -264,44 +264,12 @@ kt-menu__item--active
 </div>
 <!--end modal subir facturas-->
 
+{% block DetallesFactura %}
 <!-- Modal ver detalles de la factura(viajes en esa factura) -->
 <div class="modal fade" id="detallesFactura" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-dark" id="exampleModalLabel">Detalles de la factura</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <table class="table">
-        	<thead>
-        			<th>Folio viaje</th>
-							<th>Fecha Factura</th>
-							<th>Subtotal</th>
-							<th>IVA</th>
-							<th>Retencion</th>
-							<th>Total</th>
-        	</thead>
-					<tbody>
-						<tr>
-							<td>BKG000001</td>
-							<td>2019/03/12</td>
-							<td>8000.00</td>
-							<td>350.00</td>
-							<td>150.00</td>
-							<td>75.20</td>
-						</tr>
-					</tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
+	{% include "TablaDetallesFactura.html" %}
 </div>
+{% endblock %}
 
 {% endblock %}
 
