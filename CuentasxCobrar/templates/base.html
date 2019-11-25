@@ -97,12 +97,11 @@
 	<div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
 		<div class="kt-header-mobile__logo">
 			<a href="index.html">
-				<img alt="Logo" src='{% static "assets/media/logos/logo-12.png" %}'/>
+				<img alt="Logo" src='{% static "img\logo-cobrar-145x42.png" %}'/>
 			</a>
 		</div>
 		<div class="kt-header-mobile__toolbar">
 			<button class="kt-header-mobile__toolbar-toggler kt-header-mobile__toolbar-toggler--left" id="kt_aside_mobile_toggler"><span></span></button>
-			<button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler"><span></span></button>
 			<button class="kt-header-mobile__toolbar-topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more"></i></button>
 		</div>
 	</div>
@@ -154,7 +153,7 @@
 							<i class="kt-menu__section-icon flaticon-more-v2"></i>
 						</li>
 						<li class="kt-menu__item {% block activateReporteCobros %} {% endblock %}" aria-haspopup="true"><a href="{% url 'ReporteCobros' %}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-checkmark"></i><span class="kt-menu__link-text">Cobradas</span></a></li>
-						<li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="https://keenthemes.com/metronic/preview/demo12/builder.html" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-cancel"></i><span class="kt-menu__link-text">Canceladas</span></a></li>
+						<li class="kt-menu__item {% block activateReporteCanceladas %} {% endblock %}" aria-haspopup="true"><a href="{% url 'ReporteCanceladas' %}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-cancel"></i><span class="kt-menu__link-text">Canceladas</span></a></li>
 
 
 					</ul>
@@ -269,6 +268,10 @@
 
 			{% block ContadoresReporteCobros %}
 			{% endblock %}
+
+			{% block ContadoresReporteCanceladas %}
+			{% endblock %}
+
 			<!-- fin contadores-->
 
 			<!--filtros-->
@@ -280,6 +283,9 @@
 
 			{% block FiltrosReporteCobros %}
 			{% endblock %}
+
+			{% block FiltrosReporteCanceladas %}
+			{% endblock %}
 			<!-- fin filtros-->
 
 			<!-- aqui va el contenido -->
@@ -290,6 +296,9 @@
 			{% endblock %}
 
 			{% block ReporteCobros %}
+			{% endblock %}
+
+			{% block ReporteCanceladas %}
 			{% endblock %}
 			<!--end contenido-->
 

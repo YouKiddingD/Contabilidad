@@ -337,7 +337,7 @@ function formatDataTableFacturas(){
     columnDefs: [ {
       orderable: false,
       targets:   0,
-      "className": "dt-head-center dt-body-center",
+      "className": "text-center",
       "width": "1%",
       "mRender": function (data, type, full) {
         idfac = $('input[name="EvidenciaXML"]').data("facturaid");
@@ -353,23 +353,23 @@ function formatDataTableFacturas(){
     {
       "name": "Status",
       "width": "10%",
-      "className": "dt-head-center dt-body-center",
+      "className": "text-center",
       "targets": [2,3]
     },
     {
       "width": "5%",
-      "className": "dt-head-center dt-body-center",
-      "targets": [8,9, 10, 11]
+      "className": "text-center",
+      "targets": [8,9, 10]
 
     },
     {
-      "className": "dt-head-center dt-body-right",
+      "className": "text-right",
       'width' : '5%',
       "targets": [4,5,6,7]
     },
     {
       "width": "3%",
-      "className": "dt-head-center dt-body-center",
+      "className": "text-center",
       "targets": 12,
       "mRender": function (data, type, full) {
         evXML = $('input[name="EvidenciaXML"]').data("evidenciaxml");
@@ -378,7 +378,7 @@ function formatDataTableFacturas(){
     },
     {
       "width": "3%",
-      "className": "dt-head-center dt-body-center",
+      "className": "text-center",
       "targets": 13,
       "mRender": function (data, type, full) {
        return ( full[10] === 'Pendiente' ? '<button type ="button" class="BtnEliminarFactura btn btn-danger btn-elevate btn-pill btn-sm" data-idfact="'+idfac+'"><i class="flaticon-delete"></i></button>':'');

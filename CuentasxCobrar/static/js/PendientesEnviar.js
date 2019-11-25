@@ -294,7 +294,7 @@ function LimpiarModalSF()
                  if(to != total)
                  {
                    $("#btnGuardarFactura").prop("disabled", true)
-                   alertToastError("el total de la factura no coincide con el total calculado del sistema")
+                   alertToastError("El total de la factura no coincide con el total calculado del sistema")
                     //uppyDashboard.reset()
                     uppyDashboard.cancelAll()
 

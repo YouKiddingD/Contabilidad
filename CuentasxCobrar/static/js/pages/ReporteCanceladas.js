@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  $("#TableReporteCobros").DataTable({
+  $("#TableReporteCanceladas").DataTable({
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
     },
@@ -18,13 +18,13 @@ $(document).ready(function(){
       },
 
       {
-        "targets": [1,2],
+        "targets": [1,2, 3],
         "width": "15px",
         "className": "dt-head-center dt-body-center"
       },
 
       {
-        "targets": [3,4],
+        "targets": [4,5],
         "width": "12px",
         "className": "dt-head-center dt-body-right"
       },
@@ -33,11 +33,11 @@ $(document).ready(function(){
 
 
   //rago fecha para el Filtro
-  $('input[name="FiltroFechaReporteCobros"]').daterangepicker({
+  $('input[name="FiltroFechaReporteCanceladas"]').daterangepicker({
    autoUpdateInput: false
   });
 
-  $('input[name="FiltroFechaReporteCobros"]').on('apply.daterangepicker', function(ev, picker) {
+  $('input[name="FiltroFechaReporteCanceladas"]').on('apply.daterangepicker', function(ev, picker) {
     $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
   });
 
