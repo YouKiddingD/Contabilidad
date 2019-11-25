@@ -42,7 +42,7 @@ $(document).ready(function(){
   		is3D: true,
   	  };
 
-  	  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  	  var chart = new google.visualization.PieChart(document.getElementById('conEvidencias'));
 
   	  chart.draw(data, options);
   	}
@@ -63,7 +63,7 @@ $(document).ready(function(){
 		is3D: true,
 	  };
 
-	  var chart = new google.visualization.PieChart(document.getElementById('sinevidencias'));
+	  var chart = new google.visualization.PieChart(document.getElementById('sinEvidencias'));
 
 	  chart.draw(data, options);
 	}
