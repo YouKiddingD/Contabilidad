@@ -29,6 +29,8 @@ $(document).on( 'change', 'input[name="checkEC"]', function () {
 
 $('#BtnAplicarFiltro').on('click', fnGetFacturas);
 
+$('.btnDetalleFactura').on('click', getDetalleFactura);
+
 
 //eliminar row de la tabla estados de cuenta
 $('#TableEstadosdeCuenta').on( 'click', '.BtnEliminarFactura', function () {
@@ -386,4 +388,26 @@ function formatDataTableFacturas(){
    }
    ]
  });
+}
+
+function getDetalleFactura()
+{
+  var IDFactura = $(this).parents('tr').data('idfactura');
+  WaitMe_Show('#divTableDetalles');
+
+  fetch("/EstadosdeCuenta/GetDetallesFactura?IDFactura=" + IDFactura, {
+    method: "GET",
+    credentials: "same-origin",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+  }).then(function(response){
+    return response.clone().json();
+  }).then(function(data){
+    WaitMe_Hide('#detallesFactura');
+    $('#divTableDetalles').html(data.htmlRes);
+  }).catch(function(ex){
+    console.log("no success!");
+  });
 }
