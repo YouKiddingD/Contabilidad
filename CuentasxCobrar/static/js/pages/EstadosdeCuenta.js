@@ -325,7 +325,7 @@ function SaveCobro(){
 
 function formatDataTableFacturas(){
   table = $('#TableEstadosdeCuenta').DataTable({
-    "scrollX": true,
+    "scrollX": "100%",
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
     },
@@ -335,6 +335,7 @@ function formatDataTableFacturas(){
     "buttons": [
     'excel'
     ],
+
 
     columnDefs: [ {
       orderable: false,

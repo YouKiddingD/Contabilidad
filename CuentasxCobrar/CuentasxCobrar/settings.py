@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'PendienteEnviar',
     'EstadosdeCuenta',
     'ReporteCobros',
-    'ReporteCanceladas'
+    'ReporteCanceladas',
+    'Indicadores'
 ]
 
 MIDDLEWARE = [
