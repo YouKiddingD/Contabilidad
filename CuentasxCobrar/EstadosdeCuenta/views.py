@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from EstadosdeCuenta.models import RelacionFacturaxPartidas, View_FacturasxCliente, PendientesEnviar, RelacionConceptoxProyecto
+from EstadosdeCuenta.models import RelacionFacturaxPartidas, View_FacturasxCliente, PendientesEnviar, RelacionConceptoxProyecto, CobrosxCliente
 from django.template.loader import render_to_string
 import json, datetime
 
@@ -34,7 +34,7 @@ def GetFacturasByFilters(request):
 
 
 def CancelarFactura(request):
-	IDFactura = request.GET["IDFactura"]
+	IDFactura = json.loads(request.body.decode('utf-8'))["IDFactura"]
 	conRelacionFacturaxPartidas = RelacionFacturaxPartidas.objects.filter(IDFacturaxCliente = IDFactura)
 	if conRelacionFacturaxPartidas:
 		conRelacionFacturaxPartidas[0].IDFacturaxCliente.Status = 'Cancelada'
@@ -59,3 +59,24 @@ def GetDetallesFactura(request):
 			ListaViajes.append(RelacionConceptoxProyecto.objects.get(IDConcepto = Partida.IDConcepto))
 	htmlRes = render_to_string('TablaDetallesFactura.html', {'Pendientes':ListaViajes}, request = request,)
 	return JsonResponse({'htmlRes' : htmlRes})
+
+
+
+def SaveCobroxCliente(request):
+	jParams = json.loads(request.body.decode('utf-8'))
+	newCobro = CobrosxCliente()
+	newCobro.FechaAlta = datetime.datetime.now()
+	newCobro.Folio = jParams["Folio"]
+	newCobro.Total = jParams["Total"]
+	newCobro.FechaCobro = datetime.datetime.strptime(jParams["FechaCobro"],'%Y/%m/%d')
+	newCobro.RutaXML = jParams["RutaXML"]
+	newCobro.RutaPDF = jParams["RutaPDF"]
+	newCobro.Comentarios = jParams["Comentarios"]
+	newCobro.TipoCambio = jParams["TipoCambio"]
+	newCobro.save()
+	return HttpResponse(newFactura.IDCobro)
+
+
+
+def SaveCobroxFactura(request):
+	return HttpResponse('')

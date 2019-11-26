@@ -117,6 +117,7 @@ $(document).on('click', '#btnSaveCobro', function(){
     if($('input[name="FolioCobro"]').val() != "")
     {
       alert("puedes subir el pago");
+      SaveCobroxCliente();
     }
     else
     {
@@ -319,10 +320,6 @@ var fnCancelarFactura = async function (IDFactura) {
   return res;
 }
 
-function SaveCobro(){
-
-}
-
 function formatDataTableFacturas(){
   table = $('#TableEstadosdeCuenta').DataTable({
     "scrollX": "100%",
@@ -411,4 +408,53 @@ function getDetalleFactura()
   }).catch(function(ex){
     console.log("no success!");
   });
+}
+
+function saveCobroxCliente()  {
+  jParams = {
+    Folio: $('#FolioCobro').val(),
+    Total:$('#AddCosto').val(),
+    FechaCobro: $('#FechaCobro').val(),
+    TipoCambio: $('#TipoCambioCobro').val(),
+    Comentarios: $('#comentariosEC').val(),
+    RutaXML: $('#kt_uppy_1').data("rutaarchivoXML"), //$('#RutaXML').val(),
+    RutaPDF: $('#kt_uppy_1').data("rutaarchivoPDF"), //$('#RutaPDF').val(),
+  }
+
+  fetch("/EstadosdeCuenta/SaveCobroxCliente", {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jParams)
+  }).then(function(response){
+
+    if(response.status == 200)
+    {
+      return response.clone().json();
+    }
+    else if(response.status == 500)
+    {
+      Swal.fire({
+        type: 'error',
+        title: 'El folio indicado ya existe en el sistema',
+        showConfirmButton: false,
+        timer: 2500
+      })
+      WaitMe_Hide('#WaitModalPE');
+    }
+
+  }).then(function(IDFactura){
+    SavePartidasxFactura(IDFactura);
+  }).catch(function(ex){
+    console.log("no success!");
+  });
+}
+
+function SaveCobroxFactura()
+{
+
 }
