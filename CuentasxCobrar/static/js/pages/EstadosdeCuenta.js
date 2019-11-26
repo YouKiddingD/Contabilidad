@@ -6,10 +6,8 @@ $(document).ready(function()
   var evXML;
   var idfac;
   var totConv=0;
-
 //tabla estados de cuenta
 formatDataTableFacturas();
-
 //ejecuta varias funciones cada que el checkbox es seleccionado en la tabla estados de cuenta
 $(document).on( 'change', 'input[name="checkEC"]', function () {
   var input = 'input[name="checkEC"]';
@@ -179,7 +177,8 @@ function Getdatos(){
   var arrSelect=[];
   $("input[name=checkEC]:checked").each(function () {
     var datosRow = table.row($(this).parents('tr')).data();
-    arrSelect.push([datosRow[1],datosRow[7], datosRow[8], datosRow[9], datosRow[7]]);
+    var prueba = $(this).data("idfactu");
+    arrSelect.push([datosRow[1],datosRow[7], datosRow[8], datosRow[9], datosRow[7], prueba]);
   });
   return arrSelect;
 }
@@ -218,19 +217,25 @@ function showDatosObtenidos(){
     columnDefs: [
     {
      "className": "text-center",
-     "targets": [0,3]
+     "targets": 0,
    },
    {
      "className": "text-right",
      "targets": [1,2]
    },
    {
+    "className": "text-center",
+    "targets": 3
+  },
+   {
     "className": "dt-head-center dt-body-right",
     "targets": 4,
     "mRender": function (data, type, full) {
      return (full[3] === 'MXN' ? `$ <input class="col-6 text-right" type="number" name="totalCobro" id="valCobro" value="${full[2]}">` : '<input type="number" name="totalCobro" id="valCobro" value="'+totConv+'">');
    }
- }]
+ },
+
+]
 });
 
   $('#AddCosto').val(truncarDecimales(total, 2));
@@ -344,14 +349,18 @@ function formatDataTableFacturas(){
       "width": "1%",
       "mRender": function (data, type, full) {
         idfac = $('input[name="EvidenciaXML"]').data("facturaid");
-        return (full[10] != 'Cobrada' && full[10] != 'Cancelada' ? '<input type="checkbox" name="checkEC" id="estiloCheckbox"/>': '');
+        return (full[10] != 'Cobrada' && full[10] != 'Cancelada' ? '<input type="checkbox" name="checkEC" id="estiloCheckbox" data-idfactu="'+idfac+'"/>': '');
       }
     },
     {
       "name": "Status",
       "width": "5%",
       "className": "text-center bold",
-      "targets": 1
+      "targets": 1,
+      "mRender": function (data, type, full) {
+        idfac = $('input[name="EvidenciaXML"]').data("facturaid");
+        return `<a  href="#detallesFactura" class="btnDetalleFactura" data-toggle="modal" data-backdrop="static" data-keyboard="false" id="foliofactura">${full[1]}</a>`;
+      }
     },
     {
       "name": "Status",
@@ -390,6 +399,9 @@ function formatDataTableFacturas(){
    ]
  });
 }
+
+
+
 
 function getDetalleFactura()
 {
