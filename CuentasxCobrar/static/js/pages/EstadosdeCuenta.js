@@ -1,7 +1,7 @@
-var table;
+var table; 
+var cliente;
 $(document).ready(function()
 {
-  var cliente;
   var calculo =0;
   var evXML;
   var idfac;
@@ -179,7 +179,7 @@ function Getdatos(){
   $("input[name=checkEC]:checked").each(function () {
     var datosRow = table.row($(this).parents('tr')).data();
     var prueba = $(this).data("idfactu");
-    arrSelect.push([datosRow[1],datosRow[7], datosRow[8], datosRow[9], datosRow[7], prueba]);
+    arrSelect.push([datosRow[1],datosRow[7], datosRow[8], datosRow[9], datosRow[7], prueba, datosRow[2]]);
   });
   return arrSelect;
 }
@@ -431,6 +431,7 @@ function saveCobroxCliente()  {
     Comentarios: $('#comentariosEC').val(),
     RutaXML: $('#RutaXML').attr('href'),
     RutaPDF: $('#RutaPDF').attr('href'),
+    Cliente: cliente,
   }
 
   fetch("/EstadosdeCuenta/SaveCobroxCliente", {

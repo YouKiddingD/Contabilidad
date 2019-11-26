@@ -74,6 +74,7 @@ def SaveCobroxCliente(request):
 	newCobro.RutaPDF = jParams["RutaPDF"]
 	newCobro.Comentarios = jParams["Comentarios"]
 	newCobro.TipoCambio = jParams["TipoCambio"]
+	newCobro.NombreCortoCliente = jParams["Cliente"]
 	newCobro.save()
 	return HttpResponse(newCobro.IDCobro)
 
