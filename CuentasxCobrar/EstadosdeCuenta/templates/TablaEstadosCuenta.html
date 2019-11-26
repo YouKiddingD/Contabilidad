@@ -28,7 +28,7 @@
 					{% for Factura in Facturas %}
 					<tr data-IDFactura="{{Factura.IDFactura}}">
 						<td></td>
-						<td style="font-weight: bold;"><a href="#detallesFactura" class="btnDetalleFactura" data-toggle="modal" data-backdrop="static" data-keyboard="false">{{Factura.Folio}}</a></td>
+						<td style="font-weight: bold;">{{Factura.Folio}}</td>
 						<td>{{Factura.Cliente}}</td>
 						<td>{{Factura.FechaFactura|date:'Y/m/d'}}</td>
 						<td>{{Factura.Subtotal|floatformat:"2"}}</td>
