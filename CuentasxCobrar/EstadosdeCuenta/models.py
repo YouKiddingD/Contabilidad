@@ -139,7 +139,7 @@ class CobrosxCliente(models.Model):
     IDCobro = models.AutoField(primary_key=True)
     FechaAlta = models.DateTimeField()
     Total = models.DecimalField(default=0, max_digits=30, decimal_places=5)
-    Folio = models.CharField(max_length=10, unique=True)
+    Folio = models.CharField(max_length=50, unique=True)
     RutaPDF = models.CharField(max_length=300)
     RutaXML = models.CharField(max_length=300)
     FechaCobro = models.DateTimeField()
