@@ -23,14 +23,14 @@ $(document).ready(function(){
 
 		  var table = new google.visualization.Table(document.getElementById('table_div'));
 
-		  table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+		  table.draw(data, {showRowNumber: false, width: '100%', height: '100%'});
 		}
 
 
 
   	function drawChart() {
   	  var data = google.visualization.arrayToDataTable([
-  		['Task', 'Hours per Day'],
+  		['Viajes', 'Con evidencias'],
   		['Eaton',     10],
   		['3M',     15],
   		['Rafael',     20],
@@ -50,7 +50,7 @@ $(document).ready(function(){
 
     function withoutEvidencias() {
 	  var data = google.visualization.arrayToDataTable([
-		['Task', 'Hours per Day'],
+		['Viajes', 'Sin evidencias'],
 		['Eaton',     1],
 		['3M',     5],
 		['Rafael',     2],

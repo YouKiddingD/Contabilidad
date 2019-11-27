@@ -27,11 +27,11 @@ $(document).on( 'change', 'input[name="checkEC"]', function () {
 
 $('#BtnAplicarFiltro').on('click', fnGetFacturas);
 
-$('.btnDetalleFactura').on('click', getDetalleFactura);
+$(document).on('click', '.btnDetalleFactura',getDetalleFactura);
 
 
 //eliminar row de la tabla estados de cuenta
-$('#TableEstadosdeCuenta').on( 'click', '.BtnEliminarFactura', function () {
+$(document).on( 'click', '.BtnEliminarFactura', function () {
  Swal.fire({
   title: '¿Estas Seguro?',
   text: "Estas a un click de eliminar algo importante",
