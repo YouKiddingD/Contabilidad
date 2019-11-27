@@ -14,7 +14,7 @@
 			<td>{{Cobro.IDCobro.Folio}}</td>
 			<td>{{Cobro.IDCobro.NombreCortoCliente}}</td>
 			<td>{{Cobro.IDCobro.FechaCobro|date:'Y/m/d'}}</td>
-			<td>{{Cobro.IDCobro.Total}}</td>
+			<td>{{Cobro.IDCobro.Total|floatformat:"2"}}</td>
 			<td>{{Cobro.IDFactura.Folio}}</td>
 		</tr>
 		{%endfor%}
