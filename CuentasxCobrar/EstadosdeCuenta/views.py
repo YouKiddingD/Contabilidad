@@ -7,9 +7,10 @@ import json, datetime
 
 
 def EstadosdeCuenta(request):
-	Facturas = View_FacturasxCliente.objects.exclude(Status = "Cancelada")
-	return render(request, 'EstadosdeCuenta.html', {'Facturas': Facturas})
-
+	FacturasPendiente = View_FacturasxCliente.objects.filter(Status = "Pendiente")
+	FacturasAbonada = View_FacturasxCliente.objects.filter(Status = "Abonada")
+	result = FacturasPendiente | FacturasAbonada
+	return render(request, 'EstadosdeCuenta.html', {'Facturas': result})
 
 
 def GetFacturasByFilters(request):

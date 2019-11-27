@@ -1,4 +1,4 @@
-var table; 
+var table;
 var cliente;
 $(document).ready(function()
 {
@@ -167,7 +167,9 @@ $('input[name="TipoCambioCobro"]').on('change', function(){
 function CleanModal()
 {
  $('input[name="FolioCobro"]').val('');
- $('.uploaded-files ol').remove()
+ $('.uploaded-files ol').remove();
+ $('#comentariosEC').val('');
+ $('#TipoCambioCobro').val(1);
  calculo = 0;
  totConv = 0;
 }
