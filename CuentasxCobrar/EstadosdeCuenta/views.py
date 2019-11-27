@@ -1,7 +1,8 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from EstadosdeCuenta.models import RelacionFacturaxPartidas, View_FacturasxCliente, PendientesEnviar, RelacionConceptoxProyecto, CobrosxCliente
+from EstadosdeCuenta.models import RelacionFacturaxPartidas, View_FacturasxCliente, FacturasxCliente, PendientesEnviar, RelacionConceptoxProyecto, CobrosxCliente, CobrosxFacturas, RelacionCobrosFacturasxCliente
 from django.template.loader import render_to_string
+from decimal import Decimal
 import json, datetime
 
 
@@ -73,10 +74,31 @@ def SaveCobroxCliente(request):
 	newCobro.RutaPDF = jParams["RutaPDF"]
 	newCobro.Comentarios = jParams["Comentarios"]
 	newCobro.TipoCambio = jParams["TipoCambio"]
+	newCobro.NombreCortoCliente = jParams["Cliente"]
 	newCobro.save()
-	return HttpResponse(newFactura.IDCobro)
+	return HttpResponse(newCobro.IDCobro)
 
 
 
 def SaveCobroxFactura(request):
-	return HttpResponse('')
+	jParams = json.loads(request.body.decode('utf-8'))
+	for Cobro in jParams["arrCobros"]:
+		newCobroxFactura = CobrosxFacturas()
+		newCobroxFactura.Total = Cobro["Total"]
+		newCobroxFactura.FechaAlta = datetime.datetime.now()
+		newCobroxFactura.save()
+		newRelacionCobroxFactura = RelacionCobrosFacturasxCliente()
+		newRelacionCobroxFactura.IDCobro = CobrosxCliente.objects.get(IDCobro = jParams["IDCobro"])
+		newRelacionCobroxFactura.IDCobroxFactura = CobrosxFacturas.objects.get(IDCobroxFactura = newCobroxFactura.IDCobroxFactura)
+		Factura = FacturasxCliente.objects.get(IDFactura = Cobro["IDFactura"])
+		Factura.Saldo -= Decimal(Cobro["Total"])
+		newRelacionCobroxFactura.IDFactura = Factura
+		newRelacionCobroxFactura.IDUsuarioAlta = 1
+		newRelacionCobroxFactura.IDCliente = 1
+		if Factura.Saldo == 0:
+			Factura.Status = "Cobrada"
+		else:
+			Factura.Status = "Abonada"
+		Factura.save()
+		newRelacionCobroxFactura.save()
+	return HttpResponse("")

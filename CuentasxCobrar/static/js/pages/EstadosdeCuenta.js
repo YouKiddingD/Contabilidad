@@ -1,7 +1,7 @@
-var table;
+var table; 
+var cliente;
 $(document).ready(function()
 {
-  var cliente;
   var calculo =0;
   var evXML;
   var idfac;
@@ -114,8 +114,8 @@ $(document).on('click', '#btnSaveCobro', function(){
   {
     if($('input[name="FolioCobro"]').val() != "")
     {
-      alert("puedes subir el pago");
-      SaveCobroxCliente();
+      //alert("puedes subir el pago");
+      saveCobroxCliente();
     }
     else
     {
@@ -179,7 +179,7 @@ function Getdatos(){
   $("input[name=checkEC]:checked").each(function () {
     var datosRow = table.row($(this).parents('tr')).data();
     var prueba = $(this).data("idfactu");
-    arrSelect.push([datosRow[1],datosRow[7], datosRow[8], datosRow[9], datosRow[7], prueba]);
+    arrSelect.push([datosRow[1],datosRow[7], datosRow[8], datosRow[9], datosRow[7], prueba, datosRow[2]]);
   });
   return arrSelect;
 }
@@ -228,15 +228,15 @@ function showDatosObtenidos(){
     "className": "text-center",
     "targets": 3
   },
-   {
+  {
     "className": "dt-head-center dt-body-right",
     "targets": 4,
     "mRender": function (data, type, full) {
-     return (full[3] === 'MXN' ? `$ <input class="col-6 text-right" type="number" name="totalCobro" id="valCobro" value="${full[2]}">` : '<input type="number" name="totalCobro" id="valCobro" value="'+totConv+'">');
+     return (full[3] === 'MXN' ? `$ <input class="col-6 text-right valCobro" type="number" data-idfact="${full[5]}" name="totalCobro" id="valCobro" value="${full[2]}">` : '<input type="number" class="valCobro" data-idfact="'+ full[5] +'" name="totalCobro" id="valCobro" value="'+totConv+'">');
    }
  },
 
-]
+ ]
 });
 
   $('#AddCosto').val(truncarDecimales(total, 2));
@@ -429,8 +429,9 @@ function saveCobroxCliente()  {
     FechaCobro: $('#FechaCobro').val(),
     TipoCambio: $('#TipoCambioCobro').val(),
     Comentarios: $('#comentariosEC').val(),
-    RutaXML: $('#kt_uppy_1').data("rutaarchivoXML"), //$('#RutaXML').val(),
-    RutaPDF: $('#kt_uppy_1').data("rutaarchivoPDF"), //$('#RutaPDF').val(),
+    RutaXML: $('#RutaXML').attr('href'),
+    RutaPDF: $('#RutaPDF').attr('href'),
+    Cliente: cliente,
   }
 
   fetch("/EstadosdeCuenta/SaveCobroxCliente", {
@@ -459,14 +460,60 @@ function saveCobroxCliente()  {
       WaitMe_Hide('#WaitModalPE');
     }
 
-  }).then(function(IDFactura){
-    SavePartidasxFactura(IDFactura);
+  }).then(function(IDCobro){
+    SaveCobroxFactura(IDCobro);
   }).catch(function(ex){
     console.log("no success!");
   });
 }
 
-function SaveCobroxFactura()
+function SaveCobroxFactura(IDCobro)
 {
+  var arrCobros = [];
+  $('.valCobro').each(function() {
+    IDFactura = $(this).data('idfact');
+    Total = $(this).val();
+    arrCobros.push({'Total': Total, 'IDFactura': IDFactura});
+  });
 
+  jParams = {
+    IDCobro: IDCobro,
+    arrCobros: arrCobros,
+  }
+
+  fetch("/EstadosdeCuenta/SaveCobroxFactura", {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jParams)
+  }).then(function(response){
+
+    if(response.status == 200)
+    {
+      Swal.fire({
+        type: 'success',
+        title: 'El cobro fue guardado correctamente',
+        showConfirmButton: false,
+        timer: 2500
+      })
+      WaitMe_Hide('#WaitModalPE');
+    }
+    else if(response.status == 500)
+    {
+      Swal.fire({
+        type: 'error',
+        title: 'El folio indicado ya existe en el sistema',
+        showConfirmButton: false,
+        timer: 2500
+      })
+      WaitMe_Hide('#WaitModalPE');
+    }
+
+  }).catch(function(ex){
+    console.log("no success!");
+  });
 }
