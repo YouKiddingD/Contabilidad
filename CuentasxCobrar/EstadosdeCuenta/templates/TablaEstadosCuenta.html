@@ -1,4 +1,5 @@
 {% load static %}
+{% load Tags_EstadosDeCuenta %}
 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
 		<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 			<div class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" id="TbPading">
@@ -38,7 +39,7 @@
 						<td>{{Factura.Saldo|floatformat:"2"}}</td>
 						<td>{{Factura.Moneda}}</td>
 						<td>{{Factura.Status}}</td>
-						<td>folio001, folio002, folio001, folio002</td>
+						<td>{{Folios|index:forloop.counter0}}</td>
 						<td><input name="EvidenciaXML" type="hidden" data-facturaid="{{Factura.IDFactura}}"  data-evidenciaxml="{{Factura.RutaXML}}"></td>
 						<td></td>
 					</tr>
