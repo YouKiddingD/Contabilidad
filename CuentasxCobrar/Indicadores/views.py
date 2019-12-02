@@ -8,6 +8,12 @@ def Indicadores(request):
 
 
 
-def GetIndicadores(request):
-	Indicadores = {}
-	FinalizadosEvidencias = View_PendientesEnviarCxC(Status = 'Finalizado', IsEvidenciaDigital = True, IsEvidenciaFisica = True)
+# def GetIndicadores(request):
+# 	Indicadores = []
+# 	FinalizadosEvidencias = View_PendientesEnviarCxC.objects.filter(Status = 'Finalizado', IsEvidenciaDigital = True, IsEvidenciaFisica = True)
+# 	for Finalizado in FinalizadosEvidencias:
+# 		if Finalizado.NombreCortoCliente not in Indicadores:
+# 			Indicadores.append({Finalizado.NombreCortoCliente: 0});
+# 		Indicadores[Finalizado.NombreCortoCliente]++
+# 	breakpoint()
+# 	return render('')
